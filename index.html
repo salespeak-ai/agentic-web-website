@@ -86,16 +86,17 @@
             --text-secondary: #94a3b8;
             --text-tertiary: #64748b;
 
-            --accent-cyan: #06b6d4;
-            --accent-cyan-dim: rgba(6, 182, 212, 0.15);
-            --accent-cyan-glow: rgba(6, 182, 212, 0.4);
-            --accent-amber: #f59e0b;
-            --accent-amber-dim: rgba(245, 158, 11, 0.15);
+            /* Salespeak Brand Colors */
+            --accent-cyan: #1E90FF;
+            --accent-cyan-dim: rgba(30, 144, 255, 0.15);
+            --accent-cyan-glow: rgba(30, 144, 255, 0.4);
+            --accent-amber: #FF6B35;
+            --accent-amber-dim: rgba(255, 107, 53, 0.15);
             --accent-emerald: #10b981;
             --accent-emerald-dim: rgba(16, 185, 129, 0.15);
             --accent-rose: #f43f5e;
             --accent-rose-dim: rgba(244, 63, 94, 0.15);
-            --accent-violet: #8b5cf6;
+            --accent-violet: #9333EA;
 
             --border-subtle: rgba(148, 163, 184, 0.1);
             --border-medium: rgba(148, 163, 184, 0.2);
@@ -1790,6 +1791,34 @@
             color: var(--text-tertiary);
         }
 
+        .footer-powered {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        .salespeak-logo {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            transition: opacity 0.2s ease;
+        }
+
+        .salespeak-logo:hover {
+            opacity: 0.8;
+        }
+
+        .salespeak-logo .s {
+            color: var(--accent-cyan);
+        }
+
+        .salespeak-logo .e {
+            color: var(--accent-amber);
+        }
+
         /* ============================================
            ANIMATIONS
         ============================================ */
@@ -1911,7 +1940,7 @@
                     <div class="hero-glow"></div>
                     <div class="hero-card">
                         <div class="hero-card-header">
-                            <span class="hero-card-endpoint">/.well-known/ucp</span>
+                            <span class="hero-card-endpoint">/.well-known/mcp</span>
                             <span class="hero-card-status">Verified Endpoint</span>
                         </div>
 
@@ -2052,7 +2081,7 @@
                     <div class="step">
                         <div class="step-number">1</div>
                         <h4>Expose Profile</h4>
-                        <p>Publish your capabilities at <code>/.well-known/ucp</code></p>
+                        <p>Publish your capabilities at <code>/.well-known/mcp</code></p>
                     </div>
 
                     <div class="step">
@@ -2275,7 +2304,7 @@
                 <div class="code-content">
                     <div class="code-block" id="code-discovery">
 <span class="comment">// Agent discovers company capabilities</span>
-<span class="method">GET</span> https://acme.com/.well-known/ucp
+<span class="method">GET</span> https://acme.com/.well-known/mcp
 
 <span class="comment">// Response: capability manifest</span>
 {
@@ -2520,12 +2549,12 @@
 
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h4>What's published at /.well-known/ucp?</h4>
+                        <h4>What's published at /.well-known/mcp?</h4>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>The <code>/.well-known/ucp</code> endpoint serves your company's capability manifest — a machine-readable document describing what questions you can answer and what actions you support. It includes your company name, description, list of verified response topics, available actions, and the endpoint URL for AI agent interactions. Think of it as a standardized "menu" for AI.</p>
+                            <p>The <code>/.well-known/mcp</code> endpoint serves your company's capability manifest — a machine-readable document describing what questions you can answer and what actions you support. It includes your company name, description, list of verified response topics, available actions, and the endpoint URL for AI agent interactions. Think of it as a standardized "menu" for AI.</p>
                         </div>
                     </div>
                 </div>
@@ -2579,10 +2608,15 @@
                 </div>
                 <div class="footer-links">
                     <a href="#">Specification</a>
-                    <a href="#">GitHub</a>
+                    <a href="https://github.com/salespeak-ai/agentic-web-website">GitHub</a>
                     <a href="#">Community</a>
                 </div>
-                <p class="footer-copy">Open standard for the AI-native web</p>
+                <div class="footer-powered">
+                    <span>Powered by</span>
+                    <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
+                        sale<span class="s">s</span>p<span class="e">e</span>ak
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
