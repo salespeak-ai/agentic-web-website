@@ -1022,6 +1022,164 @@
         }
 
         /* ============================================
+           DISCOVERY SECTION
+        ============================================ */
+        .discovery {
+            background: var(--bg-primary);
+        }
+
+        .discovery-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .discovery-intro {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .discovery-intro code {
+            background: var(--bg-tertiary);
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.9375rem;
+            color: var(--accent-cyan);
+        }
+
+        .discovery-command {
+            margin-bottom: 2rem;
+        }
+
+        .discovery-command-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .discovery-command-label span {
+            padding: 0.25rem 0.5rem;
+            background: var(--accent-cyan-dim);
+            border-radius: 0.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+        }
+
+        .discovery-code {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .discovery-code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .discovery-code-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .discovery-code-dot {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 50%;
+            background: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .discovery-code-lang {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .discovery-code pre {
+            padding: 1.25rem;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .discovery-code pre .comment {
+            color: var(--text-muted);
+        }
+
+        .discovery-code pre .var {
+            color: var(--accent-cyan);
+        }
+
+        .discovery-code pre .cmd {
+            color: var(--accent-amber);
+        }
+
+        .discovery-response-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin: 2rem 0 0.75rem;
+        }
+
+        .discovery-response-label .badge {
+            padding: 0.25rem 0.5rem;
+            background: var(--accent-emerald-dim);
+            border-radius: 0.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--accent-emerald);
+        }
+
+        .discovery-json {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+
+        .discovery-json pre {
+            padding: 1.25rem;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .discovery-json .key {
+            color: var(--accent-cyan);
+        }
+
+        .discovery-json .string {
+            color: var(--accent-emerald);
+        }
+
+        .discovery-json .bracket {
+            color: var(--text-muted);
+        }
+
+        /* ============================================
            IN ACTION (CONVERSATION DEMO)
         ============================================ */
         .in-action {
@@ -2298,6 +2456,96 @@
                         <div class="action-tile-icon">🚀</div>
                         <span>Start Trial</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Discovery Section -->
+    <section class="discovery" id="discovery">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">🔍 Discovery</span>
+                <h2>How discovery works</h2>
+                <p>AI agents discover your capabilities through a standard endpoint.</p>
+            </div>
+
+            <div class="discovery-content animate-on-scroll">
+                <p class="discovery-intro">
+                    Companies publish their services and capabilities in a standard JSON manifest located at <code>/.well-known/mcp</code>.
+                    This allows AI agents to dynamically discover what questions you can answer and what actions you support — without hard-coded integrations.
+                </p>
+
+                <div class="discovery-command">
+                    <div class="discovery-command-label">
+                        Run this command to discover a company's capabilities:
+                        <span>Shell</span>
+                    </div>
+                    <div class="discovery-code">
+                        <div class="discovery-code-header">
+                            <div class="discovery-code-dots">
+                                <div class="discovery-code-dot"></div>
+                                <div class="discovery-code-dot"></div>
+                                <div class="discovery-code-dot"></div>
+                            </div>
+                            <span class="discovery-code-lang">bash</span>
+                        </div>
+                        <pre><span class="comment"># Discover business capabilities</span>
+<span class="var">export</span> SERVER_URL=https://acme.com
+<span class="cmd">curl</span> -s -X GET $SERVER_URL/.well-known/mcp</pre>
+                    </div>
+                </div>
+
+                <div class="discovery-response-label">
+                    Response:
+                    <span class="badge">200 OK</span>
+                </div>
+                <div class="discovery-json">
+                    <pre><span class="bracket">{</span>
+  <span class="key">"mcp"</span>: <span class="bracket">{</span>
+    <span class="key">"version"</span>: <span class="string">"2026-01-11"</span>,
+    <span class="key">"name"</span>: <span class="string">"Acme Inc"</span>,
+    <span class="key">"description"</span>: <span class="string">"Enterprise security platform"</span>,
+    <span class="key">"endpoint"</span>: <span class="string">"https://acme.com/api/mcp"</span>
+  <span class="bracket">}</span>,
+  <span class="key">"capabilities"</span>: <span class="bracket">{</span>
+    <span class="key">"verified_responses"</span>: <span class="bracket">[</span>
+      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"pricing"</span>, <span class="key">"description"</span>: <span class="string">"Current pricing and plans"</span> <span class="bracket">}</span>,
+      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"integrations"</span>, <span class="key">"description"</span>: <span class="string">"Supported integrations and APIs"</span> <span class="bracket">}</span>,
+      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"compliance"</span>, <span class="key">"description"</span>: <span class="string">"Security certifications (SOC2, ISO)"</span> <span class="bracket">}</span>
+    <span class="bracket">]</span>,
+    <span class="key">"actions"</span>: <span class="bracket">[</span>
+      <span class="bracket">{</span>
+        <span class="key">"name"</span>: <span class="string">"ask_question"</span>,
+        <span class="key">"description"</span>: <span class="string">"Ask any question about Acme products"</span>,
+        <span class="key">"requires_auth"</span>: false
+      <span class="bracket">}</span>,
+      <span class="bracket">{</span>
+        <span class="key">"name"</span>: <span class="string">"schedule_demo"</span>,
+        <span class="key">"description"</span>: <span class="string">"Book a personalized product demo"</span>,
+        <span class="key">"requires_auth"</span>: false,
+        <span class="key">"fields"</span>: <span class="bracket">[</span><span class="string">"name"</span>, <span class="string">"email"</span>, <span class="string">"company"</span>, <span class="string">"preferred_time"</span><span class="bracket">]</span>
+      <span class="bracket">}</span>,
+      <span class="bracket">{</span>
+        <span class="key">"name"</span>: <span class="string">"open_ticket"</span>,
+        <span class="key">"description"</span>: <span class="string">"Create a support ticket"</span>,
+        <span class="key">"requires_auth"</span>: true
+      <span class="bracket">}</span>,
+      <span class="bracket">{</span>
+        <span class="key">"name"</span>: <span class="string">"request_quote"</span>,
+        <span class="key">"description"</span>: <span class="string">"Get a custom pricing quote"</span>,
+        <span class="key">"requires_auth"</span>: false,
+        <span class="key">"qualification_required"</span>: true
+      <span class="bracket">}</span>
+    <span class="bracket">]</span>
+  <span class="bracket">}</span>,
+  <span class="key">"qualification"</span>: <span class="bracket">{</span>
+    <span class="key">"enabled"</span>: true,
+    <span class="key">"fields"</span>: <span class="bracket">[</span><span class="string">"company_size"</span>, <span class="string">"industry"</span>, <span class="string">"use_case"</span>, <span class="string">"security_requirements"</span><span class="bracket">]</span>
+  <span class="bracket">}</span>
+<span class="bracket">}</span></pre>
                 </div>
             </div>
         </div>
