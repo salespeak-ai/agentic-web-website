@@ -1669,6 +1669,20 @@
             box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.3);
         }
 
+        .standard-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .standard-card-link:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .standard-card-link:hover .standard-logo {
+            color: var(--accent-cyan);
+        }
+
         .standard-card::before {
             content: '';
             position: absolute;
@@ -2616,12 +2630,12 @@
             </div>
 
             <div class="standards-grid stagger-children">
-                <div class="standard-card">
+                <a href="/nlweb.html" class="standard-card standard-card-link">
                     <div class="standard-logo">NLWeb</div>
                     <h4>Natural Language Web Protocol</h4>
                     <p>Enables natural language queries to structured web endpoints.</p>
                     <span class="standard-org">Microsoft</span>
-                </div>
+                </a>
 
                 <div class="standard-card">
                     <div class="standard-logo">UCP</div>

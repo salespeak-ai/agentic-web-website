@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLWeb & The Agentic Web — Building on Open Standards</title>
+    <meta name="description" content="How The Agentic Web extends NLWeb with B2B capabilities: structured discovery, qualification loops, action endpoints, and verified responses.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://app.salespeak.ai/widget.js" data-org-id="61fff524-bd18-42f5-abbc-af0a1b8e1f1c" data-launcher="dynamic-launcher"></script>
+</head>
+<style>
+    :root {
+        /* Salespeak Brand Colors */
+        --accent-blue: #1E90FF;
+        --accent-orange: #FF6B35;
+        --accent-purple: #9333EA;
+        --accent-emerald: #10B981;
+
+        /* Base */
+        --bg-primary: #030712;
+        --bg-secondary: #0a0f1a;
+        --bg-tertiary: #111827;
+        --text-primary: #f9fafb;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+
+        /* Typography */
+        --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+        min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+        position: relative;
+        padding: 4rem 2rem 5rem;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150%;
+        height: 100%;
+        background:
+            radial-gradient(ellipse at 30% 0%, rgba(30, 144, 255, 0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 0%, rgba(147, 51, 234, 0.12) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .header-content {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        margin-bottom: 2rem;
+        transition: color 0.2s;
+    }
+
+    .header-back:hover {
+        color: var(--accent-blue);
+    }
+
+    .header-label {
+        display: inline-block;
+        padding: 0.375rem 1rem;
+        background: rgba(147, 51, 234, 0.15);
+        border: 1px solid rgba(147, 51, 234, 0.3);
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--accent-purple);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header p {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+    /* Main Content */
+    .content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+    }
+
+    .content h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 3rem 0 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 2rem 0 1rem;
+        color: var(--text-primary);
+    }
+
+    .content p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+    }
+
+    .content a {
+        color: var(--accent-blue);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+    }
+
+    .content a:hover {
+        border-color: var(--accent-blue);
+    }
+
+    .content code {
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        background: var(--bg-tertiary);
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        color: var(--accent-blue);
+    }
+
+    /* Intro Box */
+    .intro-box {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .intro-box p {
+        font-size: 1.0625rem;
+        margin-bottom: 0;
+    }
+
+    .intro-box p + p {
+        margin-top: 1rem;
+    }
+
+    /* Quote/Highlight Box */
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(30, 144, 255, 0.1) 100%);
+        border-left: 3px solid var(--accent-purple);
+        border-radius: 0 0.75rem 0.75rem 0;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+    }
+
+    .highlight-box p {
+        font-size: 1.125rem;
+        font-style: italic;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    /* How It Works Grid */
+    .how-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    @media (max-width: 600px) {
+        .how-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .how-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1rem;
+        padding: 1.5rem;
+    }
+
+    .how-card-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.5rem;
+        background: rgba(30, 144, 255, 0.15);
+        color: var(--accent-blue);
+        font-weight: 700;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+    }
+
+    .how-card h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .how-card p {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    /* Extension Section */
+    .extension-section {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin: 3rem 0;
+    }
+
+    .extension-section h2 {
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .extension-section h2::before {
+        content: '→';
+        color: var(--accent-orange);
+    }
+
+    .extension-list {
+        list-style: none;
+        margin: 1.5rem 0 0;
+    }
+
+    .extension-list li {
+        position: relative;
+        padding: 1.25rem 0 1.25rem 2rem;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .extension-list li:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .extension-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 1.5rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--accent-orange);
+    }
+
+    .extension-list strong {
+        color: var(--text-primary);
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .extension-list span {
+        font-size: 0.9375rem;
+        color: var(--text-secondary);
+    }
+
+    /* Analogy Box */
+    .analogy-box {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1rem;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .analogy-box p {
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    .analogy-box .highlight {
+        color: var(--accent-blue);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        text-align: center;
+        padding: 3rem 0;
+        margin-top: 2rem;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .cta-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        max-width: 500px;
+        margin: 0 auto 1.5rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s;
+        border: none;
+    }
+
+    .btn-primary {
+        background: var(--accent-blue);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #1a7fd9;
+        transform: translateY(-2px);
+        border-color: transparent;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--border-subtle);
+        color: var(--text-secondary);
+    }
+
+    .btn-secondary:hover {
+        border-color: var(--accent-blue);
+        color: var(--accent-blue);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 3rem 2rem;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-powered {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .salespeak-logo {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .salespeak-logo:hover {
+        color: var(--accent-blue);
+    }
+
+    .salespeak-logo .s {
+        color: var(--accent-blue);
+    }
+
+    .salespeak-logo .e {
+        color: var(--accent-orange);
+    }
+</style>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="header-back">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+            </a>
+            <span class="header-label">Open Standards</span>
+            <h1>NLWeb & The Agentic Web</h1>
+            <p>Building on open protocols to create a conversational layer for the entire web — and extending it for B2B.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+        <div class="intro-box">
+            <p><strong>NLWeb</strong> simplifies the process of building conversational interfaces for websites. It natively supports MCP (Model Context Protocol), allowing the same natural language APIs to serve both humans and AI agents.</p>
+            <p>Schema.org and related semi-structured formats like RSS — used by over 100 million websites — have become not just de facto syndication mechanisms, but also a semantic layer for the web. NLWeb leverages these to enable natural language interfaces more easily.</p>
+        </div>
+
+        <h2>What is NLWeb?</h2>
+        <p>NLWeb is a collection of <strong>open protocols</strong> and associated open source tools. Its main focus is establishing a foundational layer for the AI Web — much like HTML revolutionized document sharing.</p>
+
+        <p>To make this vision reality, NLWeb provides practical implementation code — not as the definitive solution, but as proof-of-concept demonstrations showing one possible approach. We expect and encourage the community to develop diverse, innovative implementations that surpass these examples.</p>
+
+        <p>This mirrors the web's own evolution, from the humble <code>htdocs</code> folder in NCSA's HTTP server to today's massive data center infrastructures — all unified by shared protocols that enable seamless communication.</p>
+
+        <div class="highlight-box">
+            <p>AI has the potential to enhance every web interaction. Realizing this requires a collaborative spirit reminiscent of the Web's early "barn raising" days. Shared protocols, sample implementations, and community participation are all essential.</p>
+        </div>
+
+        <p>NLWeb brings together protocols, Schema.org formats, and sample code to help sites quickly implement conversational endpoints — benefitting both users through natural interfaces and agents through structured interaction.</p>
+
+        <h2>How It Works</h2>
+        <p>NLWeb has two primary components:</p>
+
+        <div class="how-grid">
+            <div class="how-card">
+                <div class="how-card-number">1</div>
+                <h4>Natural Language Protocol</h4>
+                <p>A simple protocol to interact with a site using natural language. It returns responses in JSON using Schema.org vocabulary.</p>
+            </div>
+            <div class="how-card">
+                <div class="how-card-number">2</div>
+                <h4>Structured Implementation</h4>
+                <p>Uses existing markup on sites with structured lists (products, recipes, reviews). Combined with UI widgets, conversational interfaces can be added with ease.</p>
+            </div>
+        </div>
+
+        <h2>NLWeb and MCP/A2A</h2>
+        <p>MCP and A2A are emerging standards for enabling chatbots and AI assistants to interact with tools and each other. Every NLWeb instance also acts as an <strong>MCP server</strong> (and soon A2A) and supports a core method, <code>ask</code>, which allows a natural language question to be posed to a website.</p>
+
+        <p>The response returned uses <strong>Schema.org</strong> — a widely adopted vocabulary for describing web data.</p>
+
+        <div class="analogy-box">
+            <p><span class="highlight">NLWeb</span> is to MCP/A2A what <span class="highlight">HTML</span> is to HTTP.</p>
+        </div>
+
+        <!-- Extension Section -->
+        <section class="extension-section">
+            <h2>Where We're Building</h2>
+            <p>We've been following NLWeb closely — we like the direction a lot. Treating "talking to a site" as a standard, and defining consistent endpoints for agents to consume, feels like the right foundation.</p>
+
+            <p>Where we think we can contribute is the <strong>next layer</strong>: extending NLWeb so that "talking to a company" isn't only free-form Q&A — it also supports structured discovery and actions that reflect how B2B companies actually operate.</p>
+
+            <p>Concretely, we're exploring an extension model that adds:</p>
+
+            <ul class="extension-list">
+                <li>
+                    <strong>Capability Discovery</strong>
+                    <span>A standardized way for a company endpoint to advertise what it can do (beyond chat)</span>
+                </li>
+                <li>
+                    <strong>B2B Qualification Loops</strong>
+                    <span>The endpoint can ask follow-up questions — security requirements, deployment constraints, timeline, budget bands, integrations — before producing a final answer or enabling actions</span>
+                </li>
+                <li>
+                    <strong>Action Endpoints</strong>
+                    <span>Schedule a technical deep-dive, request a quote, start a trial, open a support ticket, route to the right product line/region, fetch security docs (SOC2/ISO)</span>
+                </li>
+                <li>
+                    <strong>Verified Responses</strong>
+                    <span>Authoritative answers with structured fields (not just prose), designed to reduce hallucination and stale web scraping</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h3>Join the Agentic Web</h3>
+            <p>Explore our specification and see how we're building on these open standards.</p>
+            <div class="cta-buttons">
+                <a href="/specification.html" class="btn btn-primary">
+                    Read the Specification
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="/sequence.html" class="btn btn-secondary">View Interaction Flow</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-powered">
+            <span>Powered by</span>
+            <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
+                sale<span class="s">s</span>p<span class="e">e</span>ak
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
