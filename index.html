@@ -278,10 +278,41 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .nav-brand-title {
             font-family: var(--font-display);
             font-weight: 700;
             font-size: 1.25rem;
-            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .nav-brand-powered {
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .nav-brand-powered .salespeak {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .nav-brand-powered .salespeak .s {
+            color: var(--accent-cyan);
+        }
+
+        .nav-brand-powered .salespeak .e {
+            color: var(--accent-amber);
         }
 
         .nav-brand-icon {
@@ -423,36 +454,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .hero-powered {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s var(--ease-out-expo) 0.15s both;
-        }
-
-        .hero-powered .salespeak-logo {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .hero-powered .salespeak-logo:hover {
-            color: var(--accent-cyan);
-        }
-
-        .hero-powered .salespeak-logo .s {
-            color: var(--accent-cyan);
-        }
-
-        .hero-powered .salespeak-logo .e {
-            color: var(--accent-amber);
         }
 
         .hero-description {
@@ -2059,7 +2060,10 @@
             <div class="nav-inner">
                 <a href="#" class="nav-brand">
                     <div class="nav-brand-icon">⬡</div>
-                    Agentic Web
+                    <div class="nav-brand-text">
+                        <span class="nav-brand-title">Agentic Web</span>
+                        <span class="nav-brand-powered">Powered by <span class="salespeak">sale<span class="s">s</span>p<span class="e">e</span>ak</span></span>
+                    </div>
                 </a>
 
                 <div class="nav-links">
@@ -2093,12 +2097,6 @@
                         The future of company-AI interaction
                     </div>
                     <h1>Build the <span>Agentic Web</span></h1>
-                    <div class="hero-powered">
-                        <span>Powered by</span>
-                        <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
-                            sale<span class="s">s</span>p<span class="e">e</span>ak
-                        </a>
-                    </div>
                     <p class="hero-description">
                         Where companies don't just have websites — they have AI-native endpoints
                         that answer questions and take actions on their behalf.
