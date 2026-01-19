@@ -1,0 +1,2624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Agentic Web — AI-Native Endpoints for Every Company</title>
+    <meta name="description" content="Where companies don't just have websites — they have AI-native endpoints that answer questions and take actions on their behalf.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #030712;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --bg-elevated: #1e293b;
+
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+
+            --accent-cyan: #06b6d4;
+            --accent-cyan-dim: rgba(6, 182, 212, 0.15);
+            --accent-cyan-glow: rgba(6, 182, 212, 0.4);
+            --accent-amber: #f59e0b;
+            --accent-amber-dim: rgba(245, 158, 11, 0.15);
+            --accent-emerald: #10b981;
+            --accent-emerald-dim: rgba(16, 185, 129, 0.15);
+            --accent-rose: #f43f5e;
+            --accent-rose-dim: rgba(244, 63, 94, 0.15);
+            --accent-violet: #8b5cf6;
+
+            --border-subtle: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.2);
+
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Global Background Texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(6, 182, 212, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.05), transparent),
+                radial-gradient(ellipse 60% 40% at 0% 80%, rgba(245, 158, 11, 0.03), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Noise Texture Overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+        h4 { font-size: 1.125rem; }
+
+        p {
+            color: var(--text-secondary);
+            max-width: 65ch;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .container { padding: 0 2rem; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.5rem;
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: all 0.3s var(--ease-out-expo);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), #0891b2);
+            color: var(--bg-primary);
+            box-shadow:
+                0 0 0 1px rgba(6, 182, 212, 0.3),
+                0 4px 16px rgba(6, 182, 212, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 0 0 1px rgba(6, 182, 212, 0.5),
+                0 8px 32px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-medium);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .nav.scrolled {
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.75rem 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .nav-brand-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-actions .btn-secondary {
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .nav-actions .btn-secondary { display: inline-flex; }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-btn {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-btn { display: none; }
+        }
+
+        .mobile-menu-btn span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        .hero-content {
+            max-width: 640px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--accent-cyan-dim);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) both;
+        }
+
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.4s both;
+        }
+
+        @media (max-width: 1023px) {
+            .hero-visual { display: none; }
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-medium);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow:
+                0 0 0 1px var(--border-subtle),
+                0 24px 48px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+        }
+
+        .hero-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .hero-card-endpoint {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-dim);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+        }
+
+        .hero-card-status {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+        }
+
+        .hero-card-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-emerald);
+            border-radius: 50%;
+        }
+
+        .hero-card-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-card-response {
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-card-question {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+
+        .hero-card-answer {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .hero-card-answer strong {
+            color: var(--accent-cyan);
+        }
+
+        .hero-card-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+            margin-top: 0.75rem;
+        }
+
+        .hero-card-actions-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hero-card-action {
+            padding: 0.5rem 0.875rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hero-card-action:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .hero-card-action.primary {
+            background: var(--accent-cyan-dim);
+            border-color: rgba(6, 182, 212, 0.3);
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Background Elements */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .hero-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black, transparent);
+            pointer-events: none;
+        }
+
+        /* ============================================
+           SECTION UTILITIES
+        ============================================ */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            section { padding: 8rem 0; }
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            margin: 0 auto;
+            font-size: 1.125rem;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-medium), transparent);
+            margin: 0;
+        }
+
+        /* ============================================
+           PROBLEM/SOLUTION SECTION
+        ============================================ */
+        .problem-solution {
+            background: var(--bg-secondary);
+        }
+
+        .ps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .ps-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        .ps-card {
+            padding: 2rem;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        .ps-card.problem {
+            background: linear-gradient(135deg, var(--accent-rose-dim), transparent);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .ps-card.solution {
+            background: linear-gradient(135deg, var(--accent-emerald-dim), transparent);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .ps-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .ps-card.problem .ps-icon {
+            background: var(--accent-rose-dim);
+            color: var(--accent-rose);
+        }
+
+        .ps-card.solution .ps-icon {
+            background: var(--accent-emerald-dim);
+            color: var(--accent-emerald);
+        }
+
+        .ps-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .ps-card.problem h3 { color: var(--accent-rose); }
+        .ps-card.solution h3 { color: var(--accent-emerald); }
+
+        .ps-visual {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .ps-visual-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .ps-visual-flow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .ps-visual-node {
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 0.375rem;
+            color: var(--text-secondary);
+        }
+
+        .ps-visual-arrow {
+            color: var(--text-tertiary);
+        }
+
+        .ps-card.problem .ps-visual-node.highlight {
+            background: var(--accent-rose-dim);
+            color: var(--accent-rose);
+        }
+
+        .ps-card.solution .ps-visual-node.highlight {
+            background: var(--accent-emerald-dim);
+            color: var(--accent-emerald);
+        }
+
+        /* ============================================
+           PILLARS SECTION
+        ============================================ */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.3s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--border-medium);
+            transform: translateY(-4px);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .pillar-card:hover::before {
+            opacity: 1;
+        }
+
+        .pillar-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .pillar-card:first-child .pillar-icon {
+            background: var(--accent-cyan-dim);
+            color: var(--accent-cyan);
+        }
+
+        .pillar-card:last-child .pillar-icon {
+            background: var(--accent-amber-dim);
+            color: var(--accent-amber);
+        }
+
+        .pillar-card h3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .pillar-card > p {
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-examples {
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .pillar-examples li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        .pillar-examples li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .pillar-card:last-child .pillar-examples li::before {
+            background: var(--accent-amber);
+        }
+
+        /* ============================================
+           HOW IT WORKS SECTION
+        ============================================ */
+        .how-it-works {
+            background: var(--bg-secondary);
+        }
+
+        .steps-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .steps {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Connection Line */
+        .steps::before {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .steps::before {
+                content: '';
+                position: absolute;
+                top: 2.25rem;
+                left: calc(16.67% + 1rem);
+                right: calc(16.67% + 1rem);
+                height: 2px;
+                background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet), var(--accent-amber));
+                opacity: 0.3;
+                display: block;
+            }
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 1rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step:nth-child(1) .step-number { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .step:nth-child(2) .step-number { border-color: var(--accent-violet); color: var(--accent-violet); }
+        .step:nth-child(3) .step-number { border-color: var(--accent-amber); color: var(--accent-amber); }
+
+        .step h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .step p {
+            font-size: 0.9375rem;
+            margin: 0 auto;
+        }
+
+        /* Action Tiles */
+        .action-tiles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 640px) {
+            .action-tiles {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .action-tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .action-tile:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        .action-tile-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-tile span {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           IN ACTION (CONVERSATION DEMO)
+        ============================================ */
+        .in-action {
+            overflow: hidden;
+        }
+
+        .chat-demo {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .chat-header-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .chat-header-dot:nth-child(1) { background: #ef4444; }
+        .chat-header-dot:nth-child(2) { background: #eab308; }
+        .chat-header-dot:nth-child(3) { background: #22c55e; }
+
+        .chat-header-title {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .chat-messages {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.5s var(--ease-out-expo) both;
+        }
+
+        .chat-message:nth-child(2) { animation-delay: 0.1s; }
+        .chat-message:nth-child(3) { animation-delay: 0.2s; }
+        .chat-message:nth-child(4) { animation-delay: 0.3s; }
+
+        .chat-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .chat-message.user .chat-avatar {
+            background: var(--accent-violet);
+            color: white;
+        }
+
+        .chat-message.assistant .chat-avatar {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-emerald));
+            color: white;
+        }
+
+        .chat-bubble {
+            flex: 1;
+        }
+
+        .chat-bubble-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-bottom: 0.375rem;
+        }
+
+        .chat-bubble-content {
+            background: var(--bg-secondary);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .chat-message.user .chat-bubble-content {
+            background: var(--bg-elevated);
+        }
+
+        .chat-verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            color: var(--accent-emerald);
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--accent-emerald-dim);
+            border-radius: 0.25rem;
+        }
+
+        .chat-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .chat-action-btn {
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chat-action-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .chat-action-btn.selected {
+            background: var(--accent-cyan-dim);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .chat-confirmation {
+            background: var(--accent-emerald-dim);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .chat-confirmation-title {
+            font-weight: 600;
+            color: var(--accent-emerald);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .chat-confirmation-detail {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================
+           TWO-WAY CONVERSATIONS
+        ============================================ */
+        .two-way {
+            background: var(--bg-secondary);
+        }
+
+        .two-way-demo {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .two-way-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .two-way-message {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.5s var(--ease-out-expo) both;
+        }
+
+        .two-way-message.vendor {
+            flex-direction: row-reverse;
+        }
+
+        .two-way-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .two-way-message.vendor .two-way-avatar {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-emerald));
+            color: white;
+            border: none;
+        }
+
+        .two-way-content {
+            flex: 1;
+            max-width: 80%;
+        }
+
+        .two-way-message.vendor .two-way-content {
+            text-align: right;
+        }
+
+        .two-way-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-bottom: 0.375rem;
+        }
+
+        .two-way-bubble {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .two-way-message.vendor .two-way-bubble {
+            background: var(--accent-cyan-dim);
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .two-way-bubble p {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+
+        .two-way-questions {
+            list-style: none;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .two-way-questions li {
+            background: var(--bg-secondary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .two-way-fit {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--accent-emerald-dim);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .two-way-fit-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-emerald);
+            margin-bottom: 0.5rem;
+        }
+
+        .two-way-fit p {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+        }
+
+        /* ============================================
+           UNDER THE HOOD (CODE)
+        ============================================ */
+        .under-hood {
+            overflow: hidden;
+        }
+
+        .code-panel {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .code-tabs {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            overflow-x: auto;
+        }
+
+        .code-tab {
+            padding: 1rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            border: none;
+            background: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .code-tab:hover {
+            color: var(--text-secondary);
+        }
+
+        .code-tab.active {
+            color: var(--accent-cyan);
+        }
+
+        .code-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+        }
+
+        .code-content {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .code-block {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .code-block .comment { color: var(--text-tertiary); }
+        .code-block .keyword { color: var(--accent-violet); }
+        .code-block .string { color: var(--accent-emerald); }
+        .code-block .property { color: var(--accent-cyan); }
+        .code-block .number { color: var(--accent-amber); }
+        .code-block .method { color: #60a5fa; }
+
+        .code-insight {
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--accent-amber-dim);
+            border-left: 3px solid var(--accent-amber);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .code-insight-label {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-amber);
+            margin-bottom: 0.375rem;
+        }
+
+        .code-insight p {
+            font-size: 0.9375rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* ============================================
+           PARADIGM SHIFT (COMPARISON TABLE)
+        ============================================ */
+        .paradigm {
+            background: var(--bg-secondary);
+        }
+
+        .comparison-table {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .comparison-table {
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+            }
+        }
+
+        .comparison-column {
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .comparison-column {
+                border-radius: 0;
+            }
+
+            .comparison-column.old {
+                border-radius: 1rem 0 0 1rem;
+            }
+
+            .comparison-column.new {
+                border-radius: 0 1rem 1rem 0;
+            }
+        }
+
+        .comparison-column.old {
+            background: rgba(244, 63, 94, 0.05);
+            border: 1px solid rgba(244, 63, 94, 0.15);
+        }
+
+        .comparison-column.new {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .comparison-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comparison-column.old .comparison-icon {
+            background: var(--accent-rose-dim);
+            color: var(--accent-rose);
+        }
+
+        .comparison-column.new .comparison-icon {
+            background: var(--accent-emerald-dim);
+            color: var(--accent-emerald);
+        }
+
+        .comparison-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .comparison-column.old .comparison-header h3 {
+            color: var(--accent-rose);
+        }
+
+        .comparison-column.new .comparison-header h3 {
+            color: var(--accent-emerald);
+        }
+
+        .comparison-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        .comparison-list li::before {
+            content: '';
+            width: 1.25rem;
+            height: 1.25rem;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .comparison-column.old .comparison-list li::before {
+            content: '✕';
+            color: var(--accent-rose);
+            font-size: 0.875rem;
+            width: auto;
+            height: auto;
+        }
+
+        .comparison-column.new .comparison-list li::before {
+            content: '✓';
+            color: var(--accent-emerald);
+            font-size: 0.875rem;
+            font-weight: bold;
+            width: auto;
+            height: auto;
+        }
+
+        /* ============================================
+           STANDARDS SECTION
+        ============================================ */
+        .standards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .standards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .standards-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .standard-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .standard-card:hover {
+            border-color: var(--border-medium);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.3);
+        }
+
+        .standard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .standard-card:nth-child(1)::before { background: #3b82f6; }
+        .standard-card:nth-child(2)::before { background: var(--accent-cyan); }
+        .standard-card:nth-child(3)::before { background: var(--accent-amber); }
+        .standard-card:nth-child(4)::before { background: var(--accent-emerald); }
+
+        .standard-logo {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .standard-card:nth-child(1) .standard-logo { color: #3b82f6; }
+        .standard-card:nth-child(2) .standard-logo { color: var(--accent-cyan); }
+        .standard-card:nth-child(3) .standard-logo { color: var(--accent-amber); }
+        .standard-card:nth-child(4) .standard-logo { color: var(--accent-emerald); }
+
+        .standard-card h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .standard-card p {
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .standard-org {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        .standards-footer {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+        }
+
+        .standards-footer p {
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            margin: 0 auto;
+        }
+
+        .standards-footer strong {
+            color: var(--accent-cyan);
+        }
+
+        /* ============================================
+           CTA SECTION
+        ============================================ */
+        .cta-section {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(6, 182, 212, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .cta-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .cta-content h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-content h2 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content > p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* ============================================
+           FAQ SECTION
+        ============================================ */
+        .faq {
+            background: var(--bg-secondary);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-medium);
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-question h4 {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .faq-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            color: var(--accent-cyan);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s var(--ease-out-expo);
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-inner {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        @media (min-width: 640px) {
+            .footer-inner {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .footer-brand-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+            border-radius: 0.375rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-copy {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        /* ============================================
+           ANIMATIONS
+        ============================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-out-expo);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger children */
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s var(--ease-out-expo);
+        }
+
+        .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
+        .stagger-children.visible > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .stagger-children.visible > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .stagger-children.visible > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .stagger-children.visible > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .stagger-children.visible > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+
+        /* ============================================
+           SCROLLBAR
+        ============================================ */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-medium);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="#" class="nav-brand">
+                    <div class="nav-brand-icon">⬡</div>
+                    Agentic Web
+                </a>
+
+                <div class="nav-links">
+                    <a href="#pillars" class="nav-link">Pillars</a>
+                    <a href="#how-it-works" class="nav-link">How it Works</a>
+                    <a href="#standards" class="nav-link">Standards</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="#" class="btn btn-secondary">Learn the Pattern</a>
+                    <a href="#" class="btn btn-primary">Read the Specification</a>
+                    <button class="mobile-menu-btn" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid-bg"></div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="hero-badge-dot"></span>
+                        The future of company-AI interaction
+                    </div>
+                    <h1>Build the <span>Agentic Web</span></h1>
+                    <p class="hero-description">
+                        Where companies don't just have websites — they have AI-native endpoints
+                        that answer questions and take actions on their behalf.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#" class="btn btn-primary">
+                            Read the Specification
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a href="#in-action" class="btn btn-secondary">See it in Action</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-glow"></div>
+                    <div class="hero-card">
+                        <div class="hero-card-header">
+                            <span class="hero-card-endpoint">/.well-known/ucp</span>
+                            <span class="hero-card-status">Verified Endpoint</span>
+                        </div>
+
+                        <div class="hero-card-label">Verified Response</div>
+                        <div class="hero-card-response">
+                            <p class="hero-card-question">"Does Acme support Salesforce integration?"</p>
+                            <p class="hero-card-answer">
+                                Yes, <strong>Acme offers native Salesforce integration</strong> on all Business and Enterprise plans.
+                                Setup takes ~15 minutes with our guided wizard.
+                            </p>
+                            <span class="hero-card-verified">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M11.5 4L5.5 10L2.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Verified by Acme Inc. • Updated 2h ago
+                            </span>
+                        </div>
+
+                        <div class="hero-card-actions-label">Available Actions</div>
+                        <div class="hero-card-actions">
+                            <button class="hero-card-action primary">Schedule Demo</button>
+                            <button class="hero-card-action">View Pricing</button>
+                            <button class="hero-card-action">Start Free Trial</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Problem/Solution Section -->
+    <section class="problem-solution">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">⚠ The Problem</span>
+                <h2>Stop AI Slop</h2>
+                <p>The current web wasn't built for AI. It's time to fix that.</p>
+            </div>
+
+            <div class="ps-grid">
+                <div class="ps-card problem animate-on-scroll">
+                    <div class="ps-icon">✕</div>
+                    <h3>AI-powered research is broken</h3>
+                    <p>
+                        Today, AI scrapes SEO-biased content and presents it as objective truth.
+                        Users get hallucinated answers mixed with marketing fluff, with no way to
+                        verify accuracy or take action.
+                    </p>
+                    <div class="ps-visual">
+                        <div class="ps-visual-label">Current approach</div>
+                        <div class="ps-visual-flow">
+                            <span class="ps-visual-node">AI Agent</span>
+                            <span class="ps-visual-arrow">→</span>
+                            <span class="ps-visual-node highlight">Scrapes Web</span>
+                            <span class="ps-visual-arrow">→</span>
+                            <span class="ps-visual-node">Guesses Answer</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ps-card solution animate-on-scroll">
+                    <div class="ps-icon">✓</div>
+                    <h3>Verified first-party data</h3>
+                    <p>
+                        AI queries each vendor directly through verified endpoints, enabling
+                        apples-to-apples comparison with authoritative, real-time information
+                        that can be trusted and cited.
+                    </p>
+                    <div class="ps-visual">
+                        <div class="ps-visual-label">Agentic approach</div>
+                        <div class="ps-visual-flow">
+                            <span class="ps-visual-node">AI Agent</span>
+                            <span class="ps-visual-arrow">→</span>
+                            <span class="ps-visual-node highlight">Verified API</span>
+                            <span class="ps-visual-arrow">→</span>
+                            <span class="ps-visual-node">Trusted Answer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Two Pillars Section -->
+    <section id="pillars">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">◈ Two Pillars</span>
+                <h2>Verified Responses. Possible Actions.</h2>
+                <p>The agentic web is built on two foundational capabilities that transform how AI interacts with businesses.</p>
+            </div>
+
+            <div class="pillars-grid stagger-children">
+                <div class="pillar-card">
+                    <div class="pillar-icon">◎</div>
+                    <h3>Verified Responses</h3>
+                    <p>Answer questions with authoritative, up-to-date information AI can trust and cite.</p>
+                    <ul class="pillar-examples">
+                        <li>Security certifications (SOC2, HIPAA, GDPR)</li>
+                        <li>Enterprise pricing and plan details</li>
+                        <li>Salesforce & third-party integrations</li>
+                        <li>Uptime SLA and performance guarantees</li>
+                    </ul>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">⚡</div>
+                    <h3>Possible Actions</h3>
+                    <p>Enable AI agents to take real actions — not just answer questions, but complete tasks.</p>
+                    <ul class="pillar-examples">
+                        <li>Schedule a product demo</li>
+                        <li>Open a support ticket</li>
+                        <li>Request a custom quote</li>
+                        <li>Start a free trial</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">→ How It Works</span>
+                <h2>Three steps to the agentic web</h2>
+                <p>Implement once, become accessible to any AI agent.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="steps stagger-children">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h4>Expose Profile</h4>
+                        <p>Publish your capabilities at <code>/.well-known/ucp</code></p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h4>AI Discovers</h4>
+                        <p>Agents find and understand what your company can answer and do</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h4>Interact</h4>
+                        <p>Users get verified answers and complete actions through conversation</p>
+                    </div>
+                </div>
+
+                <div class="action-tiles stagger-children">
+                    <div class="action-tile">
+                        <div class="action-tile-icon">📅</div>
+                        <span>Schedule Demo</span>
+                    </div>
+                    <div class="action-tile">
+                        <div class="action-tile-icon">🎫</div>
+                        <span>Support Ticket</span>
+                    </div>
+                    <div class="action-tile">
+                        <div class="action-tile-icon">💰</div>
+                        <span>Request Quote</span>
+                    </div>
+                    <div class="action-tile">
+                        <div class="action-tile-icon">🚀</div>
+                        <span>Start Trial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- In Action Section -->
+    <section class="in-action" id="in-action">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">◉ In Action</span>
+                <h2>See it work</h2>
+                <p>A real conversation between a user, AI agent, and verified vendor endpoint.</p>
+            </div>
+
+            <div class="chat-demo animate-on-scroll">
+                <div class="chat-header">
+                    <div class="chat-header-dot"></div>
+                    <div class="chat-header-dot"></div>
+                    <div class="chat-header-dot"></div>
+                    <span class="chat-header-title">AI Assistant — Acme Support</span>
+                </div>
+
+                <div class="chat-messages">
+                    <div class="chat-message user">
+                        <div class="chat-avatar">👤</div>
+                        <div class="chat-bubble">
+                            <div class="chat-bubble-name">You</div>
+                            <div class="chat-bubble-content">
+                                I keep getting 429 errors from the Acme API. I'm on the Pro plan — is there something wrong with my rate limits?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message assistant">
+                        <div class="chat-avatar">⬡</div>
+                        <div class="chat-bubble">
+                            <div class="chat-bubble-name">Acme (via AI Agent)</div>
+                            <div class="chat-bubble-content">
+                                I checked your account directly with Acme. Your Pro plan includes <strong>10,000 requests/hour</strong>, but your current usage shows <strong>12,847 requests</strong> in the last hour — you're 28% over your limit.
+                                <br><br>
+                                <strong>Recommended next steps:</strong>
+                                <br>• Upgrade to Business plan (50,000 req/hr)
+                                <br>• Implement request caching
+                                <br>• Contact support for a temporary limit increase
+
+                                <span class="chat-verified-badge">
+                                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                                        <path d="M11.5 4L5.5 10L2.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Verified by Acme Inc.
+                                </span>
+
+                                <div class="chat-actions">
+                                    <button class="chat-action-btn">Schedule a Call</button>
+                                    <button class="chat-action-btn selected">Open Support Ticket</button>
+                                    <button class="chat-action-btn">View Documentation</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message user">
+                        <div class="chat-avatar">👤</div>
+                        <div class="chat-bubble">
+                            <div class="chat-bubble-name">You</div>
+                            <div class="chat-bubble-content">
+                                Open a support ticket for me — I need a temporary increase while we implement caching.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-message assistant">
+                        <div class="chat-avatar">⬡</div>
+                        <div class="chat-bubble">
+                            <div class="chat-bubble-name">Acme (via AI Agent)</div>
+                            <div class="chat-bubble-content">
+                                Done! I've created a support ticket on your behalf.
+
+                                <div class="chat-confirmation">
+                                    <div class="chat-confirmation-title">✓ Ticket Created: #ACM-2024-78542</div>
+                                    <div class="chat-confirmation-detail">
+                                        <strong>Subject:</strong> Temporary rate limit increase request<br>
+                                        <strong>Priority:</strong> High (production impact)<br>
+                                        <strong>Context:</strong> Pro plan user, 28% over limit, implementing caching
+                                    </div>
+                                </div>
+
+                                Acme support typically responds within 2 hours for high-priority tickets.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Two-Way Conversations Section -->
+    <section class="two-way">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">↔ Two-Way</span>
+                <h2>Not one-way Q&A — a real conversation</h2>
+                <p>Vendors can ask qualification questions and provide personalized responses.</p>
+            </div>
+
+            <div class="two-way-demo animate-on-scroll">
+                <div class="two-way-flow">
+                    <div class="two-way-message user">
+                        <div class="two-way-avatar">👤</div>
+                        <div class="two-way-content">
+                            <div class="two-way-label">User via AI Agent</div>
+                            <div class="two-way-bubble">
+                                <p>Is Acme a good fit for our enterprise needs?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-way-message vendor">
+                        <div class="two-way-avatar">⬡</div>
+                        <div class="two-way-content">
+                            <div class="two-way-label">Acme Endpoint</div>
+                            <div class="two-way-bubble">
+                                <p>I'd love to help assess fit. A few quick questions:</p>
+                                <ul class="two-way-questions">
+                                    <li>Do you require SOC2 compliance?</li>
+                                    <li>What region are you primarily located in?</li>
+                                    <li>Approximately how many users?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-way-message user">
+                        <div class="two-way-avatar">👤</div>
+                        <div class="two-way-content">
+                            <div class="two-way-label">User via AI Agent</div>
+                            <div class="two-way-bubble">
+                                <p>Yes to SOC2, we're EU-based, about 500 users.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-way-message vendor">
+                        <div class="two-way-avatar">⬡</div>
+                        <div class="two-way-content">
+                            <div class="two-way-label">Acme Endpoint</div>
+                            <div class="two-way-bubble">
+                                <div class="two-way-fit">
+                                    <div class="two-way-fit-label">Fit Assessment</div>
+                                    <p><strong>Strong fit.</strong> Acme Enterprise includes SOC2 Type II certification, EU data residency (Frankfurt), and scales to 10,000+ users.</p>
+                                </div>
+                                <div class="chat-actions" style="margin-top: 1rem;">
+                                    <button class="chat-action-btn">Request Custom Quote</button>
+                                    <button class="chat-action-btn">Schedule Demo</button>
+                                    <button class="chat-action-btn">View Security Docs</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Under the Hood Section -->
+    <section class="under-hood">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">&lt;/&gt; Under the Hood</span>
+                <h2>Developer-friendly by design</h2>
+                <p>Standard protocols, simple integration, full control.</p>
+            </div>
+
+            <div class="code-panel animate-on-scroll">
+                <div class="code-tabs">
+                    <button class="code-tab active" data-tab="discovery">1. Discovery</button>
+                    <button class="code-tab" data-tab="query">2. Query</button>
+                    <button class="code-tab" data-tab="qualify">3. Qualify</button>
+                    <button class="code-tab" data-tab="response">4. Response</button>
+                </div>
+
+                <div class="code-content">
+                    <div class="code-block" id="code-discovery">
+<span class="comment">// Agent discovers company capabilities</span>
+<span class="method">GET</span> https://acme.com/.well-known/ucp
+
+<span class="comment">// Response: capability manifest</span>
+{
+  <span class="property">"name"</span>: <span class="string">"Acme Inc"</span>,
+  <span class="property">"description"</span>: <span class="string">"Enterprise API platform"</span>,
+  <span class="property">"capabilities"</span>: {
+    <span class="property">"verified_responses"</span>: [
+      <span class="string">"pricing"</span>, <span class="string">"integrations"</span>, <span class="string">"compliance"</span>
+    ],
+    <span class="property">"available_actions"</span>: [
+      <span class="string">"schedule_demo"</span>, <span class="string">"open_ticket"</span>, <span class="string">"request_quote"</span>
+    ]
+  },
+  <span class="property">"endpoint"</span>: <span class="string">"https://api.acme.com/agent"</span>
+}
+                    </div>
+
+                    <div class="code-block" id="code-query" style="display: none;">
+<span class="comment">// Agent queries the company endpoint</span>
+<span class="method">POST</span> https://api.acme.com/agent
+
+{
+  <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"method"</span>: <span class="string">"ask_company"</span>,
+  <span class="property">"params"</span>: {
+    <span class="property">"question"</span>: <span class="string">"Is Acme a good fit for enterprise?"</span>,
+    <span class="property">"context"</span>: {
+      <span class="property">"user_type"</span>: <span class="string">"enterprise_buyer"</span>
+    }
+  },
+  <span class="property">"id"</span>: <span class="number">1</span>
+}
+                    </div>
+
+                    <div class="code-block" id="code-qualify" style="display: none;">
+<span class="comment">// Vendor asks qualification questions</span>
+{
+  <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"result"</span>: {
+    <span class="property">"type"</span>: <span class="string">"qualification_required"</span>,
+    <span class="property">"questions"</span>: [
+      {
+        <span class="property">"id"</span>: <span class="string">"compliance"</span>,
+        <span class="property">"text"</span>: <span class="string">"Do you require SOC2 compliance?"</span>,
+        <span class="property">"type"</span>: <span class="string">"boolean"</span>
+      },
+      {
+        <span class="property">"id"</span>: <span class="string">"region"</span>,
+        <span class="property">"text"</span>: <span class="string">"What region are you located in?"</span>,
+        <span class="property">"options"</span>: [<span class="string">"US"</span>, <span class="string">"EU"</span>, <span class="string">"APAC"</span>]
+      },
+      {
+        <span class="property">"id"</span>: <span class="string">"users"</span>,
+        <span class="property">"text"</span>: <span class="string">"Approximately how many users?"</span>,
+        <span class="property">"type"</span>: <span class="string">"number"</span>
+      }
+    ]
+  },
+  <span class="property">"id"</span>: <span class="number">1</span>
+}
+                    </div>
+
+                    <div class="code-block" id="code-response" style="display: none;">
+<span class="comment">// Vendor returns fit assessment with actions</span>
+{
+  <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"result"</span>: {
+    <span class="property">"type"</span>: <span class="string">"fit_assessment"</span>,
+    <span class="property">"fit_score"</span>: <span class="string">"strong"</span>,
+    <span class="property">"response"</span>: <span class="string">"Acme Enterprise includes SOC2 Type II, EU data residency, and scales to 10,000+ users."</span>,
+    <span class="property">"verification"</span>: {
+      <span class="property">"signed_by"</span>: <span class="string">"acme.com"</span>,
+      <span class="property">"timestamp"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>
+    },
+    <span class="property">"available_actions"</span>: [
+      { <span class="property">"id"</span>: <span class="string">"quote"</span>, <span class="property">"label"</span>: <span class="string">"Request Custom Quote"</span> },
+      { <span class="property">"id"</span>: <span class="string">"demo"</span>, <span class="property">"label"</span>: <span class="string">"Schedule Demo"</span> }
+    ]
+  },
+  <span class="property">"id"</span>: <span class="number">1</span>
+}
+                    </div>
+                </div>
+
+                <div class="code-insight">
+                    <div class="code-insight-label">Key Insight</div>
+                    <p>The vendor controls the qualification logic — not the AI. Your business rules stay yours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Paradigm Shift Section -->
+    <section class="paradigm">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">⟳ Paradigm Shift</span>
+                <h2>From static pages to intelligent endpoints</h2>
+                <p>See how the agentic web transforms company-AI interaction.</p>
+            </div>
+
+            <div class="comparison-table animate-on-scroll">
+                <div class="comparison-column old">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">📄</div>
+                        <h3>Traditional Web</h3>
+                    </div>
+                    <ul class="comparison-list">
+                        <li>Static pages designed for humans</li>
+                        <li>AI scrapes and guesses at content</li>
+                        <li>Forms required for every action</li>
+                        <li>No context preserved between sessions</li>
+                        <li>Generic support queues for everyone</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-column new">
+                    <div class="comparison-header">
+                        <div class="comparison-icon">⬡</div>
+                        <h3>Agentic Web</h3>
+                    </div>
+                    <ul class="comparison-list">
+                        <li>Machine-readable endpoints for AI</li>
+                        <li>AI calls verified APIs directly</li>
+                        <li>Actions completed through conversation</li>
+                        <li>Full context flows through interactions</li>
+                        <li>Intelligent routing and handoff</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Standards Section -->
+    <section id="standards">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">⚙ Open Standards</span>
+                <h2>Built on open protocols</h2>
+                <p>The agentic web leverages emerging standards from industry leaders.</p>
+            </div>
+
+            <div class="standards-grid stagger-children">
+                <div class="standard-card">
+                    <div class="standard-logo">NLWeb</div>
+                    <h4>Natural Language Web Protocol</h4>
+                    <p>Enables natural language queries to structured web endpoints.</p>
+                    <span class="standard-org">Microsoft</span>
+                </div>
+
+                <div class="standard-card">
+                    <div class="standard-logo">UCP</div>
+                    <h4>Universal Commerce Protocol</h4>
+                    <p>Standard for AI-native commerce and business interactions.</p>
+                    <span class="standard-org">Open Standard</span>
+                </div>
+
+                <div class="standard-card">
+                    <div class="standard-logo">MCP</div>
+                    <h4>Model Context Protocol</h4>
+                    <p>Connects AI models to external tools and data sources.</p>
+                    <span class="standard-org">Anthropic</span>
+                </div>
+
+                <div class="standard-card">
+                    <div class="standard-logo">A2A</div>
+                    <h4>Agent-to-Agent Protocol</h4>
+                    <p>Enables autonomous agent collaboration and handoffs.</p>
+                    <span class="standard-org">Google</span>
+                </div>
+            </div>
+
+            <div class="standards-footer animate-on-scroll">
+                <p>
+                    The agentic web isn't a single protocol — it's the <strong>convergence of open standards</strong>.
+                    Implement once, become accessible to any AI agent.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content animate-on-scroll">
+                <h2>Join the <span>Agentic Web</span></h2>
+                <p>Make your company accessible to AI agents with verified responses and actionable capabilities.</p>
+                <div class="cta-actions">
+                    <a href="#" class="btn btn-primary">
+                        Read the Specification
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="btn btn-secondary">Learn the Pattern</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-label">? FAQ</span>
+                <h2>Common questions</h2>
+                <p>Everything you need to know about implementing the agentic web.</p>
+            </div>
+
+            <div class="faq-grid animate-on-scroll">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>Is this replacing my website?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>No. The agentic web complements your existing website. Your human-facing pages remain exactly as they are. You're adding a parallel, machine-readable layer that AI agents can interact with. Think of it as adding an API for AI alongside your existing website — not replacing anything.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>How do verified responses stay current?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Verified responses are served from your live systems, not cached or scraped data. When an AI queries your endpoint, it receives real-time information from your authoritative source. You control the data, update frequency, and verification mechanisms. Responses include timestamps so AI agents know how fresh the information is.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>What's published at /.well-known/ucp?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>The <code>/.well-known/ucp</code> endpoint serves your company's capability manifest — a machine-readable document describing what questions you can answer and what actions you support. It includes your company name, description, list of verified response topics, available actions, and the endpoint URL for AI agent interactions. Think of it as a standardized "menu" for AI.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>How do actions work safely?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>You define exactly which actions are available and their authorization requirements. High-impact actions (like purchases) can require user confirmation, OAuth flows, or additional verification. Low-risk actions (like scheduling a demo) can be immediate. You control the security model entirely — the AI agent simply presents options to users and executes approved actions through your defined protocols.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>Does this lock me into one platform?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>The agentic web is built on open standards, not proprietary platforms. By implementing standard protocols (UCP, MCP, A2A), your endpoint becomes accessible to any AI agent that supports these standards — ChatGPT, Claude, Gemini, and future systems. There's no vendor lock-in; you own and host your endpoints.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <h4>Which AI agents can use this?</h4>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <p>Any AI agent that supports the underlying protocols can discover and interact with your endpoints. This includes major AI assistants (Claude, ChatGPT, Gemini), enterprise AI tools, custom agents built on foundation models, and future AI systems. As these protocols become standard, your implementation will work with the entire ecosystem — implement once, work everywhere.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-brand-icon"></div>
+                    Agentic Web
+                </div>
+                <div class="footer-links">
+                    <a href="#">Specification</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Community</a>
+                </div>
+                <p class="footer-copy">Open standard for the AI-native web</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.getElementById('nav');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll, .stagger-children').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Code tabs
+        const codeTabs = document.querySelectorAll('.code-tab');
+        const codeBlocks = {
+            discovery: document.getElementById('code-discovery'),
+            query: document.getElementById('code-query'),
+            qualify: document.getElementById('code-qualify'),
+            response: document.getElementById('code-response')
+        };
+
+        codeTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all tabs
+                codeTabs.forEach(t => t.classList.remove('active'));
+                // Hide all code blocks
+                Object.values(codeBlocks).forEach(block => block.style.display = 'none');
+
+                // Activate clicked tab and show corresponding code
+                tab.classList.add('active');
+                const tabId = tab.dataset.tab;
+                codeBlocks[tabId].style.display = 'block';
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const isOpen = item.classList.contains('open');
+
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('open');
+                });
+
+                // Open clicked item if it wasn't already open
+                if (!isOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+        // Chat action buttons interaction
+        document.querySelectorAll('.chat-action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const parent = this.closest('.chat-actions');
+                parent.querySelectorAll('.chat-action-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
