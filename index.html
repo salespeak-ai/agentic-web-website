@@ -425,6 +425,36 @@
             background-clip: text;
         }
 
+        .hero-powered {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s var(--ease-out-expo) 0.15s both;
+        }
+
+        .hero-powered .salespeak-logo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .hero-powered .salespeak-logo:hover {
+            color: var(--accent-cyan);
+        }
+
+        .hero-powered .salespeak-logo .s {
+            color: var(--accent-cyan);
+        }
+
+        .hero-powered .salespeak-logo .e {
+            color: var(--accent-amber);
+        }
+
         .hero-description {
             font-size: 1.25rem;
             line-height: 1.7;
@@ -2063,6 +2093,12 @@
                         The future of company-AI interaction
                     </div>
                     <h1>Build the <span>Agentic Web</span></h1>
+                    <div class="hero-powered">
+                        <span>Powered by</span>
+                        <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
+                            sale<span class="s">s</span>p<span class="e">e</span>ak
+                        </a>
+                    </div>
                     <p class="hero-description">
                         Where companies don't just have websites — they have AI-native endpoints
                         that answer questions and take actions on their behalf.
