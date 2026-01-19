@@ -1154,6 +1154,133 @@
             color: var(--text-secondary);
         }
 
+        /* Qualification Questions */
+        .chat-qualification-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .chat-question {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .chat-question-label {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .chat-question-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .chat-option {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: 1rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chat-option:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+        }
+
+        .chat-option.selected {
+            background: var(--accent-cyan-dim);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Fit Assessment */
+        .chat-fit-assessment {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 144, 255, 0.1) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-fit-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-fit-score {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-emerald);
+            font-family: var(--font-mono);
+        }
+
+        .chat-fit-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent-emerald);
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-emerald-dim);
+            border-radius: 1rem;
+        }
+
+        .chat-fit-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-fit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-fit-item.match .chat-fit-check {
+            color: var(--accent-emerald);
+        }
+
+        .chat-fit-check {
+            font-weight: 600;
+        }
+
+        .chat-fit-pricing {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .chat-fit-pricing-label {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .chat-fit-pricing-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-family: var(--font-mono);
+        }
+
         /* ============================================
            TWO-WAY CONVERSATIONS
         ============================================ */
@@ -2127,7 +2254,7 @@
             <div class="section-header animate-on-scroll">
                 <span class="section-label">◉ In Action</span>
                 <h2>See it work</h2>
-                <p>A real conversation between a user, AI agent, and verified vendor endpoint.</p>
+                <p>The vendor controls the conversation — asking qualifying questions and delivering tailored responses.</p>
             </div>
 
             <div class="chat-demo animate-on-scroll">
@@ -2135,7 +2262,7 @@
                     <div class="chat-header-dot"></div>
                     <div class="chat-header-dot"></div>
                     <div class="chat-header-dot"></div>
-                    <span class="chat-header-title">AI Assistant — Acme Support</span>
+                    <span class="chat-header-title">AI Assistant — Evaluating Ionix</span>
                 </div>
 
                 <div class="chat-messages">
@@ -2144,7 +2271,7 @@
                         <div class="chat-bubble">
                             <div class="chat-bubble-name">You</div>
                             <div class="chat-bubble-content">
-                                I keep getting 429 errors from the Acme API. I'm on the Pro plan — is there something wrong with my rate limits?
+                                Will Ionix work for my company?
                             </div>
                         </div>
                     </div>
@@ -2152,27 +2279,45 @@
                     <div class="chat-message assistant">
                         <div class="chat-avatar">⬡</div>
                         <div class="chat-bubble">
-                            <div class="chat-bubble-name">Acme (via AI Agent)</div>
+                            <div class="chat-bubble-name">Ionix (via AI Agent)</div>
                             <div class="chat-bubble-content">
-                                I checked your account directly with Acme. Your Pro plan includes <strong>10,000 requests/hour</strong>, but your current usage shows <strong>12,847 requests</strong> in the last hour — you're 28% over your limit.
-                                <br><br>
-                                <strong>Recommended next steps:</strong>
-                                <br>• Upgrade to Business plan (50,000 req/hr)
-                                <br>• Implement request caching
-                                <br>• Contact support for a temporary limit increase
+                                I'd love to help determine if Ionix is a good fit. A few quick questions:
+
+                                <div class="chat-qualification-questions">
+                                    <div class="chat-question">
+                                        <span class="chat-question-label">Company size?</span>
+                                        <div class="chat-question-options">
+                                            <span class="chat-option">1-50</span>
+                                            <span class="chat-option">51-200</span>
+                                            <span class="chat-option selected">201-1000</span>
+                                            <span class="chat-option">1000+</span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-question">
+                                        <span class="chat-question-label">Security requirements?</span>
+                                        <div class="chat-question-options">
+                                            <span class="chat-option">Basic</span>
+                                            <span class="chat-option selected">SOC2</span>
+                                            <span class="chat-option">HIPAA</span>
+                                            <span class="chat-option">FedRAMP</span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-question">
+                                        <span class="chat-question-label">Primary use case?</span>
+                                        <div class="chat-question-options">
+                                            <span class="chat-option">API Security</span>
+                                            <span class="chat-option selected">Attack Surface</span>
+                                            <span class="chat-option">Compliance</span>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <span class="chat-verified-badge">
                                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                                         <path d="M11.5 4L5.5 10L2.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
-                                    Verified by Acme Inc.
+                                    Verified by Ionix
                                 </span>
-
-                                <div class="chat-actions">
-                                    <button class="chat-action-btn">Schedule a Call</button>
-                                    <button class="chat-action-btn selected">Open Support Ticket</button>
-                                    <button class="chat-action-btn">View Documentation</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -2182,7 +2327,7 @@
                         <div class="chat-bubble">
                             <div class="chat-bubble-name">You</div>
                             <div class="chat-bubble-content">
-                                Open a support ticket for me — I need a temporary increase while we implement caching.
+                                We're about 350 employees, need SOC2 compliance, mainly focused on attack surface management.
                             </div>
                         </div>
                     </div>
@@ -2190,20 +2335,38 @@
                     <div class="chat-message assistant">
                         <div class="chat-avatar">⬡</div>
                         <div class="chat-bubble">
-                            <div class="chat-bubble-name">Acme (via AI Agent)</div>
+                            <div class="chat-bubble-name">Ionix (via AI Agent)</div>
                             <div class="chat-bubble-content">
-                                Done! I've created a support ticket on your behalf.
-
-                                <div class="chat-confirmation">
-                                    <div class="chat-confirmation-title">✓ Ticket Created: #ACM-2024-78542</div>
-                                    <div class="chat-confirmation-detail">
-                                        <strong>Subject:</strong> Temporary rate limit increase request<br>
-                                        <strong>Priority:</strong> High (production impact)<br>
-                                        <strong>Context:</strong> Pro plan user, 28% over limit, implementing caching
+                                <div class="chat-fit-assessment">
+                                    <div class="chat-fit-header">
+                                        <span class="chat-fit-score">92%</span>
+                                        <span class="chat-fit-label">Strong Fit</span>
+                                    </div>
+                                    <div class="chat-fit-details">
+                                        <div class="chat-fit-item match">
+                                            <span class="chat-fit-check">✓</span>
+                                            <span>SOC2 Type II certified</span>
+                                        </div>
+                                        <div class="chat-fit-item match">
+                                            <span class="chat-fit-check">✓</span>
+                                            <span>Attack surface discovery included</span>
+                                        </div>
+                                        <div class="chat-fit-item match">
+                                            <span class="chat-fit-check">✓</span>
+                                            <span>Mid-market tier available (100-500 employees)</span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-fit-pricing">
+                                        <span class="chat-fit-pricing-label">Estimated pricing:</span>
+                                        <span class="chat-fit-pricing-value">$2,400 - $3,200/mo</span>
                                     </div>
                                 </div>
 
-                                Acme support typically responds within 2 hours for high-priority tickets.
+                                <div class="chat-actions">
+                                    <button class="chat-action-btn selected">Schedule Demo</button>
+                                    <button class="chat-action-btn">Request Custom Quote</button>
+                                    <button class="chat-action-btn">View Case Studies</button>
+                                </div>
                             </div>
                         </div>
                     </div>
