@@ -1,0 +1,13 @@
+version: 1
+frontend:
+  phases:
+    # No build step needed for static HTML
+    build:
+      commands: []
+  artifacts:
+    # Serve from root directory
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths: []
