@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Web Specification — MCP Extension for Enterprise</title>
+    <meta name="description" content="Technical specification for implementing AI-native endpoints using the Model Context Protocol (MCP) extension for enterprise.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Salespeak Brand Colors */
+            --primary: #1E90FF;
+            --primary-dim: rgba(30, 144, 255, 0.1);
+            --accent: #FF6B35;
+            --accent-dim: rgba(255, 107, 53, 0.1);
+            --purple: #9333EA;
+            --purple-dim: rgba(147, 51, 234, 0.1);
+            --emerald: #10b981;
+            --emerald-dim: rgba(16, 185, 129, 0.1);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.1);
+
+            --bg-primary: #030712;
+            --bg-secondary: #0a0f1a;
+            --bg-card: #111827;
+            --bg-code: #1e293b;
+
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #64748b;
+
+            --border-subtle: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.2);
+
+            --font-display: 'Fraunces', serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --sidebar-width: 280px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 2rem;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-subtle);
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .sidebar-badge {
+            display: inline-flex;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-dim);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            border-radius: 100px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .toc-title {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+        }
+
+        .toc-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        .toc-link.active {
+            color: var(--primary);
+            background: var(--primary-dim);
+        }
+
+        .toc-number {
+            display: inline-block;
+            width: 1.5rem;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 3rem 4rem;
+            max-width: calc(100% - var(--sidebar-width));
+        }
+
+        .content {
+            max-width: 800px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Lead paragraph */
+        .lead {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Section header with number */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--primary-dim);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            border-radius: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--bg-code);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            color: var(--text-secondary);
+        }
+
+        :not(pre) > code {
+            background: var(--bg-card);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+            color: var(--primary);
+        }
+
+        /* Syntax highlighting */
+        .token-comment { color: var(--text-tertiary); }
+        .token-key { color: var(--primary); }
+        .token-string { color: var(--emerald); }
+        .token-number { color: var(--amber); }
+        .token-method { color: var(--accent); }
+        .token-url { color: var(--purple); }
+
+        /* Info boxes */
+        .info-box {
+            padding: 1rem 1.25rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid;
+        }
+
+        .info-box.note {
+            background: var(--primary-dim);
+            border-color: var(--primary);
+        }
+
+        .info-box.important {
+            background: var(--amber-dim);
+            border-color: var(--amber);
+        }
+
+        .info-box.tip {
+            background: var(--emerald-dim);
+            border-color: var(--emerald);
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box.note .info-box-title { color: var(--primary); }
+        .info-box.important .info-box-title { color: var(--amber); }
+        .info-box.tip .info-box-title { color: var(--emerald); }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 0.9375rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9375rem;
+        }
+
+        th, td {
+            padding: 0.875rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tr:hover td {
+            background: var(--bg-card);
+        }
+
+        /* Lists */
+        ul, ol {
+            color: var(--text-secondary);
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Flow diagram */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-node {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .flow-node.user {
+            background: var(--primary-dim);
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            color: var(--primary);
+        }
+
+        .flow-node.agent {
+            background: var(--purple-dim);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            color: var(--purple);
+        }
+
+        .flow-node.vendor {
+            background: var(--emerald-dim);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--emerald);
+        }
+
+        .flow-arrow {
+            color: var(--text-tertiary);
+            font-size: 1.25rem;
+        }
+
+        /* Capability cards */
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .capability-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .capability-card:hover {
+            border-color: var(--border-medium);
+        }
+
+        .capability-card h4 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-body);
+        }
+
+        .capability-card p {
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+
+        /* Glossary */
+        .glossary-term {
+            margin-bottom: 1.5rem;
+        }
+
+        .glossary-term dt {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .glossary-term dd {
+            color: var(--text-secondary);
+            margin-left: 0;
+        }
+
+        /* Back to home link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Footer */
+        .spec-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spec-footer-powered {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        .salespeak-logo {
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .salespeak-logo .s { color: var(--primary); }
+        .salespeak-logo .e { color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main {
+                margin-left: 0;
+                max-width: 100%;
+                padding: 2rem;
+            }
+
+            .capability-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-medium);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="/" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">⬡</div>
+                    Agentic Web
+                </a>
+                <span class="sidebar-badge">Specification v0.1</span>
+            </div>
+
+            <nav>
+                <div class="toc-title">Contents</div>
+                <ul class="toc-list">
+                    <li class="toc-item">
+                        <a href="#overview" class="toc-link active">
+                            <span class="toc-number">1.</span> Overview
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#discovery" class="toc-link">
+                            <span class="toc-number">2.</span> Discovery
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#verified-responses" class="toc-link">
+                            <span class="toc-number">3.</span> Verified Responses
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#possible-actions" class="toc-link">
+                            <span class="toc-number">4.</span> Possible Actions
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#session-lifecycle" class="toc-link">
+                            <span class="toc-number">5.</span> Session Lifecycle
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#rest-api" class="toc-link">
+                            <span class="toc-number">6.</span> REST API
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#security" class="toc-link">
+                            <span class="toc-number">7.</span> Security
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#glossary" class="toc-link">
+                            <span class="toc-number">8.</span> Glossary
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="content">
+                <a href="/" class="back-link">
+                    ← Back to Home
+                </a>
+
+                <h1>Agentic Web Specification</h1>
+                <p class="lead">
+                    Technical specification for implementing AI-native endpoints using the Model Context Protocol (MCP) extension. Enable AI agents to query your company directly and take actions on behalf of users.
+                </p>
+
+                <!-- Section 1: Overview -->
+                <section id="overview">
+                    <div class="section-header">
+                        <span class="section-number">1</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Overview</h2>
+                    </div>
+
+                    <p>
+                        The Agentic Web specification defines how companies expose AI-native endpoints that provide <strong>verified responses</strong> and enable <strong>possible actions</strong>. Built on the Model Context Protocol (MCP), it creates a standardized way for AI agents to interact with businesses programmatically.
+                    </p>
+
+                    <h3>Architecture Overview</h3>
+                    <p>The agentic web follows a three-party interaction model:</p>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node user">User</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node agent">AI Agent</div>
+                        <span class="flow-arrow">⇄</span>
+                        <div class="flow-node vendor">Vendor Endpoint</div>
+                    </div>
+
+                    <p>
+                        Users interact with AI agents (Claude, ChatGPT, etc.) which discover and communicate with vendor endpoints. The vendor maintains full control over responses, qualification logic, and available actions.
+                    </p>
+
+                    <h3>Key Capabilities</h3>
+                    <div class="capability-grid">
+                        <div class="capability-card">
+                            <h4>Verified Responses</h4>
+                            <p>Answer questions with authoritative, cryptographically signed data that AI can trust and cite.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>Possible Actions</h4>
+                            <p>Enable AI agents to complete tasks like scheduling demos, opening tickets, or starting trials.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>Qualification Flows</h4>
+                            <p>Collect buyer context through conversational flows before revealing pricing or booking calls.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>Context Preservation</h4>
+                            <p>Maintain full conversation context through sessions, enabling intelligent routing and handoff.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Discovery -->
+                <section id="discovery">
+                    <div class="section-header">
+                        <span class="section-number">2</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Discovery</h2>
+                    </div>
+
+                    <p>
+                        AI agents discover vendor capabilities through a well-known endpoint. This manifest describes what questions the vendor can answer and what actions are available.
+                    </p>
+
+                    <h3>MCP Profile Endpoint</h3>
+                    <p>
+                        Vendors publish their capability manifest at <code>/.well-known/mcp</code>. This endpoint returns a JSON document describing the vendor's agentic capabilities.
+                    </p>
+
+                    <pre><code><span class="token-comment">// GET https://acme.com/.well-known/mcp</span>
+
+{
+  <span class="token-key">"schema_version"</span>: <span class="token-string">"0.1"</span>,
+  <span class="token-key">"vendor"</span>: {
+    <span class="token-key">"name"</span>: <span class="token-string">"Acme Inc"</span>,
+    <span class="token-key">"description"</span>: <span class="token-string">"Enterprise API platform for developers"</span>,
+    <span class="token-key">"website"</span>: <span class="token-string">"https://acme.com"</span>,
+    <span class="token-key">"logo"</span>: <span class="token-string">"https://acme.com/logo.png"</span>
+  },
+  <span class="token-key">"capabilities"</span>: {
+    <span class="token-key">"verified_responses"</span>: [
+      <span class="token-string">"pricing"</span>,
+      <span class="token-string">"integrations"</span>,
+      <span class="token-string">"compliance"</span>,
+      <span class="token-string">"features"</span>
+    ],
+    <span class="token-key">"possible_actions"</span>: [
+      <span class="token-string">"schedule_demo"</span>,
+      <span class="token-string">"open_ticket"</span>,
+      <span class="token-string">"request_quote"</span>,
+      <span class="token-string">"start_trial"</span>
+    ]
+  },
+  <span class="token-key">"endpoint"</span>: <span class="token-string">"https://api.acme.com/mcp"</span>,
+  <span class="token-key">"authentication"</span>: {
+    <span class="token-key">"methods"</span>: [<span class="token-string">"api_key"</span>, <span class="token-string">"oauth2"</span>]
+  }
+}</code></pre>
+
+                    <div class="info-box note">
+                        <div class="info-box-title">Note</div>
+                        <p>The <code>/.well-known/mcp</code> endpoint must be publicly accessible without authentication. The actual API endpoint may require authentication.</p>
+                    </div>
+
+                    <h3>Capability Categories</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Example Topics</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>pricing</code></td>
+                                <td>Plan details, pricing tiers, enterprise quotes</td>
+                                <td>Plans, per-seat costs, volume discounts</td>
+                            </tr>
+                            <tr>
+                                <td><code>integrations</code></td>
+                                <td>Third-party integrations and compatibility</td>
+                                <td>Salesforce, Slack, API availability</td>
+                            </tr>
+                            <tr>
+                                <td><code>compliance</code></td>
+                                <td>Security certifications and data handling</td>
+                                <td>SOC2, HIPAA, GDPR, data residency</td>
+                            </tr>
+                            <tr>
+                                <td><code>features</code></td>
+                                <td>Product capabilities and limitations</td>
+                                <td>Rate limits, SLA, feature availability</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Section 3: Verified Responses -->
+                <section id="verified-responses">
+                    <div class="section-header">
+                        <span class="section-number">3</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Verified Responses</h2>
+                    </div>
+
+                    <p>
+                        Verified responses allow AI agents to query vendor knowledge with confidence that the information is authoritative and current. Unlike web scraping, responses come directly from the vendor's systems with cryptographic verification.
+                    </p>
+
+                    <h3>Ask Endpoint</h3>
+                    <p>The primary method for querying vendor knowledge:</p>
+
+                    <pre><code><span class="token-method">POST</span> <span class="token-url">/mcp/ask</span>
+
+{
+  <span class="token-key">"question"</span>: <span class="token-string">"Does Acme support Salesforce integration?"</span>,
+  <span class="token-key">"context"</span>: {
+    <span class="token-key">"user_type"</span>: <span class="token-string">"enterprise_buyer"</span>,
+    <span class="token-key">"company_size"</span>: <span class="token-string">"500-1000"</span>
+  }
+}</code></pre>
+
+                    <h3>Response Format</h3>
+                    <pre><code>{
+  <span class="token-key">"response"</span>: {
+    <span class="token-key">"answer"</span>: <span class="token-string">"Yes, Acme offers native Salesforce integration on Business and Enterprise plans. Setup takes approximately 15 minutes with our guided wizard."</span>,
+    <span class="token-key">"confidence"</span>: <span class="token-number">1.0</span>,
+    <span class="token-key">"sources"</span>: [
+      {
+        <span class="token-key">"type"</span>: <span class="token-string">"documentation"</span>,
+        <span class="token-key">"url"</span>: <span class="token-string">"https://docs.acme.com/integrations/salesforce"</span>
+      }
+    ]
+  },
+  <span class="token-key">"verification"</span>: {
+    <span class="token-key">"signed_by"</span>: <span class="token-string">"acme.com"</span>,
+    <span class="token-key">"timestamp"</span>: <span class="token-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="token-key">"signature"</span>: <span class="token-string">"sha256:a1b2c3..."</span>
+  },
+  <span class="token-key">"suggested_actions"</span>: [
+    {
+      <span class="token-key">"id"</span>: <span class="token-string">"schedule_demo"</span>,
+      <span class="token-key">"label"</span>: <span class="token-string">"Schedule Integration Demo"</span>
+    }
+  ]
+}</code></pre>
+
+                    <h3>Access Levels</h3>
+                    <p>Vendors can gate certain information based on qualification status:</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>public</code></td>
+                                <td>Available to all queries</td>
+                                <td>Feature lists, integration support</td>
+                            </tr>
+                            <tr>
+                                <td><code>qualified</code></td>
+                                <td>Requires basic qualification</td>
+                                <td>Enterprise pricing, SLA details</td>
+                            </tr>
+                            <tr>
+                                <td><code>nda_required</code></td>
+                                <td>Requires signed NDA</td>
+                                <td>Security architecture, roadmap</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box important">
+                        <div class="info-box-title">Important</div>
+                        <p>The vendor controls all qualification logic. AI agents cannot bypass access restrictions—they must complete the required qualification flow.</p>
+                    </div>
+                </section>
+
+                <!-- Section 4: Possible Actions -->
+                <section id="possible-actions">
+                    <div class="section-header">
+                        <span class="section-number">4</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Possible Actions</h2>
+                    </div>
+
+                    <p>
+                        Actions enable AI agents to complete tasks on behalf of users—not just answer questions, but take real steps like scheduling meetings, opening support tickets, or starting trials.
+                    </p>
+
+                    <h3>Standard Actions</h3>
+                    <div class="capability-grid">
+                        <div class="capability-card">
+                            <h4>schedule_demo</h4>
+                            <p>Book a product demonstration with a sales representative.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>open_ticket</h4>
+                            <p>Create a support ticket with full conversation context.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>request_quote</h4>
+                            <p>Request custom pricing based on requirements.</p>
+                        </div>
+                        <div class="capability-card">
+                            <h4>start_trial</h4>
+                            <p>Initiate a free trial or sandbox environment.</p>
+                        </div>
+                    </div>
+
+                    <h3>Action Request</h3>
+                    <pre><code><span class="token-method">POST</span> <span class="token-url">/mcp/actions/schedule_demo</span>
+
+{
+  <span class="token-key">"session_id"</span>: <span class="token-string">"sess_abc123"</span>,
+  <span class="token-key">"parameters"</span>: {
+    <span class="token-key">"preferred_times"</span>: [
+      <span class="token-string">"2024-01-20T14:00:00Z"</span>,
+      <span class="token-string">"2024-01-21T10:00:00Z"</span>
+    ],
+    <span class="token-key">"timezone"</span>: <span class="token-string">"America/New_York"</span>,
+    <span class="token-key">"topics"</span>: [<span class="token-string">"Salesforce integration"</span>, <span class="token-string">"Enterprise pricing"</span>]
+  }
+}</code></pre>
+
+                    <h3>Action Response</h3>
+                    <pre><code>{
+  <span class="token-key">"status"</span>: <span class="token-string">"scheduled"</span>,
+  <span class="token-key">"confirmation"</span>: {
+    <span class="token-key">"meeting_id"</span>: <span class="token-string">"mtg_xyz789"</span>,
+    <span class="token-key">"datetime"</span>: <span class="token-string">"2024-01-20T14:00:00Z"</span>,
+    <span class="token-key">"duration_minutes"</span>: <span class="token-number">30</span>,
+    <span class="token-key">"calendar_link"</span>: <span class="token-string">"https://cal.acme.com/mtg_xyz789"</span>,
+    <span class="token-key">"assigned_rep"</span>: {
+      <span class="token-key">"name"</span>: <span class="token-string">"Sarah Chen"</span>,
+      <span class="token-key">"title"</span>: <span class="token-string">"Enterprise Account Executive"</span>
+    }
+  },
+  <span class="token-key">"context_preserved"</span>: {
+    <span class="token-key">"qualification_data"</span>: <span class="token-string">"included"</span>,
+    <span class="token-key">"conversation_summary"</span>: <span class="token-string">"included"</span>
+  }
+}</code></pre>
+
+                    <div class="info-box tip">
+                        <div class="info-box-title">Tip</div>
+                        <p>Actions preserve full conversation context. When a demo is scheduled, the sales rep receives the complete qualification data and conversation history.</p>
+                    </div>
+                </section>
+
+                <!-- Section 5: Session Lifecycle -->
+                <section id="session-lifecycle">
+                    <div class="section-header">
+                        <span class="section-number">5</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Session Lifecycle</h2>
+                    </div>
+
+                    <p>
+                        Sessions track the state of an interaction from initial query through action completion. They enable progressive qualification and context preservation.
+                    </p>
+
+                    <h3>Session States</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Description</th>
+                                <th>Next Steps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>initiated</code></td>
+                                <td>Session created, no qualification</td>
+                                <td>Ask questions or begin qualification</td>
+                            </tr>
+                            <tr>
+                                <td><code>qualifying</code></td>
+                                <td>Collecting buyer information</td>
+                                <td>Answer qualification questions</td>
+                            </tr>
+                            <tr>
+                                <td><code>qualified</code></td>
+                                <td>All required data collected</td>
+                                <td>Access gated content, take actions</td>
+                            </tr>
+                            <tr>
+                                <td><code>action_pending</code></td>
+                                <td>Action requested, awaiting confirmation</td>
+                                <td>Confirm or modify action</td>
+                            </tr>
+                            <tr>
+                                <td><code>completed</code></td>
+                                <td>Action successfully completed</td>
+                                <td>Session archived with full context</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Qualification Flow</h3>
+                    <p>Vendors can require qualification before certain responses or actions:</p>
+
+                    <pre><code><span class="token-comment">// Response indicating qualification required</span>
+{
+  <span class="token-key">"status"</span>: <span class="token-string">"qualification_required"</span>,
+  <span class="token-key">"questions"</span>: [
+    {
+      <span class="token-key">"id"</span>: <span class="token-string">"company_size"</span>,
+      <span class="token-key">"text"</span>: <span class="token-string">"How many employees does your company have?"</span>,
+      <span class="token-key">"type"</span>: <span class="token-string">"select"</span>,
+      <span class="token-key">"options"</span>: [<span class="token-string">"1-50"</span>, <span class="token-string">"51-200"</span>, <span class="token-string">"201-1000"</span>, <span class="token-string">"1000+"</span>]
+    },
+    {
+      <span class="token-key">"id"</span>: <span class="token-string">"use_case"</span>,
+      <span class="token-key">"text"</span>: <span class="token-string">"What's your primary use case?"</span>,
+      <span class="token-key">"type"</span>: <span class="token-string">"text"</span>
+    }
+  ],
+  <span class="token-key">"reason"</span>: <span class="token-string">"Enterprise pricing requires company information"</span>
+}</code></pre>
+                </section>
+
+                <!-- Section 6: REST API -->
+                <section id="rest-api">
+                    <div class="section-header">
+                        <span class="section-number">6</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">REST API</h2>
+                    </div>
+
+                    <p>Complete REST API reference for implementing an Agentic Web endpoint.</p>
+
+                    <h3>Endpoints</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Endpoint</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>GET</code></td>
+                                <td><code>/.well-known/mcp</code></td>
+                                <td>Capability manifest (public)</td>
+                            </tr>
+                            <tr>
+                                <td><code>POST</code></td>
+                                <td><code>/mcp/ask</code></td>
+                                <td>Query vendor knowledge</td>
+                            </tr>
+                            <tr>
+                                <td><code>POST</code></td>
+                                <td><code>/mcp/sessions</code></td>
+                                <td>Create new session</td>
+                            </tr>
+                            <tr>
+                                <td><code>GET</code></td>
+                                <td><code>/mcp/sessions/:id</code></td>
+                                <td>Get session status</td>
+                            </tr>
+                            <tr>
+                                <td><code>POST</code></td>
+                                <td><code>/mcp/sessions/:id/qualify</code></td>
+                                <td>Submit qualification data</td>
+                            </tr>
+                            <tr>
+                                <td><code>POST</code></td>
+                                <td><code>/mcp/actions/:action</code></td>
+                                <td>Execute an action</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Error Responses</h3>
+                    <pre><code>{
+  <span class="token-key">"error"</span>: {
+    <span class="token-key">"code"</span>: <span class="token-string">"qualification_required"</span>,
+    <span class="token-key">"message"</span>: <span class="token-string">"This information requires qualification"</span>,
+    <span class="token-key">"details"</span>: {
+      <span class="token-key">"required_fields"</span>: [<span class="token-string">"company_size"</span>, <span class="token-string">"use_case"</span>]
+    }
+  }
+}</code></pre>
+                </section>
+
+                <!-- Section 7: Security -->
+                <section id="security">
+                    <div class="section-header">
+                        <span class="section-number">7</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Security</h2>
+                    </div>
+
+                    <p>Security requirements and recommendations for Agentic Web implementations.</p>
+
+                    <h3>Transport Security</h3>
+                    <ul>
+                        <li><strong>HTTPS Required:</strong> All endpoints must use TLS 1.2 or higher</li>
+                        <li><strong>Certificate Pinning:</strong> Recommended for high-security implementations</li>
+                        <li><strong>HSTS:</strong> Strict Transport Security headers should be enabled</li>
+                    </ul>
+
+                    <h3>Authentication Methods</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Use Case</th>
+                                <th>Security Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>API Key</td>
+                                <td>Simple integrations</td>
+                                <td>Basic</td>
+                            </tr>
+                            <tr>
+                                <td>OAuth 2.0</td>
+                                <td>User-authorized access</td>
+                                <td>Standard</td>
+                            </tr>
+                            <tr>
+                                <td>mTLS</td>
+                                <td>Enterprise/high-security</td>
+                                <td>High</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Data Privacy</h3>
+                    <div class="info-box important">
+                        <div class="info-box-title">Compliance</div>
+                        <p>Vendors must clearly document data handling practices, retention policies, and compliance certifications (GDPR, CCPA, SOC2, etc.) in their capability manifest.</p>
+                    </div>
+                </section>
+
+                <!-- Section 8: Glossary -->
+                <section id="glossary">
+                    <div class="section-header">
+                        <span class="section-number">8</span>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Glossary</h2>
+                    </div>
+
+                    <dl>
+                        <div class="glossary-term">
+                            <dt>Agentic Web</dt>
+                            <dd>The ecosystem of AI-native endpoints that enable direct communication between AI agents and businesses.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>Verified Response</dt>
+                            <dd>An answer from a vendor endpoint that is cryptographically signed and can be trusted by AI agents as authoritative.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>Possible Action</dt>
+                            <dd>A task that an AI agent can complete on behalf of a user, such as scheduling a demo or opening a support ticket.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>Capability Manifest</dt>
+                            <dd>The JSON document at <code>/.well-known/mcp</code> that describes a vendor's agentic capabilities.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>Session</dt>
+                            <dd>A stateful interaction that tracks context, qualification status, and action history.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>Qualification</dt>
+                            <dd>The process of collecting buyer information to unlock gated content or actions.</dd>
+                        </div>
+                        <div class="glossary-term">
+                            <dt>MCP (Model Context Protocol)</dt>
+                            <dd>The underlying protocol (from Anthropic) that enables AI models to interact with external tools and data sources.</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <!-- Footer -->
+                <footer class="spec-footer">
+                    <a href="/" class="back-link" style="margin-bottom: 0;">
+                        ← Back to Home
+                    </a>
+                    <div class="spec-footer-powered">
+                        <span>Powered by</span>
+                        <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
+                            sale<span class="s">s</span>p<span class="e">e</span>ak
+                        </a>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Highlight active TOC item on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveLink() {
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    </script>
+</body>
+</html>
