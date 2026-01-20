@@ -1,0 +1,7 @@
+# robots.txt for agentic-web.ai
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://agentic-web.ai/sitemap.xml
