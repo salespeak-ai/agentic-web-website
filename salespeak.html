@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-52RS8DP7');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Salespeak for the Agentic Web</title>
+    <meta name="description" content="How Salespeak is uniquely positioned to build the infrastructure layer for the Agentic Web.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<style>
+    :root {
+        /* Salespeak Brand Colors */
+        --accent-blue: #1E90FF;
+        --accent-orange: #FF6B35;
+        --accent-purple: #9333EA;
+        --accent-emerald: #10B981;
+
+        /* Base */
+        --bg-primary: #030712;
+        --bg-secondary: #0a0f1a;
+        --bg-tertiary: #111827;
+        --bg-card: rgba(255, 255, 255, 0.03);
+        --text-primary: #f9fafb;
+        --text-secondary: #9ca3af;
+        --text-muted: #6b7280;
+        --border-subtle: rgba(255, 255, 255, 0.08);
+        --accent-cyan: #1E90FF;
+        --accent-amber: #FF6B35;
+
+        /* Typography */
+        --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-mono: 'JetBrains Mono', monospace;
+        --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.7;
+        min-height: 100vh;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Navigation */
+    .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem 0;
+        background: rgba(3, 7, 18, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    .nav-brand-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav-brand-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.25rem;
+        line-height: 1.2;
+    }
+
+    .nav-brand-powered {
+        font-size: 0.625rem;
+        color: var(--text-muted);
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+    .nav-brand-powered .salespeak {
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    .nav-brand-powered .salespeak .s {
+        color: var(--accent-cyan);
+    }
+
+    .nav-brand-powered .salespeak .e {
+        color: var(--accent-amber);
+    }
+
+    .nav-brand-icon {
+        width: 1.5rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-brand-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Header */
+    .header {
+        position: relative;
+        padding: 7rem 2rem 4rem;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150%;
+        height: 100%;
+        background:
+            radial-gradient(ellipse at 30% 0%, rgba(30, 144, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 0%, rgba(255, 107, 53, 0.15) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .header-content {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .header-label {
+        display: inline-block;
+        padding: 0.375rem 1rem;
+        background: rgba(255, 107, 53, 0.15);
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--accent-orange);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .header p {
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Main Content */
+    .content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+    }
+
+    .content h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 3rem 0 1.5rem;
+        color: var(--text-primary);
+    }
+
+    .content h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 2rem 0 1rem;
+        color: var(--text-primary);
+    }
+
+    .content p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+    }
+
+    .content ul {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        padding-left: 1.5rem;
+    }
+
+    .content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .content strong {
+        color: var(--text-primary);
+    }
+
+    /* Comparison Table */
+    .comparison-table {
+        width: 100%;
+        margin: 2rem 0;
+        border-collapse: collapse;
+        background: var(--bg-secondary);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 1rem 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .comparison-table th {
+        background: var(--bg-tertiary);
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .comparison-table td {
+        color: var(--text-secondary);
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison-table td:first-child {
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+        .comparison-table {
+            font-size: 0.875rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    /* Three-column table */
+    .comparison-table.three-col td:last-child {
+        color: var(--accent-blue);
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .comparison-table.three-col {
+            font-size: 0.8125rem;
+        }
+        .comparison-table.three-col th,
+        .comparison-table.three-col td {
+            padding: 0.625rem 0.75rem;
+        }
+    }
+
+    /* Section Box */
+    .section-box {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin: 2.5rem 0;
+    }
+
+    .section-box h2 {
+        margin-top: 0;
+    }
+
+    .section-box h3 {
+        margin-top: 1.5rem;
+    }
+
+    .section-box h3:first-of-type {
+        margin-top: 0;
+    }
+
+    /* Edge Card */
+    .edge-card {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .edge-card h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .edge-card h4::before {
+        content: '';
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--accent-blue);
+    }
+
+    .edge-card p {
+        margin: 0;
+        font-size: 0.9375rem;
+    }
+
+    .edge-card .salespeak-edge {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.875rem;
+        color: var(--accent-blue);
+    }
+
+    .edge-card .salespeak-edge strong {
+        color: var(--accent-blue);
+    }
+
+    /* Option Cards */
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    @media (max-width: 700px) {
+        .options-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .option-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 1rem;
+        padding: 1.75rem;
+    }
+
+    .option-card.highlight {
+        border-color: var(--accent-blue);
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.08) 0%, var(--bg-secondary) 100%);
+    }
+
+    .option-label {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .option-card:first-child .option-label {
+        background: rgba(30, 144, 255, 0.15);
+        color: var(--accent-blue);
+    }
+
+    .option-card:last-child .option-label {
+        background: rgba(255, 107, 53, 0.15);
+        color: var(--accent-orange);
+    }
+
+    .option-card h4 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .option-card ul {
+        margin: 0;
+        padding-left: 1.25rem;
+    }
+
+    .option-card li {
+        font-size: 0.9375rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .option-pitch {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.875rem;
+        font-style: italic;
+        color: var(--text-primary);
+    }
+
+    /* Highlight Box */
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+        border-left: 3px solid var(--accent-blue);
+        border-radius: 0 0.75rem 0.75rem 0;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+    }
+
+    .highlight-box p {
+        font-size: 1.125rem;
+        color: var(--text-primary);
+        margin: 0;
+    }
+
+    /* One-liners */
+    .oneliners {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+
+    .oneliner {
+        padding: 0.625rem 1.25rem;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border-subtle);
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 3rem 2rem;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .footer-powered {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .salespeak-logo {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .salespeak-logo:hover {
+        color: var(--accent-blue);
+    }
+
+    .salespeak-logo .s {
+        color: var(--accent-blue);
+    }
+
+    .salespeak-logo .e {
+        color: var(--accent-orange);
+    }
+</style>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52RS8DP7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="/" class="nav-brand">
+                    <div class="nav-brand-icon">
+                        <svg width="24" height="32" viewBox="100 6 26 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M122.308 23.7396L122.338 23.7792C122.792 24.3528 123.03 25.0418 123.03 25.7671C123.03 27.544 121.576 28.9913 119.791 28.9913C118.737 28.9913 117.753 28.4803 117.144 27.6264L117.114 27.5869C117.114 27.5869 117.114 27.5869 117.114 27.5836C117.293 27.8572 117.386 28.1704 117.386 28.5133C117.386 30.1748 116.001 31.8495 112.91 31.8495C110.737 31.8495 109.17 31.144 108.13 29.7001L108.1 29.6572H108.093C107.5 28.8726 106.566 28.4078 105.586 28.4078C103.853 28.4078 102.445 29.8089 102.445 31.533C102.445 32.3209 102.743 33.0759 103.28 33.6495C105.768 36.5803 109.975 37.6253 113.082 37.6253C118.28 37.6253 123.872 34.8067 123.872 28.6187C123.872 27.3264 123.71 25.4111 122.318 23.7363L122.308 23.7396Z" fill="#1E90FF"/>
+                            <path d="M122.338 23.7782L122.288 23.7123C120.93 22.0969 118.707 20.9661 115.491 20.2573L110.704 19.1925C110.22 19.0936 109.78 18.7936 109.455 18.3485L109.442 18.332L109.455 18.3551C109.836 18.8859 110.041 19.5221 110.041 20.1881C110.041 21.9452 108.604 23.376 106.838 23.376C106.036 23.376 105.278 23.0793 104.698 22.5617C105.934 23.8408 107.693 24.7309 109.932 25.2024L114.649 26.2639C115.892 26.5375 116.72 26.9793 117.117 27.5826L117.147 27.6221C117.753 28.4793 118.74 28.987 119.794 28.987C121.579 28.987 123.034 27.5397 123.034 25.7628C123.034 25.0375 122.795 24.3485 122.341 23.7749L122.338 23.7782Z" fill="#FF6B35"/>
+                            <path d="M122.176 12.3092L122.099 12.2103C119.747 9.26966 115.752 8.22461 112.797 8.22461C110.137 8.22461 107.673 8.97626 105.857 10.3444C103.744 11.9367 102.624 14.2411 102.624 17.007C102.624 18.9653 103.147 20.6367 104.174 21.9653C104.771 22.8521 105.768 23.3796 106.838 23.3796C108.603 23.3796 110.041 21.9488 110.041 20.1916C110.041 19.5257 109.836 18.8861 109.455 18.3587L109.435 18.3224C109.153 17.9235 108.994 17.4455 108.994 17.0103C108.994 14.9466 110.965 14.007 112.797 14.007C114.517 14.007 116.14 14.8048 117.14 16.1433L117.17 16.1796C117.776 16.9543 118.684 17.396 119.668 17.396C121.417 17.396 122.838 15.9818 122.838 14.2411C122.838 13.5389 122.61 12.873 122.176 12.3158V12.3092Z" fill="#FF3300"/>
+                        </svg>
+                    </div>
+                    <div class="nav-brand-text">
+                        <span class="nav-brand-title">Agentic Web</span>
+                        <span class="nav-brand-powered">Powered by <span class="salespeak">sale<span class="s">s</span>p<span class="e">e</span>ak</span></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <span class="header-label">Strategic Position</span>
+            <h1>Why Salespeak Is Best Positioned<br>for the Agentic Web</h1>
+            <p>Most companies will need to retrofit for the Agentic Web. Salespeak has already built the components.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content">
+
+        <h2>The Agentic Web: What It Actually Means</h2>
+        <p>The shift is fundamental: <strong>Your website becomes an API. Your brand becomes a service. Your sales process becomes a protocol.</strong></p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Today</th>
+                    <th>Agentic Web</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Website for humans to browse</td>
+                    <td>AI endpoint for agents to query</td>
+                </tr>
+                <tr>
+                    <td>Contact form, SDR follows up</td>
+                    <td>Agent-to-agent negotiation in real-time</td>
+                </tr>
+                <tr>
+                    <td>Pricing page you read</td>
+                    <td>Pricing API an agent can query with context</td>
+                </tr>
+                <tr>
+                    <td>Case studies as PDFs</td>
+                    <td>Structured proof points agents can verify</td>
+                </tr>
+                <tr>
+                    <td>"Book a demo" button</td>
+                    <td>Agent autonomously qualifies + schedules</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>What's Hard That Salespeak Has Already Done</h2>
+
+        <table class="comparison-table three-col">
+            <thead>
+                <tr>
+                    <th>Challenge</th>
+                    <th>Why It's Hard</th>
+                    <th>What Salespeak Built</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Keeping AI outputs accurate</td>
+                    <td>Hallucinations + stale data</td>
+                    <td>Fact-checker agents, year-updater</td>
+                </tr>
+                <tr>
+                    <td>Speaking for the brand authentically</td>
+                    <td>AI defaults to generic</td>
+                    <td>Brand voice rules, humanizer agent</td>
+                </tr>
+                <tr>
+                    <td>Maintaining consistency at scale</td>
+                    <td>Contradictions creep in</td>
+                    <td>Contradiction resolver</td>
+                </tr>
+                <tr>
+                    <td>Being "findable" by AI</td>
+                    <td>Traditional SEO &ne; LLM retrieval</td>
+                    <td>LLM optimization focus</td>
+                </tr>
+                <tr>
+                    <td>Structured product knowledge</td>
+                    <td>Most companies = unstructured chaos</td>
+                    <td>Comparison pages, feature pages with clear field mapping</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Salespeak's Position: The Infrastructure Layer</h2>
+        <p>What Salespeak has already built maps directly to Agentic Web requirements:</p>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Current Capability</th>
+                    <th>Agentic Web Translation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Conversational AI for inbound</td>
+                    <td>The endpoint itself &mdash; answers agent queries</td>
+                </tr>
+                <tr>
+                    <td>AI lead qualification</td>
+                    <td>Agent authentication &mdash; verify the requesting agent's intent/authority</td>
+                </tr>
+                <tr>
+                    <td>LLM optimization for brands</td>
+                    <td>Discoverability layer &mdash; how agents find and trust you</td>
+                </tr>
+                <tr>
+                    <td>Fact-checked, consistent content</td>
+                    <td>The knowledge graph agents query against</td>
+                </tr>
+                <tr>
+                    <td>Structured Webflow publishing</td>
+                    <td>Dual-publish: human site + agent-readable endpoint</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-box">
+            <h2>What's Hard About the Agentic Web (That Salespeak Has Solved)</h2>
+
+            <div class="edge-card">
+                <h4>Answering Unbounded Questions</h4>
+                <p>Traditional websites have fixed pages. AI endpoints need to answer any reasonable question about your business.</p>
+                <div class="salespeak-edge"><strong>Salespeak's edge:</strong> Already handles open-ended inbound conversations. The conversational AI isn't a chatbot with 50 pre-programmed flows &mdash; it reasons.</div>
+            </div>
+
+            <div class="edge-card">
+                <h4>Taking Actions, Not Just Talking</h4>
+                <p>Agents won't just ask questions &mdash; they'll want to get a custom quote, check integration compatibility, schedule a technical evaluation, and negotiate terms.</p>
+                <div class="salespeak-edge"><strong>Salespeak's edge:</strong> Building toward agentic actions (lead qualification to handoff). The architecture for "AI that does things" is in place.</div>
+            </div>
+
+            <div class="edge-card">
+                <h4>Trust at Machine Speed</h4>
+                <p>When a buyer's agent evaluates 50 vendors in 10 seconds, how do you stand out? Verifiable claims, consistent data, structured proof.</p>
+                <div class="salespeak-edge"><strong>Salespeak's edge:</strong> Obsession with fact-checking, contradiction resolution, and content consistency is the trust layer.</div>
+            </div>
+
+            <div class="edge-card">
+                <h4>Brand Representation Without Humans</h4>
+                <p>Your AI endpoint is your brand in agent-to-agent interactions. Most companies' brand lives in human intuition &mdash; impossible to encode.</p>
+                <div class="salespeak-edge"><strong>Salespeak's edge:</strong> Already codified brand voice into rules and agents. It's transferable to the endpoint.</div>
+            </div>
+        </div>
+
+        <h2>The Opportunity: Salespeak as "Agentic Web Infrastructure"</h2>
+
+        <div class="options-grid">
+            <div class="option-card highlight">
+                <span class="option-label">Option A</span>
+                <h4>"We ARE Your AI Endpoint"</h4>
+                <p>Salespeak becomes the AI-native layer companies deploy. Your customer gets:</p>
+                <ul>
+                    <li>An endpoint that answers agent queries about their product</li>
+                    <li>Actions: qualify, quote, schedule, negotiate</li>
+                    <li>Trust: verified claims, consistent knowledge</li>
+                    <li>Analytics: who's querying, what they're asking</li>
+                </ul>
+                <div class="option-pitch">"You have a website for humans. We give you an endpoint for agents."</div>
+            </div>
+
+            <div class="option-card">
+                <span class="option-label">Option B</span>
+                <h4>"We Sell Through the Agentic Web"</h4>
+                <p>Salespeak uses its own infrastructure to dominate agent-to-agent discovery. When buyer agents search for "conversational AI for sales," Salespeak's endpoint:</p>
+                <ul>
+                    <li>Answers detailed queries instantly</li>
+                    <li>Provides verifiable ROI data</li>
+                    <li>Negotiates pilot terms autonomously</li>
+                    <li>Schedules technical deep-dives</li>
+                </ul>
+                <div class="option-pitch">Become the proof case for your own product.</div>
+            </div>
+        </div>
+
+        <h2>What's Missing (Potential Roadmap)</h2>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Gap</th>
+                    <th>Why It Matters</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Structured product schema</td>
+                    <td>Agents need machine-readable specs, not just prose</td>
+                </tr>
+                <tr>
+                    <td>Agent authentication</td>
+                    <td>Knowing who/what is querying you (and their authority level)</td>
+                </tr>
+                <tr>
+                    <td>Action protocol</td>
+                    <td>Standard way to expose "things I can do" to other agents</td>
+                </tr>
+                <tr>
+                    <td>Verification/attestation</td>
+                    <td>Third-party proof that your claims are real</td>
+                </tr>
+                <tr>
+                    <td>Agent analytics</td>
+                    <td>Understanding agent-to-agent traffic like we understand web traffic</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>One-Liner Positioning Options</h2>
+        <div class="oneliners">
+            <span class="oneliner">"The AI-native endpoint for B2B sales"</span>
+            <span class="oneliner">"Turn your website into an agent-ready API"</span>
+            <span class="oneliner">"Built for the Agentic Web &mdash; where your AI sells to their AI"</span>
+            <span class="oneliner">"Your company's interface to the agent economy"</span>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-powered">
+            <span>Powered by</span>
+            <a href="https://salespeak.ai" target="_blank" rel="noopener" class="salespeak-logo">
+                sale<span class="s">s</span>p<span class="e">e</span>ak
+            </a>
+        </div>
+    </footer>
+</body>
+</html>
