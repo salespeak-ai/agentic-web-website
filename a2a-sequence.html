@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-52RS8DP7');</script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent-to-Agent Interaction — The Agentic Web</title>
+    <meta name="description" content="Watch how AI agents negotiate on behalf of buyers and sellers. A cinematic sequence showing Agent-to-Agent commerce on the Agentic Web.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://agentic-web.ai/a2a-sequence.html">
+    <meta property="og:title" content="Agent-to-Agent Interaction — The Agentic Web">
+    <meta property="og:description" content="Watch how AI agents negotiate on behalf of buyers and sellers. A cinematic sequence showing Agent-to-Agent commerce on the Agentic Web.">
+    <meta property="og:site_name" content="The Agentic Web">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent-blue: #1E90FF;
+            --accent-orange: #FF6B35;
+            --accent-purple: #9333EA;
+            --accent-emerald: #10B981;
+            --accent-amber: #F59E0B;
+
+            --color-sarah: #10B981;
+            --color-sarah-dim: rgba(16, 185, 129, 0.12);
+            --color-sarah-border: rgba(16, 185, 129, 0.3);
+            --color-sarah-glow: rgba(16, 185, 129, 0.4);
+            --color-concierge: #1E90FF;
+            --color-concierge-dim: rgba(30, 144, 255, 0.12);
+            --color-concierge-border: rgba(30, 144, 255, 0.3);
+            --color-concierge-glow: rgba(30, 144, 255, 0.4);
+            --color-acme: #9333EA;
+            --color-acme-dim: rgba(147, 51, 234, 0.12);
+            --color-acme-border: rgba(147, 51, 234, 0.3);
+            --color-acme-glow: rgba(147, 51, 234, 0.4);
+
+            --bg-primary: #030712;
+            --bg-secondary: #0a0f1a;
+            --bg-tertiary: #111827;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #1E90FF;
+
+            --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Navigation */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1rem 0;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+        .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--text-primary); }
+        .nav-brand-text { display: flex; flex-direction: column; }
+        .nav-brand-title { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; line-height: 1.2; }
+        .nav-brand-powered { font-size: 0.625rem; color: var(--text-muted); font-weight: 400; line-height: 1.2; }
+        .nav-brand-powered .salespeak { color: var(--text-secondary); font-weight: 600; }
+        .nav-brand-powered .salespeak .s { color: var(--accent-cyan); }
+        .nav-brand-powered .salespeak .e { color: var(--accent-orange); }
+        .nav-brand-icon { width: 1.5rem; height: 2rem; display: flex; align-items: center; justify-content: center; }
+        .nav-brand-icon svg { width: 100%; height: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; font-size: 0.875rem; font-weight: 500; border-radius: 0.5rem; text-decoration: none; transition: all 0.2s ease; cursor: pointer; border: none; }
+        .btn-primary { background: var(--accent-cyan); color: white; }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        .btn-secondary:hover { border-color: var(--accent-cyan); color: var(--text-primary); }
+        @media (max-width: 640px) { .nav-actions .btn-secondary { display: none; } }
+
+        /* ===== CINEMA STAGE ===== */
+        .cinema {
+            max-width: 900px;
+            margin: 5.5rem auto 0;
+            padding: 2rem;
+            position: relative;
+            min-height: calc(100vh - 5.5rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Title Card (intro scene) */
+        .scene {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            will-change: opacity, transform;
+        }
+
+        .scene.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .scene.exiting {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.98);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        /* Title Scene */
+        .title-scene {
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .title-label {
+            display: inline-block;
+            padding: 0.375rem 1rem;
+            background: linear-gradient(135deg, var(--color-concierge-dim), var(--color-acme-dim));
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            border-radius: 2rem;
+            font-size: 0.75rem; font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase; letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .title-scene h1 {
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700; margin-bottom: 1.25rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .title-scene p {
+            font-size: 1.125rem; color: var(--text-secondary);
+            max-width: 600px; margin: 0 auto 2.5rem;
+        }
+
+        /* Actor Cards Row */
+        .actors-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .actor-pill {
+            display: flex; align-items: center; gap: 0.625rem;
+            padding: 0.625rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 3rem;
+        }
+
+        .actor-dot {
+            width: 2rem; height: 2rem;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .actor-pill.sarah .actor-dot { background: var(--color-sarah); }
+        .actor-pill.concierge .actor-dot { background: var(--color-concierge); }
+        .actor-pill.acme .actor-dot { background: var(--color-acme); }
+
+        .actor-info { text-align: left; }
+        .actor-name { font-size: 0.8125rem; font-weight: 600; line-height: 1.2; }
+        .actor-role { font-size: 0.6875rem; color: var(--text-muted); line-height: 1.2; }
+
+        /* Phase Banner */
+        .phase-banner {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 3rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .phase-badge-num {
+            width: 1.75rem; height: 1.75rem;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+            background: linear-gradient(135deg, var(--color-concierge-dim), var(--color-acme-dim));
+            color: var(--accent-blue);
+        }
+
+        .phase-badge-text {
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .phase-banner h2 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            font-weight: 700; margin-bottom: 0.75rem;
+        }
+
+        .phase-banner p {
+            font-size: 1rem; color: var(--text-secondary);
+            max-width: 560px; margin: 0 auto;
+        }
+
+        /* Message Scene */
+        .message-scene {
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .message-scene.align-right {
+            align-items: flex-end;
+        }
+
+        .message-scene.align-center {
+            align-items: center;
+        }
+
+        .msg-header {
+            display: flex; align-items: center; gap: 0.625rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .msg-avatar {
+            width: 2.25rem; height: 2.25rem;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 700; color: white;
+            flex-shrink: 0;
+        }
+
+        .msg-avatar.sarah { background: var(--color-sarah); box-shadow: 0 0 16px var(--color-sarah-glow); }
+        .msg-avatar.concierge { background: var(--color-concierge); box-shadow: 0 0 16px var(--color-concierge-glow); }
+        .msg-avatar.acme { background: var(--color-acme); box-shadow: 0 0 16px var(--color-acme-glow); }
+
+        .msg-meta { text-align: left; }
+        .msg-name { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+        .msg-name.sarah { color: var(--color-sarah); }
+        .msg-name.concierge { color: var(--color-concierge); }
+        .msg-name.acme { color: var(--color-acme); }
+
+        .msg-direction {
+            font-size: 0.6875rem; color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .msg-body {
+            max-width: 640px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            padding: 1.5rem 1.75rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        .msg-body.sarah { border-left: 3px solid var(--color-sarah); }
+        .msg-body.concierge { border-left: 3px solid var(--color-concierge); }
+        .msg-body.acme { border-left: 3px solid var(--color-acme); }
+
+        .msg-body .hl { color: var(--accent-blue); font-weight: 600; }
+        .msg-body .hl-green { color: var(--color-sarah); font-weight: 600; }
+        .msg-body .hl-purple { color: var(--color-acme); font-weight: 600; }
+        .msg-body .hl-amber { color: var(--accent-amber); font-weight: 600; }
+
+        .msg-tag {
+            display: inline-block;
+            margin-top: 0.875rem;
+            padding: 0.2rem 0.625rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 0.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* System action (thinking / searching) */
+        .system-action {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.25rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border-subtle);
+            border-radius: 0.75rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .system-action .spinner {
+            width: 1.25rem; height: 1.25rem;
+            border: 2px solid var(--border-subtle);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .system-action .label {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* Typing animation for message text */
+        .msg-body .typed-text {
+            overflow: hidden;
+            white-space: normal;
+        }
+
+        .msg-body .typed-text .char {
+            opacity: 0;
+            animation: charReveal 0.02s forwards;
+        }
+
+        @keyframes charReveal {
+            to { opacity: 1; }
+        }
+
+        /* Connection beam between agents */
+        .beam-scene {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .beam {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .beam-dot {
+            width: 0.625rem; height: 0.625rem;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .beam-dot.concierge { background: var(--color-concierge); box-shadow: 0 0 8px var(--color-concierge-glow); }
+        .beam-dot.acme { background: var(--color-acme); box-shadow: 0 0 8px var(--color-acme-glow); }
+        .beam-dot.sarah { background: var(--color-sarah); box-shadow: 0 0 8px var(--color-sarah-glow); }
+
+        .beam-line {
+            width: 120px; height: 2px;
+            position: relative; overflow: hidden;
+            border-radius: 1px;
+            background: var(--border-subtle);
+        }
+
+        .beam-line::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; bottom: 0;
+            width: 100%;
+            animation: beamSlide 1.2s ease-in-out infinite;
+        }
+
+        .beam-line.to-right::after {
+            background: linear-gradient(90deg, transparent, var(--color-concierge), var(--color-acme), transparent);
+        }
+        .beam-line.to-left::after {
+            background: linear-gradient(90deg, transparent, var(--color-acme), var(--color-concierge), transparent);
+        }
+        .beam-line.to-sarah::after {
+            background: linear-gradient(90deg, transparent, var(--color-concierge), var(--color-sarah), transparent);
+        }
+
+        @keyframes beamSlide {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        .beam-label {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+
+        /* Play Controls - Fixed Bottom */
+        .controls {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 999;
+            padding: 1rem 2rem;
+            background: linear-gradient(0deg, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.8) 80%, transparent 100%);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .controls-row {
+            display: flex; align-items: center; gap: 1rem;
+        }
+
+        .ctrl-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.15), rgba(147, 51, 234, 0.15));
+            border: 1px solid rgba(30, 144, 255, 0.3);
+            border-radius: 3rem;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.875rem; font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .ctrl-btn:hover {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.25), rgba(147, 51, 234, 0.25));
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(30, 144, 255, 0.15);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .ctrl-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .progress-track {
+            width: 100%;
+            max-width: 500px;
+            height: 3px;
+            background: var(--border-subtle);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-sarah), var(--color-concierge), var(--color-acme));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .step-counter {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+        }
+
+        /* Scene container for stacking */
+        .scene-stack {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 6rem;
+            min-height: 60vh;
+        }
+
+        /* Footer link area inside cinema */
+        .cinema-footer {
+            text-align: center;
+            padding: 2rem 0 6rem;
+        }
+
+        .cinema-footer a {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--color-concierge-dim);
+            border: 1px solid var(--color-concierge-border);
+            border-radius: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none; font-weight: 500;
+            transition: all 0.2s;
+        }
+        .cinema-footer a:hover { background: rgba(30, 144, 255, 0.25); transform: translateY(-2px); }
+
+        .salespeak-logo { color: var(--text-primary); text-decoration: none; font-weight: 600; }
+        .salespeak-logo .s { color: var(--accent-cyan); }
+        .salespeak-logo .e { color: var(--accent-orange); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .cinema { padding: 1rem; }
+            .msg-body { padding: 1rem 1.25rem; font-size: 0.9375rem; }
+            .title-scene { padding: 4rem 1rem 2rem; }
+            .phase-banner { padding: 3rem 1rem; }
+            .beam-line { width: 60px; }
+        }
+    </style>
+    <script src="https://app.salespeak.ai/widget.js" data-org-id="61fff524-bd18-42f5-abbc-af0a1b8e1f1c" data-launcher="dynamic-launcher"></script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52RS8DP7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="/" class="nav-brand">
+                    <div class="nav-brand-icon">
+                        <svg width="24" height="32" viewBox="100 6 26 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M122.308 23.7396L122.338 23.7792C122.792 24.3528 123.03 25.0418 123.03 25.7671C123.03 27.544 121.576 28.9913 119.791 28.9913C118.737 28.9913 117.753 28.4803 117.144 27.6264L117.114 27.5869C117.114 27.5869 117.114 27.5869 117.114 27.5836C117.293 27.8572 117.386 28.1704 117.386 28.5133C117.386 30.1748 116.001 31.8495 112.91 31.8495C110.737 31.8495 109.17 31.144 108.13 29.7001L108.1 29.6572H108.093C107.5 28.8726 106.566 28.4078 105.586 28.4078C103.853 28.4078 102.445 29.8089 102.445 31.533C102.445 32.3209 102.743 33.0759 103.28 33.6495C105.768 36.5803 109.975 37.6253 113.082 37.6253C118.28 37.6253 123.872 34.8067 123.872 28.6187C123.872 27.3264 123.71 25.4111 122.318 23.7363L122.308 23.7396Z" fill="#1E90FF"/>
+                            <path d="M122.338 23.7782L122.288 23.7123C120.93 22.0969 118.707 20.9661 115.491 20.2573L110.704 19.1925C110.22 19.0936 109.78 18.7936 109.455 18.3485L109.442 18.332L109.455 18.3551C109.836 18.8859 110.041 19.5221 110.041 20.1881C110.041 21.9452 108.604 23.376 106.838 23.376C106.036 23.376 105.278 23.0793 104.698 22.5617C105.934 23.8408 107.693 24.7309 109.932 25.2024L114.649 26.2639C115.892 26.5375 116.72 26.9793 117.117 27.5826L117.147 27.6221C117.753 28.4793 118.74 28.987 119.794 28.987C121.579 28.987 123.034 27.5397 123.034 25.7628C123.034 25.0375 122.795 24.3485 122.341 23.7749L122.338 23.7782Z" fill="#FF6B35"/>
+                            <path d="M122.176 12.3092L122.099 12.2103C119.747 9.26966 115.752 8.22461 112.797 8.22461C110.137 8.22461 107.673 8.97626 105.857 10.3444C103.744 11.9367 102.624 14.2411 102.624 17.007C102.624 18.9653 103.147 20.6367 104.174 21.9653C104.771 22.8521 105.768 23.3796 106.838 23.3796C108.603 23.3796 110.041 21.9488 110.041 20.1916C110.041 19.5257 109.836 18.8861 109.455 18.3587L109.435 18.3224C109.153 17.9235 108.994 17.4455 108.994 17.0103C108.994 14.9466 110.965 14.007 112.797 14.007C114.517 14.007 116.14 14.8048 117.14 16.1433L117.17 16.1796C117.776 16.9543 118.684 17.396 119.668 17.396C121.417 17.396 122.838 15.9818 122.838 14.2411C122.838 13.5389 122.61 12.873 122.176 12.3158V12.3092Z" fill="#FF3300"/>
+                        </svg>
+                    </div>
+                    <div class="nav-brand-text">
+                        <span class="nav-brand-title">Agentic Web</span>
+                        <span class="nav-brand-powered">Powered by <span class="salespeak">sale<span class="s">s</span>p<span class="e">e</span>ak</span></span>
+                    </div>
+                </a>
+                <div class="nav-actions">
+                    <a href="/sequence.html" class="btn btn-secondary">Sequence Diagram</a>
+                    <a href="/specification.html" class="btn btn-primary">Read the Specification</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cinema Stage -->
+    <div class="cinema">
+        <div class="scene-stack" id="sceneStack">
+            <!-- All scenes are injected here by JS -->
+        </div>
+    </div>
+
+    <!-- Fixed Controls -->
+    <div class="controls" id="controls">
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="controls-row">
+            <button class="ctrl-btn" id="prevBtn" onclick="prevScene()" disabled>
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <span class="step-counter" id="stepCounter">0 / 0</span>
+            <button class="ctrl-btn" id="playPauseBtn" onclick="toggleAutoplay()">
+                <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                <span id="playLabel">Play</span>
+            </button>
+            <button class="ctrl-btn" id="nextBtn" onclick="manualNext()">
+                <svg viewBox="0 0 24 24"><path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+    // ===== SCENE DEFINITIONS =====
+    const scenes = [
+        // --- TITLE ---
+        {
+            type: 'title',
+            html: `
+                <div class="title-scene">
+                    <span class="title-label">Agent-to-Agent Protocol</span>
+                    <h1>A2A Interaction Sequence</h1>
+                    <p>Watch how a buyer's AI agent and a vendor's AI agent negotiate in real time &mdash; verified data, zero hallucination, instant qualification.</p>
+                    <div class="actors-row">
+                        <div class="actor-pill sarah">
+                            <div class="actor-dot">S</div>
+                            <div class="actor-info">
+                                <div class="actor-name">Sarah</div>
+                                <div class="actor-role">CMO &mdash; Buyer</div>
+                            </div>
+                        </div>
+                        <div class="actor-pill concierge">
+                            <div class="actor-dot">C</div>
+                            <div class="actor-info">
+                                <div class="actor-name">Concierge</div>
+                                <div class="actor-role">Buyer's Agent</div>
+                            </div>
+                        </div>
+                        <div class="actor-pill acme">
+                            <div class="actor-dot">A</div>
+                            <div class="actor-info">
+                                <div class="actor-name">ACME Pulse</div>
+                                <div class="actor-role">Company Agent</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // --- PHASE 1 BANNER ---
+        {
+            type: 'phase',
+            html: `
+                <div class="phase-banner">
+                    <div class="phase-badge">
+                        <div class="phase-badge-num">1</div>
+                        <span class="phase-badge-text">Phase One</span>
+                    </div>
+                    <h2>The Initial Capability Check</h2>
+                    <p>Sarah asks her concierge to investigate whether ACME can handle her specific tech stack.</p>
+                </div>
+            `
+        },
+
+        // P1-S1: Sarah to Concierge
+        {
+            type: 'message',
+            who: 'sarah',
+            direction: 'to Concierge',
+            align: 'left',
+            text: `"Find out if ACME's <span class="hl">AttriPulse AI</span> supports multi-touch attribution for LinkedIn offline conversions. Our budget is <span class="hl">$50k/year</span>, and we currently use <span class="hl">HubSpot</span> and <span class="hl">Snowflake</span>. See if they can handle that."`
+        },
+
+        // P1-beam
+        { type: 'beam', from: 'concierge', to: 'acme', label: 'A2A Protocol' },
+
+        // P1-S2: Concierge to ACME
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to ACME Pulse &mdash; A2A',
+            align: 'left',
+            text: `"Does AttriPulse AI support <span class="hl">multi-touch attribution</span> for LinkedIn offline conversions?"`,
+            tag: 'Capability Query'
+        },
+
+        // P1-beam back
+        { type: 'beam', from: 'acme', to: 'concierge', label: 'Verified Response' },
+
+        // P1-S3: ACME responds
+        {
+            type: 'message',
+            who: 'acme',
+            direction: 'to Concierge &mdash; Verified',
+            align: 'right',
+            text: `"Yes. We offer a native <span class="hl">LinkedIn Lead Gen integration</span> that syncs offline conversion data via our <span class="hl">Snowflake connector</span>."`,
+            tag: 'Verified &bull; First-Party Data'
+        },
+
+        // P1-beam to Sarah
+        { type: 'beam', from: 'concierge', to: 'sarah', label: 'Relaying to Sarah' },
+
+        // P1-S4: Concierge to Sarah
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to Sarah',
+            align: 'left',
+            text: `"ACME confirmed they support <span class="hl">LinkedIn offline conversions</span> through a native <span class="hl">Snowflake sync</span>. The capability is built-in &mdash; no custom integration needed."`
+        },
+
+        // --- PHASE 2 BANNER ---
+        {
+            type: 'phase',
+            html: `
+                <div class="phase-banner">
+                    <div class="phase-badge">
+                        <div class="phase-badge-num">2</div>
+                        <span class="phase-badge-text">Phase Two</span>
+                    </div>
+                    <h2>Buyer Follow-up: Agent-Level Resolution</h2>
+                    <p>Sarah asks about cost. The Concierge uses context from her original prompt to satisfy ACME's questions &mdash; without bothering Sarah.</p>
+                </div>
+            `
+        },
+
+        // P2-S1: Sarah to Concierge
+        {
+            type: 'message',
+            who: 'sarah',
+            direction: 'to Concierge',
+            align: 'left',
+            text: `"That sounds good. Now find out exactly what the <span class="hl">annual cost</span> would be for my team."`
+        },
+
+        // P2-beam
+        { type: 'beam', from: 'concierge', to: 'acme', label: 'A2A Protocol' },
+
+        // P2-S2: Concierge to ACME
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to ACME Pulse &mdash; A2A',
+            align: 'left',
+            text: `"What is the annual cost for AttriPulse AI for our specific configuration?"`,
+            tag: 'Pricing Query'
+        },
+
+        // P2-beam back
+        { type: 'beam', from: 'acme', to: 'concierge', label: 'Qualification Needed' },
+
+        // P2-S3: ACME needs more info
+        {
+            type: 'message',
+            who: 'acme',
+            direction: 'to Concierge',
+            align: 'right',
+            text: `"To provide an accurate quote, I need to know the <span class="hl-amber">annual marketing spend</span> and <span class="hl-amber">required seat count</span>."`,
+            tag: 'Qualification Request'
+        },
+
+        // P2-system: Concierge pulls from context
+        {
+            type: 'system',
+            label: 'Concierge searching Sarah\'s original context...'
+        },
+
+        // P2-S4: Concierge answers from context
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to ACME Pulse &mdash; from internal context',
+            align: 'left',
+            text: `"The annual marketing budget is <span class="hl">$50k/year</span>. We require <span class="hl">5 seats</span>."`,
+            tag: 'Auto-Resolved from Context'
+        },
+
+        // P2-beam back
+        { type: 'beam', from: 'acme', to: 'concierge', label: 'Quote Generated' },
+
+        // P2-S5: ACME returns quote
+        {
+            type: 'message',
+            who: 'acme',
+            direction: 'to Concierge &mdash; Verified',
+            align: 'right',
+            text: `"Based on those parameters, you qualify for the <span class="hl-purple">Pro tier</span> at <span class="hl">$3,200/month</span> (<span class="hl">$38,400/year</span>)."`,
+            tag: 'Verified Quote'
+        },
+
+        // P2-beam to Sarah
+        { type: 'beam', from: 'concierge', to: 'sarah', label: 'Relaying to Sarah' },
+
+        // P2-S6: Concierge to Sarah
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to Sarah',
+            align: 'left',
+            text: `"The annual cost is <span class="hl">$38,400</span> for 5 seats on their <span class="hl-purple">Pro tier</span>. This fits within your <span class="hl-green">$50k budget</span>."`
+        },
+
+        // --- PHASE 3 BANNER ---
+        {
+            type: 'phase',
+            html: `
+                <div class="phase-banner">
+                    <div class="phase-badge">
+                        <div class="phase-badge-num">3</div>
+                        <span class="phase-badge-text">Phase Three</span>
+                    </div>
+                    <h2>Buyer Follow-up: Human Input Required</h2>
+                    <p>Sarah asks a technical question. ACME needs a detail not in the original prompt &mdash; forcing the agent to pause and ask Sarah.</p>
+                </div>
+            `
+        },
+
+        // P3-S1: Sarah to Concierge
+        {
+            type: 'message',
+            who: 'sarah',
+            direction: 'to Concierge',
+            align: 'left',
+            text: `"Last thing: check if their <span class="hl">predictive modeling</span> works with our HubSpot custom objects. We have a complex setup."`
+        },
+
+        // P3-beam
+        { type: 'beam', from: 'concierge', to: 'acme', label: 'A2A Protocol' },
+
+        // P3-S2: Concierge to ACME
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to ACME Pulse &mdash; A2A',
+            align: 'left',
+            text: `"Does your predictive modeling support <span class="hl">HubSpot custom objects</span>?"`,
+            tag: 'Integration Query'
+        },
+
+        // P3-beam back
+        { type: 'beam', from: 'acme', to: 'concierge', label: 'Conditional Response' },
+
+        // P3-S3: ACME needs clarification
+        {
+            type: 'message',
+            who: 'acme',
+            direction: 'to Concierge',
+            align: 'right',
+            text: `"It does, but only for <span class="hl-amber">Enterprise accounts</span>. Are you on <span class="hl-amber">HubSpot Enterprise</span> or the <span class="hl-amber">Legacy Professional</span> version?"`,
+            tag: 'Clarification Needed'
+        },
+
+        // P3-system: Concierge searches context
+        {
+            type: 'system',
+            label: 'Concierge searching internal context... data not found'
+        },
+
+        // P3-beam to Sarah
+        { type: 'beam', from: 'concierge', to: 'sarah', label: 'Human Input Required' },
+
+        // P3-S4: Concierge asks Sarah
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to Sarah',
+            align: 'left',
+            text: `"ACME needs to know if we are on <span class="hl-amber">HubSpot Enterprise</span> or <span class="hl-amber">Legacy Professional</span> to confirm custom object support. Which one are we using?"`
+        },
+
+        // P3-S5: Sarah responds
+        {
+            type: 'message',
+            who: 'sarah',
+            direction: 'to Concierge',
+            align: 'left',
+            text: `"We upgraded to <span class="hl-green">Enterprise</span> last quarter. Tell them we are on the latest version."`
+        },
+
+        // P3-beam final handshake
+        { type: 'beam', from: 'concierge', to: 'acme', label: 'Final Handshake' },
+
+        // P3-S6: Concierge to ACME
+        {
+            type: 'message',
+            who: 'concierge',
+            direction: 'to ACME Pulse &mdash; A2A',
+            align: 'left',
+            text: `"The client is on <span class="hl">HubSpot Enterprise</span>."`,
+            tag: 'Human-Verified Data'
+        },
+
+        // P3-beam back
+        { type: 'beam', from: 'acme', to: 'concierge', label: 'Confirmed' },
+
+        // P3-S7: ACME confirms
+        {
+            type: 'message',
+            who: 'acme',
+            direction: 'to Concierge &mdash; Verified',
+            align: 'right',
+            text: `"Confirmed. <span class="hl-green">Predictive modeling is fully supported.</span> I've sent a technical spec sheet to your secure endpoint."`,
+            tag: 'Verified &bull; Spec Delivered'
+        },
+
+        // --- END ---
+        {
+            type: 'phase',
+            html: `
+                <div class="phase-banner">
+                    <div class="phase-badge">
+                        <div class="phase-badge-num" style="background: linear-gradient(135deg, var(--color-sarah-dim), var(--color-concierge-dim), var(--color-acme-dim)); color: var(--color-sarah);">&#10003;</div>
+                        <span class="phase-badge-text">Complete</span>
+                    </div>
+                    <h2>Three Phases. Zero Friction.</h2>
+                    <p>The buyer's agent resolved pricing autonomously, escalated only when needed, and delivered verified data throughout &mdash; all via the A2A protocol.</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="/" class="btn btn-primary" style="font-size: 1rem; padding: 0.875rem 2rem;">Explore The Agentic Web</a>
+                    </div>
+                </div>
+            `
+        }
+    ];
+
+    // ===== RENDERING =====
+    const names = { sarah: 'Sarah', concierge: 'Concierge', acme: 'ACME Pulse' };
+
+    function renderScene(scene) {
+        const div = document.createElement('div');
+        div.className = 'scene';
+
+        if (scene.type === 'title' || scene.type === 'phase') {
+            div.innerHTML = scene.html;
+        }
+        else if (scene.type === 'message') {
+            const alignClass = scene.align === 'right' ? 'align-right' : '';
+            div.innerHTML = `
+                <div class="message-scene ${alignClass}">
+                    <div class="msg-header">
+                        <div class="msg-avatar ${scene.who}">${names[scene.who][0]}</div>
+                        <div class="msg-meta">
+                            <div class="msg-name ${scene.who}">${names[scene.who]}</div>
+                            <div class="msg-direction">${scene.direction}</div>
+                        </div>
+                    </div>
+                    <div class="msg-body ${scene.who}">
+                        ${scene.text}
+                        ${scene.tag ? `<div class="msg-tag">${scene.tag}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        else if (scene.type === 'beam') {
+            const lineClass = scene.to === 'sarah' ? 'to-sarah' : (scene.from === 'concierge' ? 'to-right' : 'to-left');
+            div.innerHTML = `
+                <div class="beam-scene">
+                    <div class="beam">
+                        <div class="beam-dot ${scene.from}"></div>
+                        <div class="beam-line ${lineClass}"></div>
+                        <div class="beam-dot ${scene.to}"></div>
+                        <span class="beam-label">${scene.label}</span>
+                    </div>
+                </div>
+            `;
+        }
+        else if (scene.type === 'system') {
+            div.innerHTML = `
+                <div class="message-scene align-center">
+                    <div class="system-action">
+                        <div class="spinner"></div>
+                        <span class="label">${scene.label}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        return div;
+    }
+
+    // ===== TIMING PER SCENE TYPE =====
+    function getSceneDuration(scene) {
+        switch (scene.type) {
+            case 'title':   return 6000;
+            case 'phase':   return 5500;
+            case 'beam':    return 3000;
+            case 'system':  return 3500;
+            case 'message':
+                const len = scene.text.replace(/<[^>]*>/g, '').length;
+                return Math.max(4500, Math.min(len * 40, 8000));
+            default:        return 4000;
+        }
+    }
+
+    // ===== STATE =====
+    let currentScene = -1;
+    const stack = document.getElementById('sceneStack');
+    const progressFill = document.getElementById('progressFill');
+    const stepCounter = document.getElementById('stepCounter');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const playLabel = document.getElementById('playLabel');
+    let currentEl = null;
+    let transitioning = false;
+    let autoplayTimer = null;
+    let isPlaying = false;
+
+    function updateUI() {
+        const total = scenes.length;
+        const current = currentScene + 1;
+        progressFill.style.width = (current / total * 100) + '%';
+        stepCounter.textContent = current + ' / ' + total;
+        prevBtn.disabled = currentScene <= 0;
+        nextBtn.disabled = currentScene >= total - 1;
+    }
+
+    function updatePlayUI() {
+        if (isPlaying) {
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+            playLabel.textContent = 'Pause';
+        } else {
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            playLabel.textContent = currentScene < 0 ? 'Play' : (currentScene >= scenes.length - 1 ? 'Replay' : 'Play');
+        }
+    }
+
+    function showScene(index, cb) {
+        if (transitioning || index < 0 || index >= scenes.length) return;
+        transitioning = true;
+
+        const newEl = renderScene(scenes[index]);
+        stack.appendChild(newEl);
+
+        // Exit current
+        if (currentEl) {
+            const oldEl = currentEl;
+            if (index > currentScene) {
+                oldEl.classList.add('exiting');
+            } else {
+                oldEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                oldEl.style.opacity = '0';
+                oldEl.style.transform = 'translateY(30px) scale(0.98)';
+            }
+            setTimeout(() => oldEl.remove(), 450);
+        }
+
+        // Enter new
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                newEl.classList.add('active');
+                transitioning = false;
+                if (cb) cb();
+            });
+        });
+
+        currentEl = newEl;
+        currentScene = index;
+        updateUI();
+        updatePlayUI();
+    }
+
+    function scheduleNext() {
+        if (!isPlaying) return;
+        if (currentScene >= scenes.length - 1) {
+            stopAutoplay();
+            return;
+        }
+        const duration = getSceneDuration(scenes[currentScene]);
+        autoplayTimer = setTimeout(() => {
+            if (!isPlaying) return;
+            showScene(currentScene + 1, () => {
+                scheduleNext();
+            });
+        }, duration);
+    }
+
+    function startAutoplay() {
+        isPlaying = true;
+        updatePlayUI();
+        // If at end or not started, start from beginning
+        if (currentScene >= scenes.length - 1 || currentScene < 0) {
+            showScene(currentScene < 0 ? 0 : 0, () => {
+                scheduleNext();
+            });
+        } else {
+            scheduleNext();
+        }
+    }
+
+    function stopAutoplay() {
+        isPlaying = false;
+        clearTimeout(autoplayTimer);
+        autoplayTimer = null;
+        updatePlayUI();
+    }
+
+    function toggleAutoplay() {
+        if (isPlaying) {
+            stopAutoplay();
+        } else {
+            startAutoplay();
+        }
+    }
+
+    function manualNext() {
+        stopAutoplay();
+        if (currentScene < scenes.length - 1) {
+            showScene(currentScene + 1);
+        }
+    }
+
+    function prevScene() {
+        stopAutoplay();
+        if (currentScene > 0) {
+            showScene(currentScene - 1);
+        }
+    }
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+            e.preventDefault();
+            toggleAutoplay();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            manualNext();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevScene();
+        }
+    });
+
+    // Init
+    updateUI();
+    updatePlayUI();
+    </script>
+</body>
+</html>
