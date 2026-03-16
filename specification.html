@@ -12,19 +12,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agentic Web — MCP Server Profile</title>
-    <meta name="description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, resources, tools, and OAuth 2.1.">
+    <meta name="description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, tools, verification, and qualification.">
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://agentic-web.ai/specification.html">
     <meta property="og:title" content="Agentic Web — MCP Server Profile">
-    <meta property="og:description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, resources, tools, and OAuth 2.1.">
+    <meta property="og:description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, tools, verification, and qualification.">
     <meta property="og:site_name" content="The Agentic Web">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Agentic Web — MCP Server Profile">
-    <meta name="twitter:description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, resources, tools, and OAuth 2.1.">
+    <meta name="twitter:description" content="MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, tools, verification, and qualification.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -35,7 +35,7 @@
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "Agentic Web — MCP Server Profile",
-        "description": "MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, resources, tools, and OAuth 2.1.",
+        "description": "MCP Server Profile specification for implementing AI-native endpoints using JSON-RPC 2.0, Streamable HTTP transport, tools, verification, and qualification.",
         "url": "https://agentic-web.ai/specification.html",
         "proficiencyLevel": "Expert",
         "publisher": {
@@ -803,7 +803,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <h1>Agentic Web — MCP Server Profile</h1>
                 <p class="lead">
-                    A profile for turning any website into an AI-native endpoint — a real MCP server. Uses JSON-RPC 2.0, Streamable HTTP transport, resources, tools, and OAuth 2.1 — the same protocol that AI agents already speak.
+                    A profile for turning any website into an AI-native endpoint — a real MCP server. Uses JSON-RPC 2.0, Streamable HTTP transport, tools, and cryptographic verification. The same protocol that AI agents already speak.
                 </p>
 
                 <!-- Section 1: Overview -->
@@ -855,7 +855,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <div class="info-box note">
                         <div class="info-box-title">MCP Compatibility</div>
-                        <p>This profile targets the <strong>MCP 2025-03-26</strong> specification. All messages are JSON-RPC 2.0. Transport is Streamable HTTP. Authorization follows the MCP OAuth 2.1 spec.</p>
+                        <p>This profile targets the <strong>MCP 2025-03-26</strong> specification. All messages are JSON-RPC 2.0. Transport is Streamable HTTP. Most interactions are anonymous — see <a href="#access">Access Model</a> for details.</p>
                     </div>
                 </section>
 
