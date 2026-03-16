@@ -804,6 +804,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </a>
 
                 <div class="nav-actions">
+                    <a href="/blog.html" class="btn btn-secondary">Under the Hood</a>
                     <a href="/sequence.html" class="btn btn-secondary">Sequence Diagram</a>
                     <a href="/specification.html" class="btn btn-primary">Read the Specification</a>
                 </div>
@@ -899,7 +900,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-arrow left"></div>
                     <div class="step-message from-vendor" data-from="Acme Endpoint">
                         <span class="step-number">3</span>
-                        Server responds with capabilities: resources (<strong>pricing</strong>, <strong>compliance</strong>, <strong>integrations</strong>) and tools (<strong>vendor_ask</strong>, <strong>schedule_demo</strong>, <strong>request_quote</strong>).
+                        Server responds with capabilities. Tools: <strong>ask_question</strong>, <strong>schedule_demo</strong>, <strong>request_quote</strong>, <strong>qualify</strong>.
                         <span class="step-protocol">MCP Capabilities</span>
                     </div>
                 </div>
@@ -909,7 +910,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-empty"></div>
                     <div class="step-message from-ai" data-from="AI Agent">
                         <span class="step-number">4</span>
-                        <code>tools/call → vendor_ask</code>: "Is Acme a good fit for us?"
+                        <code>tools/call → ask_question</code>: "Is Acme a good fit for us?"
                         <span class="step-protocol">tools/call</span>
                     </div>
                     <div class="step-arrow right"></div>
@@ -988,7 +989,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h4><span>01</span> Zero Integration Required</h4>
                 <p>The AI agent discovers vendor capabilities through a standard protocol. No custom integrations, no API keys, no vendor-specific code.</p>
                 <ul>
-                    <li>Standard <code>/.well-known/mcp</code> discovery</li>
+                    <li>Standard MCP <code>initialize</code> handshake</li>
                     <li>Works with any MCP-compatible AI</li>
                     <li>Vendor controls their own endpoint</li>
                 </ul>

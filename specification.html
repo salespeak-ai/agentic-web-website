@@ -734,6 +734,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </a>
 
             <div class="nav-actions">
+                <a href="/blog.html" class="btn btn-secondary">Under the Hood</a>
                 <a href="/sequence.html" class="btn btn-secondary">Sequence Diagram</a>
                 <a href="/specification.html" class="btn btn-primary">Read the Specification</a>
             </div>
@@ -765,33 +766,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </a>
                     </li>
                     <li class="toc-item">
-                        <a href="#resources" class="toc-link">
-                            <span class="toc-number">3.</span> Resources
-                        </a>
-                    </li>
-                    <li class="toc-item">
                         <a href="#tools" class="toc-link">
-                            <span class="toc-number">4.</span> Tools
+                            <span class="toc-number">3.</span> Tools
                         </a>
                     </li>
                     <li class="toc-item">
                         <a href="#qualification" class="toc-link">
-                            <span class="toc-number">5.</span> Qualification &amp; Sessions
+                            <span class="toc-number">4.</span> Qualification &amp; Sessions
                         </a>
                     </li>
                     <li class="toc-item">
                         <a href="#verification" class="toc-link">
-                            <span class="toc-number">6.</span> Response Verification
+                            <span class="toc-number">5.</span> Response Verification
                         </a>
                     </li>
                     <li class="toc-item">
                         <a href="#authorization" class="toc-link">
-                            <span class="toc-number">7.</span> Authorization
+                            <span class="toc-number">6.</span> Authorization
                         </a>
                     </li>
                     <li class="toc-item">
                         <a href="#glossary" class="toc-link">
-                            <span class="toc-number">8.</span> Glossary
+                            <span class="toc-number">7.</span> Glossary
                         </a>
                     </li>
                 </ul>
@@ -833,15 +829,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
 
                     <p>
-                        Users interact with AI agents which connect to vendor MCP servers over Streamable HTTP. The vendor exposes <strong>resources</strong> (company knowledge) and <strong>tools</strong> (actions) through the standard MCP protocol. The vendor maintains full control over responses, qualification logic, and available capabilities.
+                        Users interact with AI agents which connect to vendor MCP servers over Streamable HTTP. The vendor exposes <strong>tools</strong> through the standard MCP protocol — including tools for answering questions, taking actions, and qualifying buyers. The vendor maintains full control over responses, qualification logic, and available capabilities.
                     </p>
 
                     <h3>Key Capabilities</h3>
                     <div class="capability-grid">
-                        <div class="capability-card">
-                            <h4>Resources</h4>
-                            <p>Expose vendor knowledge (pricing, compliance, features) as MCP resources with <code>agentic://</code> URIs that agents can read.</p>
-                        </div>
                         <div class="capability-card">
                             <h4>Tools</h4>
                             <p>Enable AI agents to take actions — ask questions, schedule demos, open tickets, request quotes — via standard <code>tools/call</code>.</p>
@@ -854,6 +846,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <h4>Verified Responses</h4>
                             <p>Cryptographically sign tool results with Ed25519 so agents can verify that data comes directly from the vendor.</p>
                         </div>
+                    </div>
+
+                    <div class="info-box note">
+                        <div class="info-box-title">Resources</div>
+                        <p>Servers MAY also expose MCP resources for bulk data access, but the primary interaction model is through tools.</p>
                     </div>
 
                     <div class="info-box note">
@@ -879,7 +876,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span class="token-key">Content-Type</span>: application/json
 <span class="token-key">Accept</span>: application/json, text/event-stream</code></pre>
 
-                    <p>All MCP methods (<code>initialize</code>, <code>tools/list</code>, <code>tools/call</code>, <code>resources/list</code>, <code>resources/read</code>, etc.) are sent to this single URL.</p>
+                    <p>All MCP methods (<code>initialize</code>, <code>tools/list</code>, <code>tools/call</code>, etc.) are sent to this single URL.</p>
 
                     <h3>Initialize Handshake</h3>
                     <p>Every session begins with an <code>initialize</code> request. The client declares its supported protocol version and capabilities, and the server responds with its own:</p>
@@ -906,7 +903,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="token-key">"result"</span>: {
     <span class="token-key">"protocolVersion"</span>: <span class="token-string">"2025-03-26"</span>,
     <span class="token-key">"capabilities"</span>: {
-      <span class="token-key">"resources"</span>: { <span class="token-key">"listChanged"</span>: true },
       <span class="token-key">"tools"</span>: { <span class="token-key">"listChanged"</span>: true }
     },
     <span class="token-key">"serverInfo"</span>: {
@@ -929,192 +925,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </section>
 
-                <!-- Section 3: Resources -->
-                <section id="resources">
-                    <div class="section-header">
-                        <span class="section-number">3</span>
-                        <h2 style="margin-top: 0; border: none; padding: 0;">Resources</h2>
-                    </div>
-
-                    <p>
-                        Vendor knowledge — pricing tables, compliance certifications, integration lists, feature details — is exposed as <strong>MCP resources</strong>. Agents discover them with <code>resources/list</code> and read them with <code>resources/read</code>.
-                    </p>
-
-                    <h3>URI Scheme</h3>
-                    <p>Resources use the <code>agentic://</code> URI scheme, namespaced by vendor domain and category:</p>
-                    <pre><code>agentic://acme.com/pricing/plans
-agentic://acme.com/compliance/soc2
-agentic://acme.com/integrations/salesforce
-agentic://acme.com/features/api-rate-limits
-agentic://acme.com/company/about</code></pre>
-
-                    <h3>Listing Resources</h3>
-                    <pre><code><span class="token-comment">// Client → Server</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">2</span>,
-  <span class="token-key">"method"</span>: <span class="token-string">"resources/list"</span>,
-  <span class="token-key">"params"</span>: {}
-}</code></pre>
-
-                    <pre><code><span class="token-comment">// Server → Client</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">2</span>,
-  <span class="token-key">"result"</span>: {
-    <span class="token-key">"resources"</span>: [
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://acme.com/pricing/plans"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"Pricing Plans"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Current pricing tiers and per-seat costs"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      },
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://acme.com/compliance/soc2"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"SOC 2 Compliance"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"SOC 2 Type II certification details and audit scope"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      },
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://acme.com/integrations/salesforce"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"Salesforce Integration"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Native Salesforce integration setup and capabilities"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      }
-    ]
-  }
-}</code></pre>
-
-                    <h3>Reading a Resource</h3>
-                    <pre><code><span class="token-comment">// Client → Server</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">3</span>,
-  <span class="token-key">"method"</span>: <span class="token-string">"resources/read"</span>,
-  <span class="token-key">"params"</span>: {
-    <span class="token-key">"uri"</span>: <span class="token-string">"agentic://acme.com/compliance/soc2"</span>
-  }
-}</code></pre>
-
-                    <pre><code><span class="token-comment">// Server → Client</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">3</span>,
-  <span class="token-key">"result"</span>: {
-    <span class="token-key">"contents"</span>: [
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://acme.com/compliance/soc2"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>,
-        <span class="token-key">"text"</span>: <span class="token-string">"{\"certification\":\"SOC 2 Type II\",\"auditor\":\"Deloitte\",\"scope\":[\"Security\",\"Availability\",\"Confidentiality\"],\"lastAudit\":\"2025-01-15\",\"reportAvailable\":true}"</span>
-      }
-    ]
-  }
-}</code></pre>
-
-                    <h3>Small Business Example</h3>
-                    <p>The same protocol works for any business. Here's how a local bakery exposes its menu and takes orders:</p>
-
-                    <pre><code><span class="token-comment">// resources/list response for a bakery</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">9</span>,
-  <span class="token-key">"result"</span>: {
-    <span class="token-key">"resources"</span>: [
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://rosasbakery.com/menu/cakes"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"Cake Menu"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Available cakes, sizes, and pricing"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      },
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://rosasbakery.com/ordering/custom"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"Custom Orders"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"How to place a custom cake order"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      },
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://rosasbakery.com/info/hours"</span>,
-        <span class="token-key">"name"</span>: <span class="token-string">"Hours &amp; Location"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Store hours, address, and delivery area"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>
-      }
-    ]
-  }
-}</code></pre>
-
-                    <pre><code><span class="token-comment">// Client → Server (read the cake menu)</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">10</span>,
-  <span class="token-key">"method"</span>: <span class="token-string">"resources/read"</span>,
-  <span class="token-key">"params"</span>: {
-    <span class="token-key">"uri"</span>: <span class="token-string">"agentic://rosasbakery.com/menu/cakes"</span>
-  }
-}</code></pre>
-
-                    <pre><code><span class="token-comment">// Server → Client</span>
-{
-  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
-  <span class="token-key">"id"</span>: <span class="token-number">10</span>,
-  <span class="token-key">"result"</span>: {
-    <span class="token-key">"contents"</span>: [
-      {
-        <span class="token-key">"uri"</span>: <span class="token-string">"agentic://rosasbakery.com/menu/cakes"</span>,
-        <span class="token-key">"mimeType"</span>: <span class="token-string">"application/json"</span>,
-        <span class="token-key">"text"</span>: <span class="token-string">"{\"cakes\":[{\"name\":\"Classic Chocolate\",\"sizes\":[\"6-inch\",\"8-inch\",\"10-inch\"],\"price\":{\"6-inch\":32,\"8-inch\":45,\"10-inch\":60},\"glutenFree\":false},{\"name\":\"Vanilla Bean\",\"sizes\":[\"6-inch\",\"8-inch\"],\"price\":{\"6-inch\":30,\"8-inch\":42},\"glutenFree\":true}],\"customOrders\":true,\"leadTime\":\"48 hours\"}"</span>
-      }
-    ]
-  }
-}</code></pre>
-
-                    <h3>Resource Categories</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>URI Pattern</th>
-                                <th>Example Topics</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>pricing</code></td>
-                                <td><code>agentic://&lt;domain&gt;/pricing/*</code></td>
-                                <td>Plans, per-seat costs, volume discounts</td>
-                            </tr>
-                            <tr>
-                                <td><code>compliance</code></td>
-                                <td><code>agentic://&lt;domain&gt;/compliance/*</code></td>
-                                <td>SOC2, HIPAA, GDPR, data residency</td>
-                            </tr>
-                            <tr>
-                                <td><code>integrations</code></td>
-                                <td><code>agentic://&lt;domain&gt;/integrations/*</code></td>
-                                <td>Salesforce, Slack, API availability</td>
-                            </tr>
-                            <tr>
-                                <td><code>features</code></td>
-                                <td><code>agentic://&lt;domain&gt;/features/*</code></td>
-                                <td>Rate limits, SLA, feature availability</td>
-                            </tr>
-                            <tr>
-                                <td><code>company</code></td>
-                                <td><code>agentic://&lt;domain&gt;/company/*</code></td>
-                                <td>About, team, mission, contact</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="info-box tip">
-                        <div class="info-box-title">Tip</div>
-                        <p>Some resources may be gated behind qualification. If an agent tries to read a gated resource before qualifying, the server returns the content with a <code>qualificationRequired</code> flag prompting the agent to call the <code>qualify</code> tool first.</p>
-                    </div>
-                </section>
-
-                <!-- Section 4: Tools -->
+                <!-- Section 3: Tools -->
                 <section id="tools">
                     <div class="section-header">
-                        <span class="section-number">4</span>
+                        <span class="section-number">3</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Tools</h2>
                     </div>
 
@@ -1138,7 +952,7 @@ agentic://acme.com/company/about</code></pre>
   <span class="token-key">"result"</span>: {
     <span class="token-key">"tools"</span>: [
       {
-        <span class="token-key">"name"</span>: <span class="token-string">"vendor_ask"</span>,
+        <span class="token-key">"name"</span>: <span class="token-string">"ask_question"</span>,
         <span class="token-key">"description"</span>: <span class="token-string">"Ask a free-form question about Acme's products, pricing, integrations, or compliance"</span>,
         <span class="token-key">"inputSchema"</span>: {
           <span class="token-key">"type"</span>: <span class="token-string">"object"</span>,
@@ -1171,7 +985,7 @@ agentic://acme.com/company/about</code></pre>
       },
       {
         <span class="token-key">"name"</span>: <span class="token-string">"qualify"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Submit buyer qualification data to unlock gated resources and actions"</span>,
+        <span class="token-key">"description"</span>: <span class="token-string">"Submit buyer qualification data to unlock gated actions"</span>,
         <span class="token-key">"inputSchema"</span>: { <span class="token-comment">/* see Section 5 */</span> }
       }
     ]
@@ -1181,7 +995,7 @@ agentic://acme.com/company/about</code></pre>
                     <h3>Standard Tools</h3>
                     <div class="capability-grid">
                         <div class="capability-card">
-                            <h4>vendor_ask</h4>
+                            <h4>ask_question</h4>
                             <p>Free-form questions about products, pricing, integrations, and compliance. Returns verified answers.</p>
                         </div>
                         <div class="capability-card">
@@ -1202,7 +1016,7 @@ agentic://acme.com/company/about</code></pre>
                         </div>
                         <div class="capability-card">
                             <h4>qualify</h4>
-                            <p>Submit buyer qualification data to unlock gated resources and actions.</p>
+                            <p>Submit buyer qualification data to unlock gated actions.</p>
                         </div>
                     </div>
 
@@ -1213,7 +1027,7 @@ agentic://acme.com/company/about</code></pre>
   <span class="token-key">"id"</span>: <span class="token-number">5</span>,
   <span class="token-key">"method"</span>: <span class="token-string">"tools/call"</span>,
   <span class="token-key">"params"</span>: {
-    <span class="token-key">"name"</span>: <span class="token-string">"vendor_ask"</span>,
+    <span class="token-key">"name"</span>: <span class="token-string">"ask_question"</span>,
     <span class="token-key">"arguments"</span>: {
       <span class="token-key">"question"</span>: <span class="token-string">"Does Acme support Salesforce integration?"</span>
     }
@@ -1264,7 +1078,7 @@ agentic://acme.com/company/about</code></pre>
   <span class="token-key">"id"</span>: <span class="token-number">11</span>,
   <span class="token-key">"method"</span>: <span class="token-string">"tools/call"</span>,
   <span class="token-key">"params"</span>: {
-    <span class="token-key">"name"</span>: <span class="token-string">"vendor_ask"</span>,
+    <span class="token-key">"name"</span>: <span class="token-string">"ask_question"</span>,
     <span class="token-key">"arguments"</span>: {
       <span class="token-key">"question"</span>: <span class="token-string">"Can I order a gluten-free birthday cake for Saturday?"</span>
     }
@@ -1304,14 +1118,14 @@ agentic://acme.com/company/about</code></pre>
 
                     <div class="info-box tip">
                         <div class="info-box-title">Tip</div>
-                        <p>The same MCP tools pattern works whether you're a SaaS company with Salesforce integrations or a bakery taking cake orders. The protocol is the same — only the resources and tools change.</p>
+                        <p>The same MCP tools pattern works whether you're a SaaS company with Salesforce integrations or a bakery taking cake orders. The protocol is the same — only the tools change.</p>
                     </div>
                 </section>
 
-                <!-- Section 5: Qualification & Sessions -->
+                <!-- Section 4: Qualification & Sessions -->
                 <section id="qualification">
                     <div class="section-header">
-                        <span class="section-number">5</span>
+                        <span class="section-number">4</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Qualification &amp; Sessions</h2>
                     </div>
 
@@ -1332,17 +1146,17 @@ agentic://acme.com/company/about</code></pre>
                             <tr>
                                 <td><code>unqualified</code></td>
                                 <td>Session created, no buyer data collected</td>
-                                <td>Public resources, <code>vendor_ask</code>, <code>qualify</code></td>
+                                <td><code>ask_question</code>, <code>qualify</code></td>
                             </tr>
                             <tr>
                                 <td><code>qualifying</code></td>
                                 <td>Partial buyer data collected</td>
-                                <td>Public resources, <code>vendor_ask</code>, <code>qualify</code></td>
+                                <td><code>ask_question</code>, <code>qualify</code></td>
                             </tr>
                             <tr>
                                 <td><code>qualified</code></td>
                                 <td>All required buyer data collected</td>
-                                <td>All resources, all tools</td>
+                                <td>All tools</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1424,10 +1238,10 @@ agentic://acme.com/company/about</code></pre>
                     </div>
                 </section>
 
-                <!-- Section 6: Response Verification -->
+                <!-- Section 5: Response Verification -->
                 <section id="verification">
                     <div class="section-header">
-                        <span class="section-number">6</span>
+                        <span class="section-number">5</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Response Verification</h2>
                     </div>
 
@@ -1476,10 +1290,10 @@ agentic://acme.com/company/about</code></pre>
                     </div>
                 </section>
 
-                <!-- Section 7: Authorization -->
+                <!-- Section 6: Authorization -->
                 <section id="authorization">
                     <div class="section-header">
-                        <span class="section-number">7</span>
+                        <span class="section-number">6</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Authorization</h2>
                     </div>
 
@@ -1530,8 +1344,8 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         <tbody>
                             <tr>
                                 <td><code>mcp:read</code></td>
-                                <td>Read-only access to vendor resources and data</td>
-                                <td><code>resources/read</code>, <code>vendor_ask</code></td>
+                                <td>Read-only access to vendor data</td>
+                                <td><code>ask_question</code></td>
                             </tr>
                             <tr>
                                 <td><code>mcp:write</code></td>
@@ -1563,14 +1377,14 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
 
                     <div class="info-box note">
                         <div class="info-box-title">Note</div>
-                        <p>Not all endpoints require authorization. Public resources and the <code>vendor_ask</code> tool may be accessible without authentication. The server decides which capabilities require a Bearer token.</p>
+                        <p>Not all endpoints require authorization. The <code>ask_question</code> tool may be accessible without authentication. The server decides which capabilities require a Bearer token.</p>
                     </div>
                 </section>
 
-                <!-- Section 8: Glossary -->
+                <!-- Section 7: Glossary -->
                 <section id="glossary">
                     <div class="section-header">
-                        <span class="section-number">8</span>
+                        <span class="section-number">7</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Glossary</h2>
                     </div>
 
@@ -1581,7 +1395,7 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         </div>
                         <div class="glossary-term">
                             <dt>MCP Server Profile</dt>
-                            <dd>A set of conventions for implementing a specific type of MCP server. The Agentic Web profile defines how any business exposes resources and tools for AI agent interactions.</dd>
+                            <dd>A set of conventions for implementing a specific type of MCP server. The Agentic Web profile defines how any business exposes tools for AI agent interactions.</dd>
                         </div>
                         <div class="glossary-term">
                             <dt>JSON-RPC 2.0</dt>
@@ -1590,10 +1404,6 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         <div class="glossary-term">
                             <dt>Streamable HTTP</dt>
                             <dd>The MCP transport used by this profile. A single HTTPS endpoint accepts JSON-RPC 2.0 messages via POST. Responses can be returned as JSON or streamed via Server-Sent Events.</dd>
-                        </div>
-                        <div class="glossary-term">
-                            <dt>Resource</dt>
-                            <dd>An MCP primitive representing vendor knowledge (pricing, compliance, features). Discovered via <code>resources/list</code>, read via <code>resources/read</code>, identified by <code>agentic://</code> URIs.</dd>
                         </div>
                         <div class="glossary-term">
                             <dt>Tool</dt>
@@ -1605,7 +1415,7 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         </div>
                         <div class="glossary-term">
                             <dt>Qualification</dt>
-                            <dd>Progressive buyer data collection via the <code>qualify</code> tool. Transitions the session from <code>unqualified</code> → <code>qualifying</code> → <code>qualified</code>, unlocking gated resources and actions.</dd>
+                            <dd>Progressive buyer data collection via the <code>qualify</code> tool. Transitions the session from <code>unqualified</code> → <code>qualifying</code> → <code>qualified</code>, unlocking gated actions.</dd>
                         </div>
                         <div class="glossary-term">
                             <dt>structuredContent</dt>
