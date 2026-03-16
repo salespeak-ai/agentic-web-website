@@ -2528,7 +2528,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="key">"result"</span>: <span class="bracket">{</span>
     <span class="key">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
     <span class="key">"capabilities"</span>: <span class="bracket">{</span>
-      <span class="key">"resources"</span>: <span class="bracket">{</span> <span class="key">"listChanged"</span>: true <span class="bracket">}</span>,
       <span class="key">"tools"</span>: <span class="bracket">{</span> <span class="key">"listChanged"</span>: true <span class="bracket">}</span>
     <span class="bracket">}</span>,
     <span class="key">"serverInfo"</span>: <span class="bracket">{</span>
@@ -2538,9 +2537,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="bracket">}</span>
 <span class="bracket">}</span>
 
-<span class="comment">// Then discover tools and resources:</span>
-<span class="comment">// → tools/list returns: vendor_ask, schedule_demo, open_ticket, request_quote, qualify</span>
-<span class="comment">// → resources/list returns: pricing, integrations, compliance, features</span></pre>
+<span class="comment">// Then discover tools:</span>
+<span class="comment">// → tools/list returns: ask_question, schedule_demo, open_ticket, request_quote, qualify</span></pre>
                 </div>
             </div>
         </div>
@@ -2786,7 +2784,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="property">"result"</span>: {
     <span class="property">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
     <span class="property">"capabilities"</span>: {
-      <span class="property">"resources"</span>: { <span class="property">"listChanged"</span>: true },
       <span class="property">"tools"</span>: { <span class="property">"listChanged"</span>: true }
     },
     <span class="property">"serverInfo"</span>: { <span class="property">"name"</span>: <span class="string">"acme-mcp"</span>, <span class="property">"version"</span>: <span class="string">"1.0"</span> }
@@ -2803,7 +2800,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="property">"id"</span>: <span class="number">2</span>,
   <span class="property">"method"</span>: <span class="string">"tools/call"</span>,
   <span class="property">"params"</span>: {
-    <span class="property">"name"</span>: <span class="string">"vendor_ask"</span>,
+    <span class="property">"name"</span>: <span class="string">"ask_question"</span>,
     <span class="property">"arguments"</span>: {
       <span class="property">"question"</span>: <span class="string">"Does Acme support Salesforce integration?"</span>
     }
@@ -3017,7 +3014,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>AI agents connect to your MCP server endpoint (e.g., <code>https://yoursite.com/mcp</code>) and send an <code>initialize</code> request. The server responds with its capabilities — what resources (knowledge) are available and what tools (actions) are supported. The agent then calls <code>tools/list</code> and <code>resources/list</code> to see exactly what it can do. It's the standard MCP protocol — any compatible client works automatically.</p>
+                            <p>AI agents connect to your MCP server endpoint (e.g., <code>https://yoursite.com/mcp</code>) and send an <code>initialize</code> request. The server responds with its capabilities — what tools are available. The agent then calls <code>tools/list</code> to see exactly what it can do. It's the standard MCP protocol — any compatible client works automatically.</p>
                         </div>
                     </div>
                 </div>
