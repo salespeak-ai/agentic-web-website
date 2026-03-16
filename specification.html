@@ -936,6 +936,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         Vendor actions are exposed as <strong>MCP tools</strong>. Agents discover them via <code>tools/list</code> and invoke them via <code>tools/call</code>. Each tool includes a full JSON Schema <code>inputSchema</code> so agents know exactly what parameters to provide.
                     </p>
 
+                    <h3>Required, optional, and custom tools</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Tools</th>
+                                <th>Rule</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Required</strong></td>
+                                <td><code>ask_question</code></td>
+                                <td>Every Agentic Web server MUST implement this. It's the baseline: your business can answer questions.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Optional (standard)</strong></td>
+                                <td><code>qualify</code>, <code>schedule_demo</code>, <code>request_quote</code>, <code>open_ticket</code>, <code>start_trial</code></td>
+                                <td>Implement whichever ones make sense. A bakery doesn't need <code>schedule_demo</code>. A SaaS company probably does.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Custom</strong></td>
+                                <td>Anything you want</td>
+                                <td>Add your own tools: <code>place_order</code>, <code>check_stock</code>, <code>book_table</code>, <code>get_directions</code>. Agents discover them at runtime via <code>tools/list</code>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box tip">
+                        <div class="info-box-title">Tip</div>
+                        <p>The spec defines standard tool <em>names</em> so agents can recognize common patterns across servers. But you're not limited to them. If your business needs a <code>reserve_court</code> or <code>check_availability</code> tool, add it. The agent reads the <code>description</code> and <code>inputSchema</code> to figure out how to use it.</p>
+                    </div>
+
                     <h3>Listing Tools</h3>
                     <pre><code><span class="token-comment">// Client → Server</span>
 {
