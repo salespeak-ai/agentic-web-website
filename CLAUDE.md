@@ -2,7 +2,7 @@
 
 ## Overview
 
-Marketing website for "The Agentic Web" - a platform promoting AI-native endpoints for enterprise. The site explains how companies can create endpoints that AI agents can interact with, providing verified responses and enabling actions.
+Marketing website for "The Agentic Web" - a platform for turning any business into an AI-native endpoint using MCP. The site explains how companies can create MCP servers that AI agents connect to directly, providing verified responses and enabling actions. Not enterprise-only — this is for any business (Wix sites, B2C, B2B, bakeries, SaaS).
 
 **Live site:** https://agentic-web.ai/
 
@@ -17,9 +17,15 @@ Marketing website for "The Agentic Web" - a platform promoting AI-native endpoin
 
 ```
 ├── index.html         # Main landing page
-├── nlweb.html         # NLWeb standards & how Agentic Web extends it
+├── specification.html # MCP Server Profile specification
+├── blog/index.html    # "Under the Hood" technical blog post
 ├── sequence.html      # Interaction sequence diagram
-├── specification.html # Technical MCP extension specification
+├── nlweb.html         # NLWeb standards & how Agentic Web extends it
+├── why.html           # Why it's good for everyone (buyers/vendors/LLMs)
+├── a2a-chat.html      # A2A chat replay demo
+├── a2a-sequence.html  # A2A interaction sequence (cinematic)
+├── blog-agentic-web.md # Blog post source content (markdown)
+├── TODOS.md           # Tracked follow-up work
 ├── sitemap.xml        # SEO sitemap
 ├── robots.txt         # Search engine crawling rules
 ├── favicon.svg        # Site favicon
@@ -51,9 +57,13 @@ Install "Live Server" extension, then right-click `index.html` → "Open with Li
 | Page | URL Path | Purpose |
 |------|----------|---------|
 | Home | `/` | Main landing, value proposition |
-| NLWeb | `/nlweb.html` | NLWeb standards explanation |
+| Specification | `/specification.html` | MCP Server Profile spec (JSON-RPC 2.0) |
+| Blog | `/blog/` | "Under the Hood" technical blog post |
 | Sequence | `/sequence.html` | Interaction flow diagram |
-| Specification | `/specification.html` | Technical MCP spec |
+| NLWeb | `/nlweb.html` | NLWeb standards explanation |
+| Why | `/why.html` | Value prop for buyers, vendors, LLMs |
+| A2A Chat | `/a2a-chat.html` | Agent-to-agent chat replay |
+| A2A Sequence | `/a2a-sequence.html` | Agent-to-agent cinematic sequence |
 
 ## Design System
 
