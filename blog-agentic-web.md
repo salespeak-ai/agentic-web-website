@@ -1,61 +1,63 @@
-# Under the Hood: The Agentic Web — MCP Server Profiles for Every Business
+# Under the Hood: The Agentic Web
 
 *By the Agentic Web team at [Salespeak](https://salespeak.ai)*
 
 ## 1. What is the Agentic Web?
 
-When someone asks an AI assistant "Can I order a gluten-free cake from Rosa's Bakery for Saturday?" — today's AI scrapes a website, guesses at the answer, and hopes for the best. It can't check real-time availability, verify pricing, or actually place the order.
+Someone asks their AI assistant: "Can I order a gluten-free cake from Rosa's Bakery for Saturday?" The AI scrapes a website, guesses at the answer, and hopes for the best. It can't check availability, verify pricing, or place the order.
 
-The Agentic Web changes this. It's an open specification for turning any business — a bakery, a SaaS company, an e-commerce store — into an **MCP server** that AI agents can connect to directly. Instead of scraping and guessing, the agent calls a verified API, gets an authoritative answer, and can take action on the user's behalf.
+We're building a fix for this. The Agentic Web is an open spec for turning any business into an [MCP](https://modelcontextprotocol.io) server that AI agents connect to directly. Instead of scraping and guessing, the agent calls a real API, gets a signed answer, and takes action.
 
-The core idea is simple: **companies don't just have websites — they have AI-native endpoints that answer questions and take actions.**
+**Companies don't just have websites. They have AI-native endpoints that answer questions and do things.**
 
-It's built on [MCP](https://modelcontextprotocol.io) (Anthropic's Model Context Protocol), the same protocol that Claude, ChatGPT, and other AI agents already speak. Any MCP-compatible client connects to your server out of the box — no custom integrations, no vendor lock-in.
+It's built on MCP (Anthropic's Model Context Protocol), the same protocol that Claude, ChatGPT, and other AI agents already speak. Any MCP client connects to your server out of the box. No custom integrations, no lock-in.
 
-### The problem it solves
+### The problem
 
-Today, AI-powered research is broken. AI scrapes SEO-biased content and presents it as objective truth. Users get hallucinated pricing, outdated feature lists, and "contact sales" dead ends — with no way to verify accuracy or take action.
+AI-powered research is broken. AI scrapes SEO-biased content and presents it as truth. Users get hallucinated pricing, outdated feature lists, and "contact sales" dead ends. No way to verify anything. No way to act on it.
 
-The Agentic Web inverts this. Instead of AI pulling data *from* your website, your business pushes authoritative data *to* AI through a standard protocol:
+The Agentic Web flips this. Your business pushes first-party data to AI through a standard protocol:
 
 ```
-CURRENT:   AI Agent → Scrapes Website → Guesses Answer
-AGENTIC:   AI Agent → Calls MCP Server → Gets Verified Answer + Takes Action
+TODAY:     AI Agent → Scrapes Website → Guesses Answer
+AGENTIC:   AI Agent → Calls MCP Server → Verified Answer + Action
 ```
 
-### How it relates to UCP, MCP, and A2A
+### Where it sits relative to UCP, MCP, and A2A
 
-The Agentic Web isn't competing with other protocols — it complements them:
+These protocols don't compete. They cover different ground.
 
-- **MCP** (Anthropic) is the transport layer. The Agentic Web is an MCP Server Profile — conventions for building your endpoint as a standard MCP server.
-- **UCP** (Google, Shopify, Walmart, Stripe) handles commerce — product discovery, cart, checkout, payments. If you sell products, UCP handles the transaction.
-- **A2A** (Google) enables agent-to-agent communication. When a user's AI assistant needs to negotiate with your company's AI agent, A2A handles that handoff.
+**MCP** (Anthropic) is the transport layer. The Agentic Web is an MCP Server Profile: conventions for building your endpoint as a standard MCP server.
 
-The Agentic Web handles everything that's *not* a purchase: answering questions, qualifying buyers, scheduling demos, opening tickets, providing verified company information. You might implement all three — or just one. They're independent.
+**UCP** (Google, Shopify, Walmart, Stripe) handles commerce: product discovery, cart, checkout, payments. If you sell products, UCP handles the transaction. The Agentic Web handles everything else: answering questions, qualifying buyers, scheduling demos, opening tickets.
+
+**A2A** (Google) is for agent-to-agent communication. When a user's AI needs to negotiate with your company's AI, A2A handles that.
+
+You might implement all three, or just one. They're independent.
 
 
 ## 2. Who benefits?
 
 ### Buyers
 
-No more navigating websites, parsing marketing speak, or filling out the same form for the tenth time. Ask a question in plain language, get a verified answer, and book a demo — all in one conversation. Your context flows naturally between steps, and you control exactly what information you share.
+No more navigating websites, parsing marketing copy, or filling out the same form for the tenth time. Ask in plain language, get a verified answer, book a demo. All in one conversation. You control what you share.
 
 ### Businesses
 
-You define what AI can say about you. No more hallucinated features, wrong pricing, or outdated information. Every interaction collects structured qualification data (company size, use case, budget) that flows into your CRM. Leads get routed to the right person automatically — not a round-robin queue.
+You define what AI says about you. No hallucinated features, no wrong pricing. Every interaction collects structured qualification data (company size, use case, budget) that goes into your CRM. Leads route to the right person automatically.
 
 ### AI agents
 
-Instead of guessing from stale training data, agents call a live API and get the real answer. Responses are cryptographically signed, so the agent can tell users "They are SOC2 Type II certified, verified March 2026" — not "I think they might be SOC2 compliant." And agents can go beyond answering questions: they can actually book the demo, start the trial, or open the ticket.
+Agents call a live API instead of guessing from stale training data. Responses are cryptographically signed, so the agent can say "They are SOC2 Type II certified, verified March 2026" with actual proof behind it. And agents don't just answer questions. They book the demo. Start the trial. Open the ticket.
 
 
-## 3. How it works — a walkthrough
+## 3. How it works
 
-Let's walk through a complete interaction. Rosa's Bakery has set up an Agentic Web MCP server. A customer asks their AI assistant about ordering a cake.
+We'll walk through a real interaction. Rosa's Bakery has an Agentic Web MCP server. A customer asks their AI about ordering a cake.
 
-### Step 1: Connect and initialize
+### Step 1: Connect
 
-The AI agent connects to Rosa's MCP server and performs the standard handshake:
+The agent connects and does the standard MCP handshake:
 
 ```
 POST https://rosasbakery.com/mcp
@@ -97,9 +99,9 @@ Content-Type: application/json
 }
 ```
 
-The server returns an `Mcp-Session-Id` header that the client includes on all subsequent requests.
+The server returns an `Mcp-Session-Id` header. The client includes it on every request after this.
 
-### Step 2: Discover available tools
+### Step 2: Discover tools
 
 The agent calls `tools/list` to see what Rosa's Bakery can do:
 
@@ -144,7 +146,7 @@ The agent calls `tools/list` to see what Rosa's Bakery can do:
 }
 ```
 
-Notice: the same `tools/list` pattern works for any business. An enterprise SaaS company would return `ask_question`, `schedule_demo`, `request_quote`, `open_ticket`. A bakery returns `ask_question`, `place_order`. The protocol is identical — only the tools change.
+The same `tools/list` pattern works for any business. A SaaS company would return `ask_question`, `schedule_demo`, `request_quote`, `open_ticket`. A bakery returns `ask_question`, `place_order`. Same protocol. Different tools.
 
 ### Step 3: Ask a question
 
@@ -197,13 +199,11 @@ The user asked: "Can I order a gluten-free birthday cake for Saturday?"
 }
 ```
 
-The response has two parts:
-- **`content`**: Human-readable text the AI shows to the user.
-- **`structuredContent`**: Machine-readable data with pricing, availability, and a cryptographic signature proving this came directly from Rosa's Bakery — not from a hallucination.
+Two things in the response. `content` is the human-readable text the AI shows. `structuredContent` is machine-readable data with pricing, availability, and a cryptographic signature proving this came from Rosa's Bakery, not from a hallucination.
 
 ### Step 4: Place the order
 
-The user says "Great, I'll take the 8-inch for Saturday." The agent calls `place_order`:
+The user says "Great, I'll take the 8-inch for Saturday."
 
 ```json
 // Client → Server
@@ -251,15 +251,13 @@ The user says "Great, I'll take the 8-inch for Saturday." The agent calls `place
 }
 ```
 
-From question to confirmed order in four JSON-RPC calls. The user never left their AI assistant. Rosa's Bakery never built a custom integration for any specific AI platform.
+Four JSON-RPC calls. Question to confirmed order. The user never left their AI assistant. Rosa's Bakery never built a custom integration for any AI platform.
 
-### The same pattern at scale
-
-Replace Rosa's Bakery with an enterprise SaaS company and the flow is identical:
+### Same pattern, different business
 
 | Step | Bakery | SaaS Company |
 |------|--------|--------------|
-| initialize | Connect to rosasbakery.com/mcp | Connect to acme.com/mcp |
+| initialize | rosasbakery.com/mcp | acme.com/mcp |
 | tools/list | ask_question, place_order | ask_question, schedule_demo, request_quote, qualify |
 | ask_question | "Got gluten-free cakes?" | "Support Salesforce integration?" |
 | Action | place_order | schedule_demo (after qualify) |
@@ -269,13 +267,13 @@ One protocol. Any business.
 
 ## 4. Verified responses
 
-A critical problem with AI today: when it tells you "Acme is SOC2 certified," you have no idea if that's true or hallucinated. The Agentic Web solves this with **Ed25519 signatures**.
+When AI tells you "Acme is SOC2 certified," you have no idea if that's real or hallucinated. The Agentic Web fixes this with Ed25519 signatures.
 
-Every `structuredContent` response can carry a cryptographic signature. The verification flow:
+Every `structuredContent` response can carry a cryptographic signature. Verification is three steps:
 
-1. **Extract** the `structuredContent` from the tool result.
-2. **Canonicalize** using [JCS (RFC 8785)](https://www.rfc-editor.org/rfc/rfc8785) to get a deterministic byte string.
-3. **Verify** the Ed25519 signature against the vendor's public key, published at `/.well-known/jwks.json` ([RFC 7517](https://www.rfc-editor.org/rfc/rfc7517)).
+1. Extract `structuredContent` from the tool result.
+2. Canonicalize it using [JCS (RFC 8785)](https://www.rfc-editor.org/rfc/rfc8785) for a deterministic byte string.
+3. Verify the Ed25519 signature against the vendor's public key at `/.well-known/jwks.json` ([RFC 7517](https://www.rfc-editor.org/rfc/rfc7517)).
 
 ```json
 // GET https://rosasbakery.com/.well-known/jwks.json
@@ -292,17 +290,17 @@ Every `structuredContent` response can carry a cryptographic signature. The veri
 }
 ```
 
-The agent can now tell the user with certainty: *"This pricing is verified directly by Rosa's Bakery, signed 2 minutes ago"* — not *"Based on what I found online..."*
+Now the agent can say: *"This pricing is verified by Rosa's Bakery, signed 2 minutes ago."* Not *"Based on what I found online..."*
 
 
-## 5. Qualification — the conversational form
+## 5. Qualification: the conversational form
 
-Some information shouldn't be free. Enterprise pricing, custom quotes, and security documentation often require context about the buyer. Traditional web forms are friction-heavy and context-destroying.
+Some information shouldn't be free. Custom quotes and security docs need context about the buyer. Web forms are friction machines that destroy context.
 
-The Agentic Web replaces forms with the `qualify` tool — progressive, conversational data collection within the same MCP session.
+The `qualify` tool replaces them. It's progressive, conversational data collection within a single MCP session.
 
 ```json
-// Agent asks for enterprise pricing → server responds:
+// Agent asks for pricing → server responds:
 {
   "structuredContent": {
     "qualificationRequired": true,
@@ -312,23 +310,20 @@ The Agentic Web replaces forms with the `qualify` tool — progressive, conversa
 }
 ```
 
-The agent collects this naturally through conversation — "What company are you with? How big is your team?" — then submits via the `qualify` tool. The session transitions from `unqualified` → `qualifying` → `qualified`, unlocking gated tools like `schedule_demo` and `request_quote`.
+The agent collects this through conversation: "What company are you with? How big is your team?" Then submits via `qualify`. The session transitions from `unqualified` → `qualifying` → `qualified`, unlocking gated tools like `schedule_demo` and `request_quote`.
 
-The vendor controls all qualification logic. The AI can't skip it or bypass it. But unlike a web form, the buyer's full conversation context is preserved — when the demo happens, the sales rep knows exactly what was discussed.
+The vendor controls the logic. The AI can't skip or bypass qualification. But unlike a form, the buyer's full conversation context travels with them. When the demo happens, the sales rep already knows what was discussed.
 
 
 ## 6. Get started
 
-The Agentic Web specification is live at [agentic-web.ai/specification.html](https://agentic-web.ai/specification.html). It covers transport, tools, qualification, verification, and authorization in detail — with copy-paste JSON-RPC 2.0 examples throughout.
+The spec is at [agentic-web.ai/specification.html](https://agentic-web.ai/specification.html). Transport, tools, qualification, verification, authorization. Copy-paste JSON-RPC 2.0 examples throughout.
 
-The spec is open and protocol-level. Any MCP-compatible client — Claude, ChatGPT, Gemini, or a custom agent — connects without special adapters.
+Any MCP client connects without adapters. Claude, ChatGPT, Gemini, or your own agent.
 
-**What's next:**
-- Reference implementation (coming soon)
-- SDK quickstart guides
-- Community contributions via [GitHub](https://github.com/salespeak-ai/agentic-web-website)
+We're working on a reference implementation and SDK quickstart guides. The code will live on [GitHub](https://github.com/salespeak-ai/agentic-web-website).
 
-We're early. The protocols are emerging, the ecosystem is forming, and the best implementations haven't been built yet. If you're thinking about how AI agents should interact with businesses, we'd love to hear from you.
+We don't have 20 launch partners or a finished SDK. What we have is a spec that works, a protocol that's real, and a bet that every business will need an AI-native endpoint within the next two years. If you're thinking about the same problem, [come build with us](https://github.com/salespeak-ai/agentic-web-website).
 
 ---
 
