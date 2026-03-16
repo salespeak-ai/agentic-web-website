@@ -886,9 +886,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-empty"></div>
                     <div class="step-message from-ai" data-from="AI Agent">
                         <span class="step-number">2</span>
-                        Discovering Acme capabilities...
-                        <br><code>GET /.well-known/mcp</code>
-                        <span class="step-protocol">MCP Discovery</span>
+                        Connecting to Acme MCP server...
+                        <br><code>POST /mcp → initialize</code>
+                        <span class="step-protocol">MCP Initialize</span>
                     </div>
                     <div class="step-arrow right"></div>
                 </div>
@@ -899,8 +899,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-arrow left"></div>
                     <div class="step-message from-vendor" data-from="Acme Endpoint">
                         <span class="step-number">3</span>
-                        Returns capability manifest: verified responses for <strong>pricing</strong>, <strong>compliance</strong>, <strong>integrations</strong>. Available actions: <strong>schedule_demo</strong>, <strong>request_quote</strong>.
-                        <span class="step-protocol">Capability Manifest</span>
+                        Server responds with capabilities: resources (<strong>pricing</strong>, <strong>compliance</strong>, <strong>integrations</strong>) and tools (<strong>vendor_ask</strong>, <strong>schedule_demo</strong>, <strong>request_quote</strong>).
+                        <span class="step-protocol">MCP Capabilities</span>
                     </div>
                 </div>
 
@@ -909,8 +909,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-empty"></div>
                     <div class="step-message from-ai" data-from="AI Agent">
                         <span class="step-number">4</span>
-                        Querying: "Is Acme a good fit for enterprise?"
-                        <span class="step-protocol">Knowledge Query</span>
+                        <code>tools/call → vendor_ask</code>: "Is Acme a good fit for us?"
+                        <span class="step-protocol">tools/call</span>
                     </div>
                     <div class="step-arrow right"></div>
                 </div>
@@ -921,8 +921,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-arrow left"></div>
                     <div class="step-message from-vendor" data-from="Acme Endpoint">
                         <span class="step-number">5</span>
-                        <strong>Qualification needed.</strong> Returns structured questions: company size, security requirements, primary use case, required integrations.
-                        <span class="step-protocol">Qualification Request</span>
+                        <strong>Qualification needed.</strong> Returns qualificationRequired flag. Remaining fields: company size, security requirements, primary use case, required integrations.
+                        <span class="step-protocol">structuredContent</span>
                     </div>
                 </div>
 
@@ -951,8 +951,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-empty"></div>
                     <div class="step-message from-ai" data-from="AI Agent">
                         <span class="step-number">8</span>
-                        Transmits structured qualification data to Acme endpoint.
-                        <span class="step-protocol">Structured Data</span>
+                        <code>tools/call → qualify</code> with structured data
+                        <span class="step-protocol">tools/call</span>
                     </div>
                     <div class="step-arrow right"></div>
                 </div>
@@ -964,7 +964,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step-message from-vendor" data-from="Acme Endpoint">
                         <span class="step-number">9</span>
                         <strong>92% fit score.</strong> SOC2 Type II certified ✓, Enterprise tier supports 10,000+ employees ✓, External ASM included ✓. Estimated: $3,200/mo.
-                        <span class="step-protocol">Fit Assessment</span>
+                        <span class="step-protocol">structuredContent</span>
                     </div>
                 </div>
 

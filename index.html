@@ -2700,7 +2700,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="section-header animate-on-scroll">
                 <span class="section-label">↔ Two-Way</span>
                 <h2>Not one-way Q&A — a real conversation</h2>
-                <p>Vendors can ask qualification questions and provide personalized responses.</p>
+                <p>Any business can ask the right questions and provide personalized responses.</p>
             </div>
 
             <div class="two-way-demo animate-on-scroll">
@@ -2710,7 +2710,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="two-way-content">
                             <div class="two-way-label">User via AI Agent</div>
                             <div class="two-way-bubble">
-                                <p>Is Acme a good fit for our enterprise needs?</p>
+                                <p>I'm looking for an API platform — what plans do you have?</p>
                             </div>
                         </div>
                     </div>
@@ -2720,11 +2720,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="two-way-content">
                             <div class="two-way-label">Acme Endpoint</div>
                             <div class="two-way-bubble">
-                                <p>I'd love to help assess fit. A few quick questions:</p>
+                                <p>I'd love to help find the right plan. A few quick questions:</p>
                                 <ul class="two-way-questions">
-                                    <li>Do you require SOC2 compliance?</li>
-                                    <li>What region are you primarily located in?</li>
-                                    <li>Approximately how many users?</li>
+                                    <li>What's your team size?</li>
+                                    <li>What's your primary use case?</li>
+                                    <li>What's your monthly budget range?</li>
                                 </ul>
                             </div>
                         </div>
@@ -2735,7 +2735,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="two-way-content">
                             <div class="two-way-label">User via AI Agent</div>
                             <div class="two-way-bubble">
-                                <p>Yes to SOC2, we're EU-based, about 500 users.</p>
+                                <p>About 20 developers, we need REST API management, budget around $500/month.</p>
                             </div>
                         </div>
                     </div>
@@ -2747,12 +2747,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             <div class="two-way-bubble">
                                 <div class="two-way-fit">
                                     <div class="two-way-fit-label">Fit Assessment</div>
-                                    <p><strong>Strong fit.</strong> Acme Enterprise includes SOC2 Type II certification, EU data residency (Frankfurt), and scales to 10,000+ users.</p>
+                                    <p><strong>Great fit.</strong> Our Starter plan at $49/seat covers REST API management with 99.9% uptime. For 20 developers that's $980/month — I can get you a volume discount.</p>
                                 </div>
                                 <div class="chat-actions" style="margin-top: 1rem;">
-                                    <button class="chat-action-btn">Request Custom Quote</button>
-                                    <button class="chat-action-btn">Schedule Demo</button>
-                                    <button class="chat-action-btn">View Security Docs</button>
+                                    <button class="chat-action-btn">Get Started</button>
+                                    <button class="chat-action-btn">Talk to Sales</button>
+                                    <button class="chat-action-btn">See Full Pricing</button>
                                 </div>
                             </div>
                         </div>
@@ -2783,88 +2783,88 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <div class="code-content">
                     <div class="code-block" id="code-discovery">
-<span class="comment">// Agent discovers company capabilities</span>
-<span class="method">GET</span> https://acme.com/.well-known/mcp
+<span class="comment">// Client connects and initializes</span>
+<span class="method">POST</span> https://acme.com/mcp
 
-<span class="comment">// Response: capability manifest</span>
 {
-  <span class="property">"name"</span>: <span class="string">"Acme Inc"</span>,
-  <span class="property">"description"</span>: <span class="string">"Enterprise API platform"</span>,
-  <span class="property">"capabilities"</span>: {
-    <span class="property">"verified_responses"</span>: [
-      <span class="string">"pricing"</span>, <span class="string">"integrations"</span>, <span class="string">"compliance"</span>
-    ],
-    <span class="property">"available_actions"</span>: [
-      <span class="string">"schedule_demo"</span>, <span class="string">"open_ticket"</span>, <span class="string">"request_quote"</span>
-    ]
-  },
-  <span class="property">"endpoint"</span>: <span class="string">"https://api.acme.com/agent"</span>
+  <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"id"</span>: <span class="number">1</span>,
+  <span class="property">"method"</span>: <span class="string">"initialize"</span>,
+  <span class="property">"params"</span>: {
+    <span class="property">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
+    <span class="property">"clientInfo"</span>: { <span class="property">"name"</span>: <span class="string">"ai-agent"</span>, <span class="property">"version"</span>: <span class="string">"1.0"</span> }
+  }
+}
+
+<span class="comment">// Server responds with capabilities</span>
+{
+  <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"id"</span>: <span class="number">1</span>,
+  <span class="property">"result"</span>: {
+    <span class="property">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
+    <span class="property">"capabilities"</span>: {
+      <span class="property">"resources"</span>: { <span class="property">"listChanged"</span>: true },
+      <span class="property">"tools"</span>: { <span class="property">"listChanged"</span>: true }
+    },
+    <span class="property">"serverInfo"</span>: { <span class="property">"name"</span>: <span class="string">"acme-mcp"</span>, <span class="property">"version"</span>: <span class="string">"1.0"</span> }
+  }
 }
                     </div>
 
                     <div class="code-block" id="code-query" style="display: none;">
-<span class="comment">// Agent queries the company endpoint</span>
-<span class="method">POST</span> https://api.acme.com/agent
+<span class="comment">// Agent asks a question via tools/call</span>
+<span class="method">POST</span> https://acme.com/mcp
 
 {
   <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
-  <span class="property">"method"</span>: <span class="string">"ask_company"</span>,
+  <span class="property">"id"</span>: <span class="number">2</span>,
+  <span class="property">"method"</span>: <span class="string">"tools/call"</span>,
   <span class="property">"params"</span>: {
-    <span class="property">"question"</span>: <span class="string">"Is Acme a good fit for enterprise?"</span>,
-    <span class="property">"context"</span>: {
-      <span class="property">"user_type"</span>: <span class="string">"enterprise_buyer"</span>
+    <span class="property">"name"</span>: <span class="string">"vendor_ask"</span>,
+    <span class="property">"arguments"</span>: {
+      <span class="property">"question"</span>: <span class="string">"Does Acme support Salesforce integration?"</span>
     }
-  },
-  <span class="property">"id"</span>: <span class="number">1</span>
+  }
 }
                     </div>
 
                     <div class="code-block" id="code-qualify" style="display: none;">
-<span class="comment">// Vendor asks qualification questions</span>
+<span class="comment">// Qualification via the qualify tool</span>
 {
   <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
-  <span class="property">"result"</span>: {
-    <span class="property">"type"</span>: <span class="string">"qualification_required"</span>,
-    <span class="property">"questions"</span>: [
-      {
-        <span class="property">"id"</span>: <span class="string">"compliance"</span>,
-        <span class="property">"text"</span>: <span class="string">"Do you require SOC2 compliance?"</span>,
-        <span class="property">"type"</span>: <span class="string">"boolean"</span>
-      },
-      {
-        <span class="property">"id"</span>: <span class="string">"region"</span>,
-        <span class="property">"text"</span>: <span class="string">"What region are you located in?"</span>,
-        <span class="property">"options"</span>: [<span class="string">"US"</span>, <span class="string">"EU"</span>, <span class="string">"APAC"</span>]
-      },
-      {
-        <span class="property">"id"</span>: <span class="string">"users"</span>,
-        <span class="property">"text"</span>: <span class="string">"Approximately how many users?"</span>,
-        <span class="property">"type"</span>: <span class="string">"number"</span>
-      }
-    ]
-  },
-  <span class="property">"id"</span>: <span class="number">1</span>
+  <span class="property">"id"</span>: <span class="number">3</span>,
+  <span class="property">"method"</span>: <span class="string">"tools/call"</span>,
+  <span class="property">"params"</span>: {
+    <span class="property">"name"</span>: <span class="string">"qualify"</span>,
+    <span class="property">"arguments"</span>: {
+      <span class="property">"company_name"</span>: <span class="string">"Globex Corp"</span>,
+      <span class="property">"company_size"</span>: <span class="string">"500-1000"</span>,
+      <span class="property">"use_case"</span>: <span class="string">"API platform"</span>
+    }
+  }
 }
                     </div>
 
                     <div class="code-block" id="code-response" style="display: none;">
-<span class="comment">// Vendor returns fit assessment with actions</span>
+<span class="comment">// Verified response with signature</span>
 {
   <span class="property">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="property">"id"</span>: <span class="number">2</span>,
   <span class="property">"result"</span>: {
-    <span class="property">"type"</span>: <span class="string">"fit_assessment"</span>,
-    <span class="property">"fit_score"</span>: <span class="string">"strong"</span>,
-    <span class="property">"response"</span>: <span class="string">"Acme Enterprise includes SOC2 Type II, EU data residency, and scales to 10,000+ users."</span>,
-    <span class="property">"verification"</span>: {
-      <span class="property">"signed_by"</span>: <span class="string">"acme.com"</span>,
-      <span class="property">"timestamp"</span>: <span class="string">"2024-01-15T10:30:00Z"</span>
-    },
-    <span class="property">"available_actions"</span>: [
-      { <span class="property">"id"</span>: <span class="string">"quote"</span>, <span class="property">"label"</span>: <span class="string">"Request Custom Quote"</span> },
-      { <span class="property">"id"</span>: <span class="string">"demo"</span>, <span class="property">"label"</span>: <span class="string">"Schedule Demo"</span> }
-    ]
-  },
-  <span class="property">"id"</span>: <span class="number">1</span>
+    <span class="property">"content"</span>: [{
+      <span class="property">"type"</span>: <span class="string">"text"</span>,
+      <span class="property">"text"</span>: <span class="string">"Yes, Acme offers native Salesforce integration on all paid plans."</span>
+    }],
+    <span class="property">"structuredContent"</span>: {
+      <span class="property">"answer"</span>: <span class="string">"Native Salesforce integration available"</span>,
+      <span class="property">"confidence"</span>: <span class="number">1.0</span>,
+      <span class="property">"verification"</span>: {
+        <span class="property">"algorithm"</span>: <span class="string">"Ed25519"</span>,
+        <span class="property">"keyId"</span>: <span class="string">"acme-2025-03"</span>,
+        <span class="property">"signature"</span>: <span class="string">"base64url..."</span>
+      }
+    }
+  }
 }
                     </div>
                 </div>
