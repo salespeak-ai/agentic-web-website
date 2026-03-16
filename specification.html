@@ -781,8 +781,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </a>
                     </li>
                     <li class="toc-item">
-                        <a href="#authorization" class="toc-link">
-                            <span class="toc-number">6.</span> Authorization
+                        <a href="#access" class="toc-link">
+                            <span class="toc-number">6.</span> Access Model
                         </a>
                     </li>
                     <li class="toc-item">
@@ -1290,74 +1290,85 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </div>
                 </section>
 
-                <!-- Section 6: Authorization -->
-                <section id="authorization">
+                <!-- Section 6: Access Model -->
+                <section id="access">
                     <div class="section-header">
                         <span class="section-number">6</span>
-                        <h2 style="margin-top: 0; border: none; padding: 0;">Authorization</h2>
+                        <h2 style="margin-top: 0; border: none; padding: 0;">Access Model</h2>
                     </div>
 
                     <p>
-                        Authorization follows the <strong>MCP OAuth 2.1 specification</strong>. When a request requires authorization, the server initiates a standard OAuth flow that any MCP client can complete.
+                        The Agentic Web works like a website: anyone can visit and ask questions without logging in. Authentication is only required when a user needs access to their own account data or performs sensitive actions tied to an existing relationship.
                     </p>
 
-                    <h3>Authorization Flow</h3>
-                    <ol>
-                        <li>Client sends a request to the MCP endpoint.</li>
-                        <li>Server responds with <code>401 Unauthorized</code> and a <code>WWW-Authenticate</code> header pointing to the resource metadata URL.</li>
-                        <li>Client fetches <strong>RFC 9728</strong> resource metadata from the indicated URL to discover the authorization server.</li>
-                        <li>Client fetches <strong>RFC 8414</strong> authorization server metadata to get endpoint URLs.</li>
-                        <li>Client performs an <strong>OAuth 2.1 authorization code flow with PKCE</strong>.</li>
-                        <li>Client includes the <code>Bearer</code> token on subsequent requests.</li>
-                    </ol>
-
-                    <pre><code><span class="token-comment">// Step 2: Server responds 401</span>
-HTTP/1.1 <span class="token-number">401</span> Unauthorized
-<span class="token-key">WWW-Authenticate</span>: Bearer resource_metadata=<span class="token-string">"https://acme.com/.well-known/oauth-protected-resource"</span>
-
-<span class="token-comment">// Step 3: Client fetches resource metadata</span>
-<span class="token-method">GET</span> <span class="token-url">https://acme.com/.well-known/oauth-protected-resource</span>
-{
-  <span class="token-key">"resource"</span>: <span class="token-string">"https://acme.com/mcp"</span>,
-  <span class="token-key">"authorization_servers"</span>: [<span class="token-string">"https://auth.acme.com"</span>],
-  <span class="token-key">"scopes_supported"</span>: [<span class="token-string">"mcp:read"</span>, <span class="token-string">"mcp:write"</span>]
-}
-
-<span class="token-comment">// Step 4: Client fetches auth server metadata</span>
-<span class="token-method">GET</span> <span class="token-url">https://auth.acme.com/.well-known/oauth-authorization-server</span>
-{
-  <span class="token-key">"issuer"</span>: <span class="token-string">"https://auth.acme.com"</span>,
-  <span class="token-key">"authorization_endpoint"</span>: <span class="token-string">"https://auth.acme.com/authorize"</span>,
-  <span class="token-key">"token_endpoint"</span>: <span class="token-string">"https://auth.acme.com/token"</span>,
-  <span class="token-key">"code_challenge_methods_supported"</span>: [<span class="token-string">"S256"</span>]
-}</code></pre>
-
-                    <h3>Scopes</h3>
+                    <h3>Three tiers of access</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>Scope</th>
-                                <th>Description</th>
-                                <th>Grants Access To</th>
+                                <th>Tier</th>
+                                <th>How it works</th>
+                                <th>Available tools</th>
+                                <th>Website analogy</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><code>mcp:read</code></td>
-                                <td>Read-only access to vendor data</td>
+                                <td><strong>Anonymous</strong></td>
+                                <td>Agent connects, initializes, asks questions. No identity required.</td>
                                 <td><code>ask_question</code></td>
+                                <td>Browsing a website</td>
                             </tr>
                             <tr>
-                                <td><code>mcp:write</code></td>
-                                <td>Execute actions that modify state</td>
-                                <td><code>schedule_demo</code>, <code>open_ticket</code>, <code>request_quote</code>, <code>start_trial</code></td>
+                                <td><strong>Qualified</strong></td>
+                                <td>Agent submits buyer info via the <code>qualify</code> tool. Conversational, not OAuth.</td>
+                                <td><code>ask_question</code>, <code>schedule_demo</code>, <code>request_quote</code>, <code>start_trial</code></td>
+                                <td>Filling out a contact form</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Authenticated</strong></td>
+                                <td>User logs in via OAuth 2.1 (per MCP spec). Only when accessing account-specific data.</td>
+                                <td>Account tools: <code>view_my_tickets</code>, <code>manage_subscription</code></td>
+                                <td>Logging into your account</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h3>Authenticated Requests</h3>
-                    <pre><code><span class="token-method">POST</span> <span class="token-url">https://acme.com/mcp</span>
+                    <h3>Anonymous access (default)</h3>
+                    <p>Most interactions require no authentication. An agent connects, calls <code>initialize</code>, and immediately starts using <code>ask_question</code>. The <code>Mcp-Session-Id</code> header provides continuity across requests but does not identify the user.</p>
+
+                    <pre><code><span class="token-comment">// No auth headers needed — just connect and ask</span>
+<span class="token-method">POST</span> <span class="token-url">https://acme.com/mcp</span>
 <span class="token-key">Content-Type</span>: application/json
+<span class="token-key">Mcp-Session-Id</span>: <span class="token-string">sess_a1b2c3d4e5f6</span>
+
+{
+  <span class="token-key">"jsonrpc"</span>: <span class="token-string">"2.0"</span>,
+  <span class="token-key">"id"</span>: <span class="token-number">5</span>,
+  <span class="token-key">"method"</span>: <span class="token-string">"tools/call"</span>,
+  <span class="token-key">"params"</span>: {
+    <span class="token-key">"name"</span>: <span class="token-string">"ask_question"</span>,
+    <span class="token-key">"arguments"</span>: {
+      <span class="token-key">"question"</span>: <span class="token-string">"What are your pricing plans?"</span>
+    }
+  }
+}</code></pre>
+
+                    <h3>Qualified access (via the qualify tool)</h3>
+                    <p>When the server needs buyer context before unlocking certain tools, it returns a <code>qualificationRequired</code> flag (see <a href="#qualification">Section 4</a>). The agent collects information conversationally and submits it via the <code>qualify</code> tool. This is not OAuth — it's a structured conversation within the same session.</p>
+
+                    <p>After qualification, the session unlocks gated tools like <code>schedule_demo</code> and <code>request_quote</code>. No tokens, no login screens, no redirect flows. The vendor has the buyer's info because the buyer chose to share it.</p>
+
+                    <h3>Authenticated access (optional)</h3>
+                    <p>Some vendors may offer tools that require knowing <em>who</em> the user is — viewing their own support tickets, managing a subscription, or accessing account-specific data. For these cases, the server can require OAuth 2.1 authentication per the MCP spec.</p>
+
+                    <p>When a tool requires authentication, the server responds with <code>401</code> and the standard MCP OAuth flow begins:</p>
+
+                    <pre><code><span class="token-comment">// Server responds 401 for account-specific tools</span>
+HTTP/1.1 <span class="token-number">401</span> Unauthorized
+<span class="token-key">WWW-Authenticate</span>: Bearer resource_metadata=<span class="token-string">"https://acme.com/.well-known/oauth-protected-resource"</span>
+
+<span class="token-comment">// After OAuth, requests include a Bearer token</span>
+<span class="token-method">POST</span> <span class="token-url">https://acme.com/mcp</span>
 <span class="token-key">Authorization</span>: Bearer <span class="token-string">eyJhbGciOiJFZDI1NTE5...</span>
 <span class="token-key">Mcp-Session-Id</span>: <span class="token-string">sess_a1b2c3d4e5f6</span>
 
@@ -1366,19 +1377,24 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
   <span class="token-key">"id"</span>: <span class="token-number">8</span>,
   <span class="token-key">"method"</span>: <span class="token-string">"tools/call"</span>,
   <span class="token-key">"params"</span>: {
-    <span class="token-key">"name"</span>: <span class="token-string">"schedule_demo"</span>,
-    <span class="token-key">"arguments"</span>: {
-      <span class="token-key">"preferred_times"</span>: [<span class="token-string">"2025-03-20T14:00:00Z"</span>],
-      <span class="token-key">"timezone"</span>: <span class="token-string">"America/New_York"</span>,
-      <span class="token-key">"topics"</span>: [<span class="token-string">"Salesforce integration"</span>, <span class="token-string">"Pricing"</span>]
-    }
+    <span class="token-key">"name"</span>: <span class="token-string">"view_my_tickets"</span>,
+    <span class="token-key">"arguments"</span>: {}
   }
 }</code></pre>
 
-                    <div class="info-box note">
-                        <div class="info-box-title">Note</div>
-                        <p>Not all endpoints require authorization. The <code>ask_question</code> tool may be accessible without authentication. The server decides which capabilities require a Bearer token.</p>
+                    <div class="info-box tip">
+                        <div class="info-box-title">Tip</div>
+                        <p>Most businesses won't need the authenticated tier. A bakery taking cake orders, a SaaS company answering product questions, a consultant booking calls — all of these work with anonymous + qualified access only. Reserve OAuth for when users need to access <em>their own</em> data.</p>
                     </div>
+
+                    <h3>Rate limiting</h3>
+                    <p>Vendors should protect their endpoints from abuse. Common approaches:</p>
+                    <ul>
+                        <li><strong>IP-based rate limiting</strong> — standard web server configuration</li>
+                        <li><strong>Session-based limits</strong> — cap requests per <code>Mcp-Session-Id</code></li>
+                        <li><strong>API keys</strong> — optional, issued to AI platforms for higher rate limits</li>
+                    </ul>
+                    <p>When rate-limited, the server returns a standard JSON-RPC error with code <code>-32000</code> and a <code>Retry-After</code> header.</p>
                 </section>
 
                 <!-- Section 7: Glossary -->
