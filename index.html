@@ -2294,7 +2294,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="hero-glow"></div>
                     <div class="hero-card">
                         <div class="hero-card-header">
-                            <span class="hero-card-endpoint">/.well-known/mcp</span>
+                            <span class="hero-card-endpoint">POST /mcp</span>
                             <span class="hero-card-status">Verified Endpoint</span>
                         </div>
 
@@ -2398,7 +2398,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <p>Engage in real conversations — vendors can ask qualifying questions and deliver personalized, authoritative answers AI can trust and cite.</p>
                     <ul class="pillar-examples">
                         <li>Security certifications (SOC2, HIPAA, GDPR)</li>
-                        <li>Enterprise pricing and plan details</li>
+                        <li>Pricing tiers and plan details</li>
                         <li>Salesforce & third-party integrations</li>
                         <li>Uptime SLA and performance guarantees</li>
                     </ul>
@@ -2435,7 +2435,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div class="step">
                         <div class="step-number">1</div>
                         <h4>Expose Profile</h4>
-                        <p>Publish your capabilities at <code>/.well-known/mcp</code></p>
+                        <p>Set up your MCP server at <code>/mcp</code></p>
                     </div>
 
                     <div class="step">
@@ -2486,14 +2486,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <div class="discovery-content animate-on-scroll">
                 <p class="discovery-intro">
-                    Companies publish their services and capabilities in a standard JSON manifest located at <code>/.well-known/mcp</code>.
-                    This allows AI agents to dynamically discover what questions you can answer and what actions you support — without hard-coded integrations.
+                    AI agents connect to your MCP server endpoint and discover your capabilities through the standard <code>initialize</code> handshake.
+                    No custom integrations — any MCP-compatible client can find what you offer and start interacting.
                 </p>
 
                 <div class="discovery-command">
                     <div class="discovery-command-label">
-                        Run this command to discover a company's capabilities:
-                        <span>Shell</span>
+                        Connect and discover capabilities:
+                        <span>JSON-RPC 2.0</span>
                     </div>
                     <div class="discovery-code">
                         <div class="discovery-code-header">
@@ -2502,62 +2502,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <div class="discovery-code-dot"></div>
                                 <div class="discovery-code-dot"></div>
                             </div>
-                            <span class="discovery-code-lang">bash</span>
+                            <span class="discovery-code-lang">POST https://acme.com/mcp</span>
                         </div>
-                        <pre><span class="comment"># Discover business capabilities</span>
-<span class="var">export</span> SERVER_URL=https://acme.com
-<span class="cmd">curl</span> -s -X GET $SERVER_URL/.well-known/mcp</pre>
+                        <pre><span class="comment">// Client sends initialize request</span>
+<span class="bracket">{</span>
+  <span class="key">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="key">"id"</span>: <span class="number">1</span>,
+  <span class="key">"method"</span>: <span class="string">"initialize"</span>,
+  <span class="key">"params"</span>: <span class="bracket">{</span>
+    <span class="key">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
+    <span class="key">"clientInfo"</span>: <span class="bracket">{</span> <span class="key">"name"</span>: <span class="string">"ai-agent"</span>, <span class="key">"version"</span>: <span class="string">"1.0"</span> <span class="bracket">}</span>
+  <span class="bracket">}</span>
+<span class="bracket">}</span></pre>
                     </div>
                 </div>
 
                 <div class="discovery-response-label">
-                    Response:
+                    Server responds with capabilities:
                     <span class="badge">200 OK</span>
                 </div>
                 <div class="discovery-json">
                     <pre><span class="bracket">{</span>
-  <span class="key">"mcp"</span>: <span class="bracket">{</span>
-    <span class="key">"version"</span>: <span class="string">"2026-01-11"</span>,
-    <span class="key">"name"</span>: <span class="string">"Acme Inc"</span>,
-    <span class="key">"description"</span>: <span class="string">"Enterprise security platform"</span>,
-    <span class="key">"endpoint"</span>: <span class="string">"https://acme.com/api/mcp"</span>
-  <span class="bracket">}</span>,
-  <span class="key">"capabilities"</span>: <span class="bracket">{</span>
-    <span class="key">"verified_responses"</span>: <span class="bracket">[</span>
-      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"pricing"</span>, <span class="key">"description"</span>: <span class="string">"Current pricing and plans"</span> <span class="bracket">}</span>,
-      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"integrations"</span>, <span class="key">"description"</span>: <span class="string">"Supported integrations and APIs"</span> <span class="bracket">}</span>,
-      <span class="bracket">{</span> <span class="key">"topic"</span>: <span class="string">"compliance"</span>, <span class="key">"description"</span>: <span class="string">"Security certifications (SOC2, ISO)"</span> <span class="bracket">}</span>
-    <span class="bracket">]</span>,
-    <span class="key">"actions"</span>: <span class="bracket">[</span>
-      <span class="bracket">{</span>
-        <span class="key">"name"</span>: <span class="string">"ask_question"</span>,
-        <span class="key">"description"</span>: <span class="string">"Ask any question about Acme products"</span>,
-        <span class="key">"requires_auth"</span>: false
-      <span class="bracket">}</span>,
-      <span class="bracket">{</span>
-        <span class="key">"name"</span>: <span class="string">"schedule_demo"</span>,
-        <span class="key">"description"</span>: <span class="string">"Book a personalized product demo"</span>,
-        <span class="key">"requires_auth"</span>: false,
-        <span class="key">"fields"</span>: <span class="bracket">[</span><span class="string">"name"</span>, <span class="string">"email"</span>, <span class="string">"company"</span>, <span class="string">"preferred_time"</span><span class="bracket">]</span>
-      <span class="bracket">}</span>,
-      <span class="bracket">{</span>
-        <span class="key">"name"</span>: <span class="string">"open_ticket"</span>,
-        <span class="key">"description"</span>: <span class="string">"Create a support ticket"</span>,
-        <span class="key">"requires_auth"</span>: true
-      <span class="bracket">}</span>,
-      <span class="bracket">{</span>
-        <span class="key">"name"</span>: <span class="string">"request_quote"</span>,
-        <span class="key">"description"</span>: <span class="string">"Get a custom pricing quote"</span>,
-        <span class="key">"requires_auth"</span>: false,
-        <span class="key">"qualification_required"</span>: true
-      <span class="bracket">}</span>
-    <span class="bracket">]</span>
-  <span class="bracket">}</span>,
-  <span class="key">"qualification"</span>: <span class="bracket">{</span>
-    <span class="key">"enabled"</span>: true,
-    <span class="key">"fields"</span>: <span class="bracket">[</span><span class="string">"company_size"</span>, <span class="string">"industry"</span>, <span class="string">"use_case"</span>, <span class="string">"security_requirements"</span><span class="bracket">]</span>
+  <span class="key">"jsonrpc"</span>: <span class="string">"2.0"</span>,
+  <span class="key">"id"</span>: <span class="number">1</span>,
+  <span class="key">"result"</span>: <span class="bracket">{</span>
+    <span class="key">"protocolVersion"</span>: <span class="string">"2025-03-26"</span>,
+    <span class="key">"capabilities"</span>: <span class="bracket">{</span>
+      <span class="key">"resources"</span>: <span class="bracket">{</span> <span class="key">"listChanged"</span>: true <span class="bracket">}</span>,
+      <span class="key">"tools"</span>: <span class="bracket">{</span> <span class="key">"listChanged"</span>: true <span class="bracket">}</span>
+    <span class="bracket">}</span>,
+    <span class="key">"serverInfo"</span>: <span class="bracket">{</span>
+      <span class="key">"name"</span>: <span class="string">"Acme Inc"</span>,
+      <span class="key">"version"</span>: <span class="string">"1.0.0"</span>
+    <span class="bracket">}</span>
   <span class="bracket">}</span>
-<span class="bracket">}</span></pre>
+<span class="bracket">}</span>
+
+<span class="comment">// Then discover tools and resources:</span>
+<span class="comment">// → tools/list returns: vendor_ask, schedule_demo, open_ticket, request_quote, qualify</span>
+<span class="comment">// → resources/list returns: pricing, integrations, compliance, features</span></pre>
                 </div>
             </div>
         </div>
@@ -3029,12 +3012,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h4>What's published at /.well-known/mcp?</h4>
+                        <h4>How does an AI agent discover my capabilities?</h4>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>The <code>/.well-known/mcp</code> endpoint serves your company's capability manifest — a machine-readable document describing what questions you can answer and what actions you support. It includes your company name, description, list of verified response topics, available actions, and the endpoint URL for AI agent interactions. Think of it as a standardized "menu" for AI.</p>
+                            <p>AI agents connect to your MCP server endpoint (e.g., <code>https://yoursite.com/mcp</code>) and send an <code>initialize</code> request. The server responds with its capabilities — what resources (knowledge) are available and what tools (actions) are supported. The agent then calls <code>tools/list</code> and <code>resources/list</code> to see exactly what it can do. It's the standard MCP protocol — any compatible client works automatically.</p>
                         </div>
                     </div>
                 </div>
