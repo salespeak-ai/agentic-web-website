@@ -902,7 +902,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="token-key">"result"</span>: {
     <span class="token-key">"protocolVersion"</span>: <span class="token-string">"2025-03-26"</span>,
     <span class="token-key">"capabilities"</span>: {
-      <span class="token-key">"resources"</span>: { <span class="token-key">"listChanged"</span>: true },
       <span class="token-key">"tools"</span>: { <span class="token-key">"listChanged"</span>: true }
     },
     <span class="token-key">"serverInfo"</span>: {
@@ -985,7 +984,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       },
       {
         <span class="token-key">"name"</span>: <span class="token-string">"qualify"</span>,
-        <span class="token-key">"description"</span>: <span class="token-string">"Submit buyer qualification data to unlock gated resources and actions"</span>,
+        <span class="token-key">"description"</span>: <span class="token-string">"Submit buyer qualification data to unlock gated actions"</span>,
         <span class="token-key">"inputSchema"</span>: { <span class="token-comment">/* see Section 5 */</span> }
       }
     ]
@@ -1016,7 +1015,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                         <div class="capability-card">
                             <h4>qualify</h4>
-                            <p>Submit buyer qualification data to unlock gated resources and actions.</p>
+                            <p>Submit buyer qualification data to unlock gated actions.</p>
                         </div>
                     </div>
 
@@ -1118,7 +1117,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                     <div class="info-box tip">
                         <div class="info-box-title">Tip</div>
-                        <p>The same MCP tools pattern works whether you're a SaaS company with Salesforce integrations or a bakery taking cake orders. The protocol is the same — only the resources and tools change.</p>
+                        <p>The same MCP tools pattern works whether you're a SaaS company with Salesforce integrations or a bakery taking cake orders. The protocol is the same — only the tools change.</p>
                     </div>
                 </section>
 
@@ -1344,7 +1343,7 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         <tbody>
                             <tr>
                                 <td><code>mcp:read</code></td>
-                                <td>Read-only access to vendor resources and data</td>
+                                <td>Read-only access to vendor data</td>
                                 <td><code>ask_question</code></td>
                             </tr>
                             <tr>
@@ -1377,14 +1376,14 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
 
                     <div class="info-box note">
                         <div class="info-box-title">Note</div>
-                        <p>Not all endpoints require authorization. Public resources and the <code>ask_question</code> tool may be accessible without authentication. The server decides which capabilities require a Bearer token.</p>
+                        <p>Not all endpoints require authorization. The <code>ask_question</code> tool may be accessible without authentication. The server decides which capabilities require a Bearer token.</p>
                     </div>
                 </section>
 
-                <!-- Section 8: Glossary -->
+                <!-- Section 7: Glossary -->
                 <section id="glossary">
                     <div class="section-header">
-                        <span class="section-number">8</span>
+                        <span class="section-number">7</span>
                         <h2 style="margin-top: 0; border: none; padding: 0;">Glossary</h2>
                     </div>
 
@@ -1395,7 +1394,7 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         </div>
                         <div class="glossary-term">
                             <dt>MCP Server Profile</dt>
-                            <dd>A set of conventions for implementing a specific type of MCP server. The Agentic Web profile defines how any business exposes resources and tools for AI agent interactions.</dd>
+                            <dd>A set of conventions for implementing a specific type of MCP server. The Agentic Web profile defines how any business exposes tools for AI agent interactions.</dd>
                         </div>
                         <div class="glossary-term">
                             <dt>JSON-RPC 2.0</dt>
@@ -1415,7 +1414,7 @@ HTTP/1.1 <span class="token-number">401</span> Unauthorized
                         </div>
                         <div class="glossary-term">
                             <dt>Qualification</dt>
-                            <dd>Progressive buyer data collection via the <code>qualify</code> tool. Transitions the session from <code>unqualified</code> → <code>qualifying</code> → <code>qualified</code>, unlocking gated resources and actions.</dd>
+                            <dd>Progressive buyer data collection via the <code>qualify</code> tool. Transitions the session from <code>unqualified</code> → <code>qualifying</code> → <code>qualified</code>, unlocking gated actions.</dd>
                         </div>
                         <div class="glossary-term">
                             <dt>structuredContent</dt>
