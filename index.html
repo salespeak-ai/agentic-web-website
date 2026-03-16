@@ -3036,12 +3036,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
                 <div class="faq-item">
                     <button class="faq-question">
-                        <h4>Does this lock me into one platform?</h4>
+                        <h4>How does this relate to UCP, MCP, and A2A?</h4>
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>The agentic web is built on open standards, not proprietary platforms. By implementing standard protocols (UCP, MCP, A2A), your endpoint becomes accessible to any AI agent that supports these standards — ChatGPT, Claude, Gemini, and future systems. There's no vendor lock-in; you own and host your endpoints.</p>
+                            <p><strong>MCP</strong> (Anthropic) is the transport layer — how AI agents talk to servers. The Agentic Web is an MCP Server Profile: a set of conventions for building your endpoint as a standard MCP server. Any MCP client works out of the box.</p>
+                            <p><strong>UCP</strong> (Google, Shopify, Walmart, Stripe) handles commerce — product discovery, cart, checkout, payments. If you sell products, UCP handles the transaction. The Agentic Web handles everything else: answering questions, qualifying buyers, scheduling demos, opening tickets.</p>
+                            <p><strong>A2A</strong> (Google) enables agents to talk to each other. When a user's AI assistant needs to negotiate with your company's AI agent, A2A handles that handoff.</p>
+                            <p>You might implement all three: UCP for purchases, Agentic Web for knowledge and actions, A2A for agent-to-agent workflows. Or just one — they're independent.</p>
                         </div>
                     </div>
                 </div>
@@ -3053,7 +3056,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </button>
                     <div class="faq-answer">
                         <div class="faq-answer-inner">
-                            <p>Any AI agent that supports the underlying protocols can discover and interact with your endpoints. This includes major AI assistants (Claude, ChatGPT, Gemini), enterprise AI tools, custom agents built on foundation models, and future AI systems. As these protocols become standard, your implementation will work with the entire ecosystem — implement once, work everywhere.</p>
+                            <p>Any MCP-compatible AI agent can connect to your endpoint automatically — Claude, ChatGPT, Gemini, custom agents built on foundation models, and future systems. There's no vendor lock-in; you own and host your MCP server. Implement once, work everywhere.</p>
                         </div>
                     </div>
                 </div>
