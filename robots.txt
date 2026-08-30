@@ -5,3 +5,6 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://agentic-web.ai/sitemap.xml
+
+# AI-readable site summary (https://llmstxt.org)
+# See: https://agentic-web.ai/llms.txt

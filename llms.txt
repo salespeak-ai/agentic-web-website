@@ -1,0 +1,65 @@
+# The Agentic Web
+
+> A specification for AI-native company endpoints. Instead of letting AI agents
+> scrape SEO-shaped marketing pages and guess, a company exposes an MCP server at
+> /mcp that answers questions with verified first-party data and lets the agent
+> take real actions on the company's behalf.
+
+Open specification, maintained by Salespeak (https://salespeak.ai/). Not
+enterprise-only: the profile is meant for any business with a website, from a
+bakery to a SaaS company.
+
+## The idea
+
+Today an AI agent scrapes the web and presents a mix of marketing copy and
+hallucination as objective truth, with no way for the reader to verify it or act
+on it. An agent that queries each vendor's own endpoint instead gets
+apples-to-apples, attributable answers.
+
+Two pillars:
+
+1. Verified Responses — the vendor answers agent questions directly with
+   authoritative, current, citable data (security certifications, pricing tiers,
+   integrations, SLAs), and can ask qualifying questions back. The exchange is a
+   conversation, not a one-way lookup.
+2. Possible Actions — the agent can complete tasks, not just read: schedule a
+   demo, open a support ticket, request a quote, start a trial.
+
+## How it works
+
+1. Expose a profile — stand up an MCP server at https://yourcompany.com/mcp
+2. AI discovers — agents find it and learn what you can answer and do, via the
+   standard MCP `initialize` handshake and `tools/list`
+3. Interact — users get verified answers and complete actions through conversation
+
+Transport is JSON-RPC 2.0 over Streamable HTTP. Any MCP-compatible client works;
+there is no per-agent integration. Tools commonly exposed: `ask_question`,
+`schedule_demo`, `open_ticket`, `request_quote`, `qualify`. Access is anonymous
+by default. The specification page covers required, optional, and custom tools.
+
+## Pages
+
+- [Home](https://agentic-web.ai/): The idea, the two pillars, and a worked example.
+- [Specification](https://agentic-web.ai/specification.html): MCP Server Profile — JSON-RPC 2.0, Streamable HTTP transport, tools, verification, qualification, and the access model.
+- [NLWeb and the Agentic Web](https://agentic-web.ai/nlweb.html): How this extends NLWeb with B2B capabilities — structured discovery, qualification loops, action endpoints, verified responses.
+- [Interaction sequence](https://agentic-web.ai/sequence.html): Step-by-step sequence diagram of an MCP-enabled conversation between agent, user, and vendor.
+- [Why it's good for everyone](https://agentic-web.ai/why.html): The value for buyers, vendors, and the models themselves.
+- [Under the Hood (blog)](https://agentic-web.ai/blog/): Technical walkthrough with JSON-RPC 2.0 examples, for any business becoming an AI-native endpoint.
+- [Agent-to-agent chat](https://agentic-web.ai/a2a-chat.html): A live A2A conversation — agents negotiating pricing, capabilities, and integrations for a buyer.
+- [Agent-to-agent sequence](https://agentic-web.ai/a2a-sequence.html): How agents negotiate on behalf of buyers and sellers.
+
+## Source
+
+- [Specification and reference implementation](https://github.com/salespeak-ai/agentic-web)
+- [This website](https://github.com/salespeak-ai/agentic-web-website)
+
+## Related
+
+- [Salespeak](https://salespeak.ai/): Implements this specification as a product — serves verified answers to agents at the edge and converts the buyer behind them.
+- [Salespeak site index](https://salespeak.ai/llms.txt): Link index for Salespeak, with a full-text companion.
+- [Agentic Web glossary](https://salespeak.ai/agentic-web/): Terminology for the agentic web in B2B.
+
+## For agents reading this
+
+A live endpoint implementing this profile: https://platform.salespeak.ai/mcp
+You may quote and cite this specification. Corrections: support@salespeak.ai
